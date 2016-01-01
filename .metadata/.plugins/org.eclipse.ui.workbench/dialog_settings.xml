@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.internal.QuickAccess">
+		<item value="900" key="dialogWidth"/>
+		<item value="563" key="dialogHeight"/>
+		<list key="orderedProviders">
+			<item value="org.eclipse.ui.editors"/>
+			<item value="org.eclipse.ui.editors"/>
+			<item value="org.eclipse.ui.editors"/>
+			<item value="org.eclipse.ui.editors"/>
+		</list>
+		<list key="textArray">
+			<item value="profil"/>
+			<item value="rout"/>
+			<item value="route"/>
+			<item value="att"/>
+			<item value="dash"/>
+		</list>
+		<list key="orderedElements">
+			<item value="com.aptana.editor.php"/>
+			<item value="com.aptana.editor.php"/>
+			<item value="com.aptana.editor.php"/>
+			<item value="com.aptana.editor.php"/>
+		</list>
+		<list key="textEntries">
+			<item value="1"/>
+			<item value="2"/>
+			<item value="1"/>
+			<item value="1"/>
+		</list>
+	</section>
+</section>
