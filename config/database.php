@@ -55,6 +55,21 @@ return [
         
 		'mysql' => [
             'driver'    => 'mysql',
+            'host'      => env('RDS_HOSTNAME', 'ujvaldb.cdof00xdxqt6.us-west-2.rds.amazonaws.com'),
+            'port'   => env('RDS_PORT', '3306'),
+            'database'  => env('RDS_DB_NAME', 'ujvaldb'),
+            'username'  => env('RDS_USERNAME', 'dbusername'),
+            'password'  => env('RDS_PASSWORD', 'dbpassword'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
+
+        
+		'inddiaublss' => [
+            'driver'    => 'mysdfsdfsql',
             'host'      => env('DB_HOST', 'localhost'),
             'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
             'database'  => env('DB_DATABASE', 'User'),
@@ -65,7 +80,6 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
-
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
