@@ -17,7 +17,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Name</label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control" name="staff"  value="" placeholder="User Name" required>
+                                                <input type="text" class="form-control" name="name"  value="" placeholder="User Name" required>
                                             </div>
                                         </div>
                                         

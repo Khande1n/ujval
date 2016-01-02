@@ -21,7 +21,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email"/>
+                            <input type="email" class="form-control" name="email"  placeholder="Email"/>
                         </div>
                     </div>
                     <div class="form-group">

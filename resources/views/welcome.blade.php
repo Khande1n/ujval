@@ -10,8 +10,8 @@
 <!-- Banner -->
 			<section id="banner">
 				<i class="icon fa-diamond"></i>
-				<h2>Etiam adipiscing</h2>
-				<p>Magna feugiat lorem dolor egestas</p>
+				<h2>School of Strength</h2>
+				<p>Find the new revolutionary path to find real stregth that lies within</p>
 				<ul class="actions">
 					<li><a href="auth/login" class="button big special">Login</a></li>
 					<li><a href="auth/register" class="button big special">Sign Up</a></li>
@@ -22,10 +22,10 @@
 			<section id="one" class="wrapper style1">
 				<div class="inner">
 					<article class="feature left">
-						<span class="image"><img src="images/pic01.jpg" alt="" /></span>
+						<span class="image"><img src="/assets/images/pic01.jpg" alt="" /></span>
 						<div class="content">
-							<h2>Integer vitae libero acrisus egestas placerat  sollicitudin</h2>
-							<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est.</p>
+							<h2>Turn Data into Intelligent Insights</h2>
+							<p>Data processed in real-time into class & student level reports designed to help users at different levels make more informed & time-relevant decisions.</p>
 							<ul class="actions">
 								<li>
 									<a href="#" class="button alt">More</a>
@@ -34,10 +34,10 @@
 						</div>
 					</article>
 					<article class="feature right">
-						<span class="image"><img src="images/pic02.jpg" alt="" /></span>
+						<span class="image"><img src="/assets/images/pic02.jpg" alt="" /></span>
 						<div class="content">
-							<h2>Integer vitae libero acrisus egestas placerat  sollicitudin</h2>
-							<p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est.</p>
+							<h2>Going Beyond Grades</h2>
+							<p>Capture student co-scholastic achievements and track behavioral indicators via an innovative single-click evidence logging system.</p>
 							<ul class="actions">
 								<li>
 									<a href="#" class="button alt">More</a>
@@ -52,21 +52,21 @@
 			<section id="two" class="wrapper special">
 				<div class="inner">
 					<header class="major narrow">
-						<h2>Aliquam Blandit Mauris</h2>
-						<p>Ipsum dolor tempus commodo turpis adipiscing Tempor placerat sed amet accumsan</p>
+						<h2>The Do It All Platform</h2>
+						<p>Single window access to lesson planning, assessments, personalised calendar, student attendance, online submissions, reporting and so much more!</p>
 					</header>
 					<div class="image-grid">
-						<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
-						<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
-						<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
-						<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
-						<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-						<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-						<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-						<a href="#" class="image"><img src="images/pic10.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic03.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic04.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic05.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic06.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic07.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic08.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic09.jpg" alt="" /></a>
+						<a href="#" class="image"><img src="/assets/images/pic10.jpg" alt="" /></a>
 					</div>
 					<ul class="actions">
-						<li><a href="#" class="button big alt">Tempus Aliquam</a></li>
+						<li><a href="#" class="button big alt">Learn More</a></li>
 					</ul>
 				</div>
 			</section>
@@ -75,12 +75,12 @@
 			<section id="three" class="wrapper style3 special">
 				<div class="inner">
 					<header class="major narrow	">
-						<h2>Magna sed consequat tempus</h2>
-						<p>Ipsum dolor tempus commodo turpis adipiscing Tempor placerat sed amet accumsan</p>
+						<h2>Request an Online Demo!</h2>
+						<p>If the concept of Ujval sounds interesting, drop us a quick request and we'll get in touch with you to arrange an online demo.</p>
 					</header>
-					<ul class="actions">
+					<!-- <ul class="actions">
 						<li><a href="#" class="button big alt">Magna feugiat</a></li>
-					</ul>
+					</ul> -->
 				</div>
 			</section>
 
@@ -89,7 +89,7 @@
 				<div class="inner">
 					<header class="major narrow">
 						<h2>Get in touch</h2>
-						<p>Ipsum dolor tempus commodo adipiscing</p>
+						<p>Powerful features. Beautiful Design.</p>
 					</header>
 					<form action="#" method="POST">
 						<div class="container 75%">

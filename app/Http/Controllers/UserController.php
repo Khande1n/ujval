@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Password;
-use App\Staff;
+use App\User;
 use DB;
 
 class UserController extends Controller
@@ -42,7 +42,7 @@ class UserController extends Controller
 		$passwordConfirmation = $request->password_confirmation;
 		
 		// Search for a user matching the email address
-		$user = Staff::where('email', $email)->first();
+		$user = User::where('email', $email)->first();
 
 		// Go ahead if a user matching that email was found
 			if ( ! is_null($user))
@@ -51,7 +51,7 @@ class UserController extends Controller
  			   // NOTE: you can do additional validations here if needed
  				   if ($password == $passwordConfirmation)
   						 {
-        					DB::table('staff')
+        					DB::table('users')
             					->where('email', $email)
             					->update(['password' => bcrypt($password)]);
     					 }
@@ -91,7 +91,7 @@ class UserController extends Controller
     {
         $newPassword = $request->new_password;
 		$oldPassword = $request->old_password;
-		DB::table('staff')
+		DB::table('users')
 				->where('$oldPassword', '=', 'password')
 				->update(['password' => 'newPassword']);
     }

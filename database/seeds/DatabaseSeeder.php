@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\Student;
-use App\Staff;
+use App\User;
 use App\Exam;
 
 
@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         
         Student::truncate();
-		Staff::truncate();
+		User::truncate();
 		Exam::truncate();
 
         factory(Student::class, 10)->create();
-		factory(Staff::class, 10)->create();
+		factory(User::class, 10)->create();
 		factory(Exam::class, 10)->create();
 		
         Model::reguard();

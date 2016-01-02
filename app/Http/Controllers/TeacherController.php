@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CreateStaffRequest;
 use Session;
-use App\Staff;
+use App\User;
 use DB;
 
 class TeacherController extends Controller
@@ -40,9 +40,9 @@ class TeacherController extends Controller
     public function store(CreateStaffRequest $request)
     {
 			
-  		$staff = Staff::create
+  		$staff = User::create
   		([
-  		'staff' => $request->staff,
+  		'name' => $request->name,
   		'stf_bday' => $request->stf_bday,
   		'gender' => $request->gender,
   		'email' => $request->email,

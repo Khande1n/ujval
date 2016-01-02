@@ -29,7 +29,9 @@ class Staff extends Model  implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['staff', 'email', 'password', 'password_confirmation', 'role', 'stf_bday', 'gender', 'stf_guardian1', 'stf_contact1', 'stf_contact2', 'stf_add1', 'stf_add2', 'stf_street', 'stf_pincode', 'subject_id'];
+    protected $fillable = ['staff', 'email', 'password', 'password_confirmation', 
+    						'role', 'stf_bday', 'gender', 'stf_guardian1', 'stf_contact1', 
+    						'stf_contact2', 'stf_add1', 'stf_add2', 'stf_street', 'stf_pincode', 'subject_id'];
 
     /**
      * The attributes excluded from the model's JSON form.

@@ -35,8 +35,8 @@ class Attendance extends Model
 	/**
      * Get the staff with the attendance.
      */
-    public function staff()
+    public function users()
     {
-        return $this->belongsTo('App\Staff');
+        return $this->belongsTo('App\User');
     }
 }

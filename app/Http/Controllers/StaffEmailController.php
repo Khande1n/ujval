@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Mail;
-use App\Staff;
+use App\User;
 use App\Http\Requests;
 use App\Jobs\SendReminderEmail;
 use App\Http\Controllers\Controller;
@@ -21,13 +21,13 @@ class StaffEmailController extends Controller
      */
     public function sendEmailReminder(Request $request, $id)
     {
-        $user = Staff::findOrFail($id);
+        $user = User::findOrFail($id);
 		
         // $job = (new SendReminderEmail($user))->onQueue('emails');
 // 
         // $this->dispatch($job);
 
-        Mail::laterOn('emails',10, 'emails.mailCompose', ['staff' => $user], function ($m) use ($user) {
+        Mail::laterOn('emails',10, 'emails.mailCompose', ['name' => $user], function ($m) use ($user) {
             $m->from('$request->btnFrom', 'Your Application');
 			$m->to($request->btnTo);
 			$message->cc($request->btnCC, $name = null);

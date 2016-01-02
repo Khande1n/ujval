@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Staff;
+use App\User;
 
 class CreateStaffTest extends TestCase
 {
@@ -16,7 +16,7 @@ class CreateStaffTest extends TestCase
      */
     public function testNewCreateStafffactory()
     {
-    	$staff = factory('App\Staff', 50)->create();
+    	$staff = factory('App\User', 50)->create();
 		
 		// dd($exams);
 		

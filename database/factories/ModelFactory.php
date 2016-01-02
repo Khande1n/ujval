@@ -47,9 +47,9 @@ $factory->define('App\School', function (Faker\Generator $faker) {
 
 $factory->define('App\Grade', function (Faker\Generator $faker) {
 	return [
-		'grade' => $faker->numberBetween($min = 1, $max = 12),
+		'grade' => $faker->numberBetween($min = 1, $max = 10),
 		'grade_section' => $faker->randomLetter,
-		'school_id' => $faker->numberBetween($min = 1, $max = 20)
+		'school_id' => $faker->numberBetween($min = 1, $max = 15)
 	];
 });
 
@@ -82,9 +82,9 @@ $factory->define('App\Mark', function (Faker\Generator $faker) {
 });
   
 
-$factory->define('App\Staff', function (Faker\Generator $faker) {
+$factory->define('App\User', function (Faker\Generator $faker) {
 	return [
-		'staff' => $faker->name,
+		'name' => $faker->name,
   		'stf_bday' => $faker->date,
   		'gender' => $faker->numberBetween($min = 0, $max = 1),
   		'email' => $faker->safeemail,

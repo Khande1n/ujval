@@ -74,9 +74,9 @@ class ApiController extends Controller
 			->join('grades', 'grade_id', '=', 'grades.id')
 			->join('schools', 'school_id', '=', 'schools.id')	
 			// ->where('school_id', '=', 1)
-			->where('grade_id', '=', 9)
-			->where('subject_id', '=', 13)
-			->where('exam_id', '=', 6)
+			->where('grade_id', '=', 8)
+			->where('subject_id', '=', 9)
+			->where('exam_id', '=', 15)
 			->groupBy('obt_marks')
 			->orderBy('obt_marks', 'ASC')
 			->get([

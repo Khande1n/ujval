@@ -52,7 +52,8 @@ return [
             'prefix'   => '',
         ],
 
-        'mysql' => [
+        
+		'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',

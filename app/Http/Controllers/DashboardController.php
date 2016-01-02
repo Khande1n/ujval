@@ -43,7 +43,7 @@ class DashboardController extends Controller
 				
 		$user = Auth::check();				
     	$nowTime = Carbon::now()->toFormattedDateString();
-		$name = Session::get('staff');
+		$name = Session::get('name');
 		
 		
 
@@ -68,7 +68,7 @@ class DashboardController extends Controller
 		$stats = DB::table('attendances')
  	 		->join('students', 'student_id', '=', 'students.id')
     		->where('attendance', '>=', $range)
-			->where('grade_id', 1)
+			->where('student_id', 1)
     		->groupBy('date')
     		->orderBy('date', 'ASC')
     		->get([

@@ -27,9 +27,9 @@ class School extends Model
 	/**
      * School has many staffs.
      */
-    public function staff()
+    public function users()
     {
-        return $this->hasMany('App\Staff');
+        return $this->hasMany('App\User');
     }
 	
 	/**
