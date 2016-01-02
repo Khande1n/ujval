@@ -55,9 +55,9 @@ return [
         
 		'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('RDS_HOSTNAME', 'ujvaldb.cdof00xdxqt6.us-west-2.rds.amazonaws.com'),
-            'port'   => env('RDS_PORT', '3306'),
-            'database'  => env('RDS_DB_NAME', 'ujvaldb'),
+            'host'      => env('RDS_HOST', 'ujvaldbapp.cdof00xdxqt6.us-west-2.rds.amazonaws.com'),
+            'port'   	=> env('RDS_PORT', '3306'),
+            'database'  => env('RDS_DATABASE', 'ujvaldbapp'),
             'username'  => env('RDS_USERNAME', 'dbusername'),
             'password'  => env('RDS_PASSWORD', 'dbpassword'),
             'charset'   => 'utf8',
@@ -80,6 +80,7 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
+        
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
