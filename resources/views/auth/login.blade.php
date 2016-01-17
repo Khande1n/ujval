@@ -14,7 +14,7 @@
         <div class="login-container">
         
             <div class="login-box animated fadeInDown">
-                <div class="login-logo"></div>
+                <!-- <div class="login-logo"></div> -->
                 <div class="login-body">
                     <div class="login-title"><strong>Welcome</strong>, Please login</div>
                     <form class="form-horizontal" method="POST" action="/auth/login">
@@ -42,12 +42,11 @@
                 </div>
                 <div class="login-footer">
                     <div class="pull-left">
-                        &copy; 2015 AppName
+                        &copy; 2016 UJVAL
                     </div>
                     <div class="pull-right">
-                        <a href="#">About</a> |
-                        <a href="#">Privacy</a> |
-                        <a href="#">Contact Us</a>
+                        <a href="/">Home</a> |
+                        <a href="/">Contact Us</a>
                     </div>
                 </div>
             </div>

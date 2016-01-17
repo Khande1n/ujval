@@ -4,7 +4,14 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
-
+use Auth;
+use App\Grade;
+use App\Exam;
+use App\School;
+use App\Role;
+use App\Subject;
+use App\Student;
+use DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-     	view()->share('nowTime', Carbon::now()->toFormattedDateString());
+     	view()->share('nowTime', Carbon::now() -> toFormattedDateString());
+		
+		view() ->share('schools', School::orderBy('school', 'asc') -> get());
+		
+
     }
 
     /**

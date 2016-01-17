@@ -30,7 +30,7 @@ class Student extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['student', 'rollNumber', 'email', 'password', 'bday', 'gender', 'password_confirmation', 'guardian1', 'guardian2', 'contact11', 'contact12', 'std_add1', 'std_add2', 'std_street', 'std_pincode', 'school_id'];
+    protected $fillable = ['student', 'rollNumber', 'email', 'password', 'bday', 'gender', 'password_confirmation', 'guardian1', 'guardian2', 'parentemail', 'contact11', 'contact12', 'std_add1', 'std_add2', 'std_street', 'std_pincode', 'grade_id'];
 	
 	
 	/**
@@ -56,5 +56,13 @@ class Student extends Model implements AuthenticatableContract,
     public function attendances()
     {
         return $this->hasMany('App\Attendance');
+    }
+	
+	/**
+     * Get the the marks of the student.
+     */
+    public function marks()
+    {
+        return $this->hasMany('App\Mark');
     }
 }

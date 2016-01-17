@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Grade;
 use DB;
 use Session;
+use Auth;
 
 class ClassController extends Controller
 {
@@ -21,6 +22,23 @@ class ClassController extends Controller
     {
         //
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function classroom()
+    {
+    	$count = DB::table('students')
+   					->join('grades', 'grade_id', '=', 'grades.id') 
+   					->where('school_id', Auth::user()->school_id)
+   					->count();
+
+			
+        return view('principal/classroom')->with('count');
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -41,10 +59,10 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $grade  = Grade::create([
-		'grade' => $request->grade,
-		'grade_section' => $request->grade_section,
-		'school_id' => $request->school_id,
-		'student_id' => $request->student_id,
+		'grade' 		=> ucwords($request->grade),
+		'grade_section' => ucwords($request->grade_section),
+		'school_id' 	=> $request->school_id,
+		'student_id' 	=> $request->student_id,
 		]);
 
 		return redirect('admin/createclass')->withInput();

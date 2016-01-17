@@ -24,9 +24,9 @@ class CreateExamRequest extends Request
     public function rules()
     {
         return [
-        	'exam' => 'alpha_num',
-        	'exam_date' => 'required|date',
-            'exam_duration' => 'required|date',
+        	'exam' => 'string',
+        	'exam_start' => 'required|date',
+            'exam_end' => 'required|date',
         	'max_marks' => 'required|integer',
         	'pass_marks' => 'required|integer',
         ];

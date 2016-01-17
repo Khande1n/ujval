@@ -11,10 +11,10 @@
 			<section id="banner">
 				<i class="icon fa-diamond"></i>
 				<h2>School of Strength</h2>
-				<p>Find the new revolutionary path to find real stregth that lies within</p>
+				<p>Find the new revolutionary path to find real strength that lies within</p>
 				<ul class="actions">
 					<li><a href="auth/login" class="button big special">Login</a></li>
-					<li><a href="auth/register" class="button big special">Sign Up</a></li>
+					<!-- <li><a href="auth/register" class="button big special">Sign Up</a></li> -->
 				</ul>
 			</section>
 

@@ -30,7 +30,7 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $fillable = ['name', 'email', 'password','password_confirmation', 
     						'role', 'stf_bday', 'gender', 'stf_guardian1', 'stf_contact1', 
-    						'stf_contact2', 'stf_add1', 'stf_add2', 'stf_street', 'stf_pincode', 'subject_id'];
+    						'stf_contact2', 'stf_add1', 'stf_add2', 'stf_street', 'stf_pincode', 'school_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -52,8 +52,8 @@ class User extends Model implements AuthenticatableContract,
 	/**
      * Get the the attendances of the staff.
      */
-    public function attendances()
+    public function attendanceusers()
     {
-        return $this->hasMany('App\Attendance');
+        return $this->hasMany('App\AttendanceUser');
     }
 }

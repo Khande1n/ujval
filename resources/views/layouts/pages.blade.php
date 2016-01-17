@@ -23,16 +23,16 @@
                             <li class="xn-openable">
                                 <a href="/principal/classroom">Classroom</a>
                                 <ul>
-                                    <li><a href="#"><span class="fa fa-cube"></span> Student</a></li>
-                                    <li><a href="#"><span class="fa fa-life-ring"></span>Teacher</a></li>
-                                    <li class="xn-openable"><a href="#"><span class="fa fa-university"></span> Reports</a></li>
-                                    <!-- <li><a href="#"><span class="fa fa-recycle"></span> Course Tracking</a></li> -->
+                                    <!-- <li><a href="/principal/classroom#student-tab"><span class="fa fa-users"></span> Student</a></li> -->
+                                    <li><a href="/principal/classroom#teacher-tab"><span class="fa fa-user"></span>Teacher</a></li>
+                                    <li><a href="/principal/classroom#reports-tab"><span class="fa fa-bar-chart-o"></span> Reports</a></li>
+                                    <!-- <li  class="xn-openable"><a href="#"><span class="fa fa-recycle"></span> Course Tracking</a></li> -->
                                     <!-- <li><a href="#"><span class="fa fa-calendar"></span>Attendance</a></li> -->
                                 </ul>
                             </li>
-                            <li class="">
+                            <!-- <li class="">
                             	<a href="/mailbox/inbox">Message</a>
-                            </li>
+                            </li> -->
                             <!-- <li class="xn-openable">
                                 <a href="/principal/feedback">Feedback</a>
                                 <ul>
@@ -43,8 +43,8 @@
                                     <li><a href="#"><span class="fa fa-calendar"></span> Student</a></li>
                                 </ul>
                             </li> -->
-                            <li class="xn-openable">
-                                <a href="/principal/chat">Chat</a>
+                            <!-- <li class="xn-openable">
+                                <a href="/principal/chat">Chat</a> -->
                                 <!-- <ul>
                                     <li><a href="#"><span class="fa fa-cube"></span> Home</a></li>
                                     <li class="xn-openable"><a href="#"><span class="fa fa-life-ring"></span> Write</a></li>
@@ -55,13 +55,17 @@
                                     <li><a href="#"><span class="fa fa-calendar"></span> Topics</a></li>
                                     <li><a href="#"><span class="fa fa-calendar"></span> Stats</a></li>                                
                                 </ul> -->                                
-                            </li>  
+                            <!-- </li> -->  
                             <li class="xn-openable">
                                 <a href="/principal/create">Create</a>
                                 <ul>
-                                    <li><a href="/principal/create#staff-tab"><span class="fa fa-cube"></span> Staff</a></li>
-                                    <li><a href="/principal/create#student-tab"><span class="fa fa-life-ring"></span> Student</a></li>
-                                    <li><a href="/principal/create#exam-tab"><span class="fa fa-recycle"></span>Exam</a></li>
+                                    <li><a href="/principal/create#role-tab"><span class="fa fa-tags"></span>Role</a></li>
+                                    <li><a href="/principal/create#grade-tab"><span class="fa fa-building-o"></span>Grade</a></li>
+                                    <li><a href="/principal/create#subject-tab"><span class="fa fa-book"></span>Subject</a></li>
+                                    <li><a href="/principal/create#staff-tab"><span class="fa fa-user"></span>Staff</a></li>
+                                    <li><a href="/principal/create#student-tab"><span class="fa fa-users"></span>Student</a></li>
+                                    <li><a href="/principal/create#exam-tab"><span class="fa fa-pencil-square"></span>Exam</a></li>
+                                    <li><a href="/principal/create#mark-tab"><span class="fa fa-star"></span>Mark</a></li>
                                     <!-- <li><a href="#"><span class="fa fa-calendar"></span> KPI Alarm</a></li> -->
                                     <!-- <li><a href="#"><span class="fa fa-university"></span> Time-Table</a></li>
                                     <li><a href="#"><span class="fa fa-calendar"></span>Group</a></li>  
@@ -77,15 +81,15 @@
                                 <span class="fa fa-bars"></span>
                             </div>
                             <div class="pull-right">
-                                <div class="x-features-search">
+                                <!-- <div class="x-features-search">
                                     <input type="text" name="search">
                                     <input type="submit">
-                                </div>
+                                </div> -->
                                 <div class="x-features-profile">
-                                    <img src="../assets/images/avatar.jpg">
+                                    <img src="{{asset('assets/images/profile-pic.jpg')}}">
                                     <ul class="xn-drop-left animated zoomIn">
                                     	<li><a href="/profilepage"><span class="fa fa-user"></span> Profile</a></li>
-                                        <li><a href="/lock-screen"><span class="fa fa-lock"></span> Lock Screen</a></li>
+                                        <!-- <li><a href="/lock-screen"><span class="fa fa-lock"></span> Lock Screen</a></li> -->
                                         <li><a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span> Sign Out</a></li>
                                     </ul>
                                 </div>
@@ -113,7 +117,7 @@
                     @yield('message')
                     
                     <div class="x-content-footer">
-                        Copyright © 2015 Ujval. All rights reserved
+                        Copyright © 2016 Ujval. All rights reserved
                     </div>
                 </div>
                 <!-- END PAGE CONTENT WRAPPER -->                                

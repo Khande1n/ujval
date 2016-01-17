@@ -1,7 +1,7 @@
  					<div class="x-content">
                         <div id="staff-tab">
                             <div class="x-content-title">
-                                <h1> Create Staffs</h1>
+                                <h1> Create Staff</h1>
                             </div>
                             
                             <!-- FORM DETAILS -->
@@ -39,8 +39,8 @@
                                         	<label class="col-md-3 control-label"  name="gender">Gender</label>
                                             <div class="col-md-2">
                                                 <select class="form-control select" name="gender">
-                                                    <option selected>Male</option>
-                                                    <option>Female</option>
+                                                    <option>Male</option>
+                                                    <option selected>Female</option>
                                                 </select>
 											</div>
                                         </div>
@@ -66,71 +66,17 @@
                                         <!-- FORM FIELD 6 -->
                                         
                                       	<div class="form-group">
-                                      		<label class="col-md-3 control-label"  name="role">Assign Role</label>
+                                      		<label class="col-md-3 control-label">Assign Role</label>
                                             <div class="col-md-2">
-                                                <select class="form-control select" name="role">
-                                                    <option selected>SubjectTeacher</option>
-                                                    <option>ClassTeacher</option>
-                                                    <option>Guardian</option>
-                                                    <option>Manager</option>
-                                                </select>
-											</div>
+                                            	<select class="form-control select" name="role" id="role">
+													@foreach($roles as $role)
+														<option value="{{ $role->role_name }}">{{ $role->role_name }}</option>
+													@endforeach
+												</select>
+                                            </div>
                                         </div>
-                                        
+
                                         <!-- FORM FIELD 7 -->
-                                        
-                                        <!-- <div class="form-group">
-                                            <label class="col-md-3 control-label"  name="grade_name">Assign Class</label>
-                                            <div class="col-md-2">
-                                                <select class="form-control select" name="grade_name">
-                                                    <option>I</option>
-                                                    <option>II</option>
-                                                    <option>III</option>
-                                                    <option selected>IV</option>
-                                                    <option>V</option>
-                                                    <option>VI</option>
-                                                    <option>VII</option>
-                                                    <option>VIII</option>
-                                                    <option>IX</option>
-                                                    <option>X</option>
-                                                    <option>XI</option>
-                                                    <option>XII</option>
-                                                </select>
-											</div>
-											<div class="col-md-2">
-                                                <select class="form-control select" name="grade_section">
-                                                    <option selected>A</option>
-                                                    <option>B</option>
-                                                    <option>C</option>
-                                                    <option>D</option>
-                                                    <option>E</option>
-                                                    <option>F</option>
-                                                    <option>G</option>
-                                                    <option>H</option>
-                                                    <option>I</option>
-                                                    <option>J</option>
-                                                    <option>K</option>
-                                                    <option>L</option>
-                                                    <option>M</option>
-                                                    <option>N</option>
-                                                    <option>O</option>
-                                                    <option>P</option>
-                                                    <option>Q</option>
-                                                    <option>R</option>
-                                                    <option>S</option>
-                                                    <option>T</option>
-                                                    <option>U</option>
-                                                    <option>V</option>
-                                                    <option>W</option>
-                                                    <option>X</option>
-                                                    <option>Y</option>
-                                                    <option>Z</option>
-                                                </select>
-											</div>
-                                        </div> -->
-                          
-                                        
-                                        <!-- FORM FIELD 8 -->
                                         
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Address</label>
@@ -142,6 +88,21 @@
                                             </div>
                                         </div>
                                         
+                                        
+                          				<!-- FORM FIELD 8 -->
+
+										<!-- <div class="form-group"> -->
+											<input type="hidden" class="form-control" name="school_id"  value="{{$schoolId}}" required>
+										<!-- </div> -->
+										
+										
+										<!-- FORM FIELD 9 -->
+
+										<!-- <div class="form-group"> -->
+											<input type="hidden" class="form-control" name="password"  value="password123" required>
+										<!-- </div> -->
+
+
                                         <!-- FORM FIELD 'SAVE'-->
                                         
                                         <div class="panel-footer">

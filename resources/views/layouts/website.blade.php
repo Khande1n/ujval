@@ -29,7 +29,7 @@
 				<ul class="links">
 					<li><a href="/">Home</a></li>
 					<li><a href="auth/login">Login</a></li>
-					<li><a href="auth/register">Sign Up</a></li>
+					<!-- <li><a href="auth/register">Sign Up</a></li> -->
 				</ul>
 			</nav>
 

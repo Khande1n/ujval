@@ -21,7 +21,7 @@ class Grade extends Model
      *
      * @var array
      */
-    protected $fillable = ['grade', 'school_id'];
+    protected $fillable = ['grade', 'grade_section', 'school_id'];
 
 
 	/**

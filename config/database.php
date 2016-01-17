@@ -68,8 +68,8 @@ return [
 
 
         
-		'inddiaublss' => [
-            'driver'    => 'mysdfsdfsql',
+		'my989989898898sql' => [
+            'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
             'database'  => env('DB_DATABASE', 'User'),

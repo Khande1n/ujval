@@ -42,7 +42,7 @@ class UserController extends Controller
 		$passwordConfirmation = $request->password_confirmation;
 		
 		// Search for a user matching the email address
-		$user = User::where('email', $email)->first();
+		 $user = User::where('email', $email)->first();
 
 		// Go ahead if a user matching that email was found
 			if ( ! is_null($user))

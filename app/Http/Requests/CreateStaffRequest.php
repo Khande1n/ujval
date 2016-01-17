@@ -25,11 +25,11 @@ class CreateStaffRequest extends Request
     public function rules()
     {
         return [
-        	'name' => 'required|alpha_num',
-        	'stf_bday' => 'required|date',
-        	'email' => 'required|unique:users|email',
+        	'name'         => 'required|string',
+        	'stf_bday'     => 'required|date',
+        	'email'        => 'required|unique:users|email',
             'stf_contact1' => 'required|integer|digits:10',
-       		'stf_pincode' => 'required|integer|', 		
+       		'stf_pincode'  => 'required|integer', 
         ];
     }
 }

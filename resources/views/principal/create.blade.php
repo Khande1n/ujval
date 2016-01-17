@@ -10,13 +10,13 @@
 
 					<div class="x-content-tabs">
                         <ul>
-                            <li><a href="#staff-tab" class="icon active"><span class="fa fa-desktop"></span></a></li>
-                            <li><a href="#student-tab"><span class="fa fa-life-ring"></span><span>Student</span></a></li>
-                            <li><a href="#exam-tab"><span class="fa fa-microphone"></span><span>Exam</span></a></li> 
-                            <!-- <li><a href="#kpi-tab"><span class="fa fa-microphone"></span><span>KPI Alarm</span></a></li> -->
-                            <!-- <li><a href="#third-tab"><span class="fa fa-microphone"></span><span>Time-Table</span></a></li> -->
-                            <!-- <li><a href="#fourth-tab"><span class="fa fa-microphone"></span><span>Group</span></a></li> -->
-                            <!-- <li><a href="#sixth-tab"><span class="fa fa-microphone"></span><span>Marks Cut Criteria</span></a></li> --> 			                              
+                        	<li><a href="#role-tab" class="icon active"><span class="fa fa-tags"></span><span>Roles</span></a></li>
+                        	<li><a href="#grade-tab"><span class="fa fa-building-o"></span><span>Grade</span></a></li>
+                        	<li><a href="#subject-tab"><span class="fa fa-book"></span><span>Subject</span></a></li>
+                            <li><a href="#staff-tab"><span class="fa fa-user"></span>Staff</a></li>
+                            <li><a href="#student-tab"><span class="fa fa-users"></span><span>Student</span></a></li>
+                            <li><a href="#exam-tab"><span class="fa fa-pencil-square"></span><span>Exam</span></a></li> 
+                            <li><a href="#mark-tab"><span class="fa fa-star"></span><span>Mark</span></a></li>
                         </ul>
                     </div>
 
@@ -28,16 +28,37 @@
 
 <!-- FIRST TAB -->
  
-@include('create.createstaff')
+@include('create.createRole')
       
                  
-    <!-- SECOND TAB -->
+<!-- SECOND TAB -->
                                      
-@include('create.createstudent')
+@include('create.createGrade')
+
+                 
+<!-- THIRD TAB -->
+                                     
+@include('create.createSubject')
                         
                    
-<!-- THIRD TAB -->
+<!-- FOURTH TAB -->
 			
-@include('create.createexam')
+@include('create.createStaff')
+
+
+<!-- FIFTH TAB -->
+			
+@include('create.createStudent')
+
+
+<!-- SIXTH TAB -->
+			
+@include('create.createExam')
+
+
+<!-- SEVENTH TAB -->
+			
+@include('create.createMark')
+
 
 @endsection

@@ -42,14 +42,15 @@ class ExamController extends Controller
     {
         
 		$exam  = Exam::create([
-		'exam' => $request->exam,
-		'exam_date' => $request->exam_date,
-		'exam_duration' => $request->exam_duration,
-		'max_marks' => $request->max_marks,
-		'pass_marks' => $request->pass_marks,
+		'exam'        => strtoupper($request->exam),
+		'exam_start'  => $request->exam_start,
+		'exam_end'    => $request->exam_end,
+		'max_marks'   => $request->max_marks,
+		'pass_marks'  => $request->pass_marks,
+		'subject_id'  => $request->subject_id,
 		]);
 
-		return redirect('principal/create')->withInput();
+		return redirect('principal/create#exam-tab')->withInput();
     }
 
     /**

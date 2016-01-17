@@ -28,4 +28,4 @@ class ChartDashboard
 			
 		return $count;
 	}
-		
+}	

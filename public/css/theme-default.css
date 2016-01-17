@@ -7786,7 +7786,7 @@ td.dataTables_empty {
   z-index: 3;
 }
 .theme-settings .ts-button {
-  position: absolute;
+  /*position: absolute;
   left: -36px;
   height: 36px;
   width: 36px;
@@ -7799,7 +7799,7 @@ td.dataTables_empty {
   color: #FFF;
   line-height: 34px;
   text-align: center;
-  cursor: pointer;
+  cursor: pointer;*/
 }
 .theme-settings .ts-body {
   width: 200px;

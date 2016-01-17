@@ -25,10 +25,10 @@ class CreateStudentRequest extends Request
     public function rules()
     {
         return [
-       		'student' => 'required|alpha_num',
-        	'email' => 'required|email',
+       		'student' => 'required|string',
+        	'email' => 'required|unique:students|email',
         	'bday' => 'required|date',
-        	'guardian1' => 'alpha_num',
+        	'guardian1' => 'string',
         	'parentemail' => 'required|email',
         	'contact11' => 'required|integer|digits:10',
        		'std_pincode' => 'required|integer'

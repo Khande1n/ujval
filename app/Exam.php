@@ -22,7 +22,7 @@ class Exam extends Model
      *
      * @var array
      */
-    protected $fillable = ['exam', 'exam_date', 'exam_duration', 'max_marks', 'pass_marks', 'subject_id'];
+    protected $fillable = ['exam', 'exam_start', 'exam_end', 'max_marks', 'pass_marks', 'subject_id'];
 	
 		
 	/**

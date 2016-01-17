@@ -11,14 +11,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-    	factory(App\School::class, 50)->create();
-		factory(App\Grade::class, 50)->create();
-		factory(App\Subject::class, 50)->create();
-		factory(App\Exam::class, 50)->create();
-		factory(App\Mark::class, 50)->create();
-		factory(App\User::class, 50)->create();
-        factory(App\Student::class, 50)->create();
-		factory(App\Attendance::class, 50)->create();
+    	factory(App\School::class, 3)->create();
+		factory(App\Grade::class, 20)->create();
+		factory(App\User::class, 30)->create();
+		factory(App\Student::class, 100)->create();
+		factory(App\Subject::class, 20)->create();
+		factory(App\Exam::class, 20)->create();
+		factory(App\Mark::class, 100)->create();
+		factory(App\Attendance::class, 500)->create();
+		factory(App\Gradeuser::class, 50)->create();
+		factory(App\AttendanceUser::class, 500)->create();
 		
     }
 }

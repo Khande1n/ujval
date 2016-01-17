@@ -3,6 +3,8 @@
 Homestead.yaml
 Homestead.json
 .env
+ujval.pem
+rds-ca-2015-root.pem
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

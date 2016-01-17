@@ -25,10 +25,10 @@
                             <form action="#" class="form-horizontal">
                             <div class="panel panel-default">                                
                                 <div class="panel-body">
-                                    <h3><span class="fa fa-user"> NAME USER</span></h3>
-                                    <p>ROLE USER</p>
+                                    <h3><span class="fa fa-user">{{" ". ucwords(Auth::user()->name) }}</span></h3>
+                                    <p> {{ucwords(Auth::user()->role)}} </p>
                                     <div class="text-center" id="user_image">
-                                        <img src="../assets/images/users/user2.jpg" class="img-thumbnail"/>
+                                        <img src="{{asset('assets/images/profile-pic.jpg')}}" class="img-thumbnail"/>
                                     </div>                                    
                                 </div>
                                 <div class="panel-body form-group-separated">
@@ -42,21 +42,21 @@
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">#ID</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="" class="form-control" disabled/>
+                                            <input type="text" value=" {{ Auth::user()->id }} " class="form-control" disabled/>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label class="col-md-3 col-xs-5 control-label">Login</label>
+                                        <label class="col-md-3 col-xs-5 control-label">Birthday</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="USER NAME" class="form-control"/>
+                                            <input type="text" value=" {{ ucwords(Auth::user()->stf_bday) }} " class="form-control"/>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">E-mail</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="USER EMAIL" class="form-control"/>
+                                            <input type="text" value=" {{ Auth::user()->email }} " class="form-control"/>
                                         </div>
                                     </div>
                                     
@@ -77,118 +77,70 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <h3><span class="fa fa-pencil"></span> Profile</h3>
-                                    <p>This information is about the user.</p>
+                                    <p>The below mentioned are your details. Please update, if any.</p>
                                 </div>
                                 <div class="panel-body form-group-separated">
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">Name</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="User Name" class="form-control"/>
+                                            <input type="text" value=" {{ Auth::user()->name }} " class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">Address Line 1</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="" placeholder="Address Line 1" class="form-control"/>
+                                            <input type="text" value="" placeholder=" {{ Auth::user()->stf_add1 }} " class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">Address Line 2</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="" placeholder="Address Line 2" class="form-control"/>
+                                            <input type="text" value="" placeholder=" {{ Auth::user()->stf_add2 }} " class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">Street</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="" placeholder="Street Name" class="form-control"/>
+                                            <input type="text" value="" placeholder=" {{ Auth::user()->stf_street }} " class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">City</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="" placeholder="City" class="form-control"/>
+                                            <input type="text" value="" placeholder=" {{ Auth::user()->city }} " class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">State</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="" placeholder="State" class="form-control"/>
+                                            <input type="text" value="" placeholder=" {{ Auth::user()->state }} " class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-5 control-label">Country</label>
                                         <div class="col-md-9 col-xs-7">
-                                            <input type="text" value="" placeholder="Country" class="form-control"/>
+                                            <input type="text" value="" placeholder=" {{ Auth::user()->country }} " class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-5 control-label">Pincode</label>
+                                        <div class="col-md-9 col-xs-7">
+                                            <input type="text" value="" placeholder=" {{ Auth::user()->stf_pincode }} " class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12 col-xs-5">
-                                            <button type="submit"  class="btn btn-primary btn-rounded pull-right">Save</button>
+                                            <button type="submit"  class="btn btn-primary btn-rounded pull-right">
+                                            	<a href="/staff/{{ Auth::user()->id }}/edit">
+                                            		Update
+                                            	</a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             </form>
-                            
-                            <!-- <div class="panel panel-default tabs">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab1" data-toggle="tab">Contacts</a></li>
-                                    <li><a href="#tab2" data-toggle="tab">Send Message</a></li>                                    
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane panel-body active" id="tab1">                                                                                
-                                        
-                                        <div class="list-group list-group-contacts border-bottom">
-                                            <a href="#" class="list-group-item">            
-                                                <div class="list-group-status status-online"></div>
-                                                <img src="assets/images/users/user3.jpg" class="pull-left" alt="Nadia Ali">
-                                                <span class="contacts-title">Nadia Ali</span>
-                                                <p>Singer-Songwriter</p>                                    
-                                                <div class="list-group-controls">
-                                                    <button class="btn btn-primary btn-rounded"><span class="fa fa-pencil"></span></button>
-                                                </div>                                    
-                                            </a>                                                                
-                                            <a href="#" class="list-group-item">                   
-                                                <div class="list-group-status status-online"></div>
-                                                <img src="assets/images/users/user.jpg" class="pull-left" alt="Dmitry Ivaniuk">
-                                                <span class="contacts-title">Dmitry Ivaniuk</span>
-                                                <p>Web Developer/Designer</p>                                    
-                                                <div class="list-group-controls">
-                                                    <button class="btn btn-primary btn-rounded"><span class="fa fa-pencil"></span></button>
-                                                </div>                                    
-                                            </a>
-                                            <a href="#" class="list-group-item">                   
-                                                <div class="list-group-status status-away"></div>
-                                                <img src="assets/images/users/user2.jpg" class="pull-left" alt="John Doe">
-                                                <span class="contacts-title">John Doe</span>
-                                                <p>UI/UX Designer</p>                     
-                                                <div class="list-group-controls">
-                                                    <button class="btn btn-primary btn-rounded"><span class="fa fa-pencil"></span></button>
-                                                </div>
-                                            </a>                                
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="tab-pane panel-body" id="tab2">                                        
-                                        <p>Feel free to contact us for any issues you might have with our products.</p>
-                                        <div class="form-group">
-                                            <label>E-mail</label>
-                                            <input type="email" class="form-control" placeholder="youremail@domain.com">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Subject</label>
-                                            <input type="email" class="form-control" placeholder="Message subject">
-                                        </div>                                
-                                        <div class="form-group">
-                                            <label>Message</label>
-                                            <textarea class="form-control" placeholder="Your message" rows="3"></textarea>
-                                        </div>                                
-                                    </div>                                                                        
-                                    
-                                </div>
-                                
-                            </div> -->
+
 
                         </div>
                         
@@ -200,20 +152,20 @@
                                 </div>
                                 <div class="panel-body form-group-separated">                                    
                                     <div class="form-group">
-                                        <label class="col-md-4 col-xs-5 control-label">Last visit</label>
-                                        <div class="col-md-8 col-xs-7 line-height-30">12:46 27.11.2015</div>
+                                        <label class="col-md-4 col-xs-5 control-label">Last update</label>
+                                        <div class="col-md-8 col-xs-7 line-height-30"> {{ Auth::user()->updated_at }} </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4 col-xs-5 control-label">Registration</label>
-                                        <div class="col-md-8 col-xs-7 line-height-30">01:15 21.11.2015</div>
+                                        <div class="col-md-8 col-xs-7 line-height-30"> {{ Auth::user()->created_at }} </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4 col-xs-5 control-label">Groups</label>
-                                        <div class="col-md-8 col-xs-7">administrators, managers, team-leaders, developers</div>
+                                        <label class="col-md-4 col-xs-5 control-label">Contact</label>
+                                        <div class="col-md-8 col-xs-7 line-height-30"> {{ Auth::user()->stf_contact1 }} </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4 col-xs-5 control-label">Birthday</label>
-                                        <div class="col-md-8 col-xs-7 line-height-30">14.02.1989</div>
+                                        <label class="col-md-4 col-xs-5 control-label">Contact</label>
+                                        <div class="col-md-8 col-xs-7 line-height-30"> {{ Auth::user()->stf_contact2 }} </div>
                                     </div>
                                 </div>
                                 

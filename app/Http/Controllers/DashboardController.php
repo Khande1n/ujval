@@ -29,32 +29,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-    	$grades = Grade::orderBy('grade', 'asc')->get();
-		
-		$students = DB::table('students')
-				->join('grades', 'grade_id','=','grades.id')
-				->select(['students.id','student','email', 
-					'bday', 'gender', 'guardian1', 
-					'contact11', 'parentemail', 'grade'])
-				->where('school_id', '2')
-				->orderBy('student', 'asc')
-				->get();
-				
-				
-		$user = Auth::check();				
-    	$nowTime = Carbon::now()->toFormattedDateString();
-		$name = Session::get('name');
-		
-		
-
-		return response()->view('principal/dashboard', compact('nowTime', 'grades','students', 'user'));
+			
+		return response()->view('principal/dashboard');
 	
 	}
 		
 	/**
      * Display a listing of the resource.
-	 * 
-	 * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -67,8 +48,9 @@ class DashboardController extends Controller
 
 		$stats = DB::table('attendances')
  	 		->join('students', 'student_id', '=', 'students.id')
+			->join('grades', 'grade_id', '=', 'grades.id')
     		->where('attendance', '>=', $range)
-			->where('student_id', 1)
+			->where('school_id', Auth::user()->school_id)
     		->groupBy('date')
     		->orderBy('date', 'ASC')
     		->get([
@@ -78,8 +60,144 @@ class DashboardController extends Controller
     
         return $stats;
     }
-	 	
 	
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function studentAttendance()
+    {
+    	$nowTime = Carbon::now()->toFormattedDateString();
+   		 $days = Input::get('days', 7);
+		 $Idstudent = Input::get('Idstudent');
+	
+    	$range = Carbon::now()->subDays($days);
+
+		$stats = DB::table('attendances')
+ 	 		->join('students', 'student_id', '=', 'students.id')
+			->where('attendance', '>=', $range)
+			->where('student_id', $Idstudent)
+    		->groupBy('date')
+    		->orderBy('date', 'ASC')
+    		->get([
+      			DB::raw('Date(attendance) as date'),
+      			DB::raw('COUNT(*) as value')
+    	]);
+    
+        return $stats;
+    }
+	
+	 	
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function staffAttendance()
+    {
+    	$nowTime = Carbon::now()->toFormattedDateString();
+   		 $days = Input::get('days', 7);
+		 $Idstaff = Input::get('Idstaff');
+	
+    	$range = Carbon::now()->subDays($days);
+
+		$stats = DB::table('attendances')
+ 	 		->join('users', 'user_id', '=', 'users.id')
+			->where('attendance', '>=', $range)
+			->where('user_id', $Idstaff)
+    		->groupBy('date')
+    		->orderBy('date', 'ASC')
+    		->get([
+      			DB::raw('Date(attendance) as date'),
+      			DB::raw('COUNT(*) as value')
+    	]);
+    
+        return $stats;
+    }	
+		
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboardDropDown()
+    {
+        $gra_id = Input::get('gra_id');
+		
+		$subjectdropdown = DB::table('subjects')
+					->where('grade_id', $gra_id)
+					->orderBy('subject', 'asc')
+                	->get();
+				
+		$jsonSubjects = json_encode($subjectdropdown);
+
+   		return $jsonSubjects;
+    }
+	
+		
+
+		
+	/**
+     * Display a listing of the resource.
+	 * 
+     * @return \Illuminate\Http\Response
+     */
+    public function studentMarks()
+    {
+    
+   		$examId = Input::get('examId');
+		$Idstudent = Input::get('Idstudent');
+	
+		$studentMarks = DB::table('marks')
+				->join('students', 'student_id', '=', 'students.id')
+				->join('grades', 'grade_id', '=', 'grades.id')
+				->join('exams', 'exam_id', '=', 'exams.id')
+				->where('exam_id', '=', $examId)
+				->where('student_id', '=', $Idstudent)
+				->groupBy('exam_id')
+				->orderBy('obt_marks', 'ASC')
+				->get([
+					DB::raw('exam as mark'),
+					DB::raw('obt_marks as value')
+				]);
+    
+	
+        return $studentMarks;
+    }
+	
+
+		
+	/**
+     * Display a listing of the resource.
+	 * 
+     * @return \Illuminate\Http\Response
+     */
+    public function staffMarks()
+    {
+    
+   		$examId = Input::get('examId');
+		$Idstaff = Input::get('Idstaff');
+		
+		$staffMarks = DB::table('marks')
+				->join('exams', 'exam_id', '=', 'exams.id')
+				->join('subjects', 'subject_id', '=', 'subjects.id') 
+				->join('gradeusers', 'subjects.grade_id', '=', 'gradeusers.grade_id')
+				->join('users', 'user_id', '=', 'users.id')
+				->select('user_id', 'name','subjects.grade_id','exam','subject','subject_id','exam_id' )
+				->where('exam_id', '=', $examId)
+				->where('user_id', '=', $Idstaff)
+				->groupBy('obt_marks')
+				->orderBy('obt_marks', 'ASC')
+				->get([
+					DB::raw('obt_marks as mark'),
+					DB::raw('Count(*) as value')
+				]);
+
+        	return $staffMarks;
+    }
+	
+
     /**
      * Show the form for creating a new resource.
      *
@@ -112,9 +230,9 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        $studentDetail = Student::findOrFail($id);
+        $student = Student::findOrFail($id);
 		
-		return view('principal.show', compact('studentDetail'));
+		return view('dashboard.show',compact('student'));
     }
 
     /**
@@ -152,4 +270,6 @@ class DashboardController extends Controller
     {
         //
     }
+	
+
 }

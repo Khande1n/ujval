@@ -15,14 +15,14 @@ class CreateSchoolsTable extends Migration
         Schema::create('schools', function (Blueprint $table) {
             $table->increments('id');
 			$table->string('school');
-			$table->integer('sch_contact1');
-			$table->integer('sch_contact2')->nullable();
-			$table->string('sch_add1');
+			$table->bigInteger('sch_contact1')->default('9000000009');
+			$table->bigInteger('sch_contact2')->nullable();
+			$table->string('sch_add1')->nullable();
 			$table->string('sch_add2')->nullable();
-			$table->string('sch_street');
-			$table->string('sch_pincode');
-			$table->string('city');
-			$table->string('state');
+			$table->string('sch_street')->nullable();
+			$table->string('sch_pincode')->nullable();
+			$table->string('city')->nullable();
+			$table->string('state')->nullable();
 			$table->string('country')->default('India');
 			$table->timestamps();
         });
