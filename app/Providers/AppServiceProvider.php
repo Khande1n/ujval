@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
      	view()->share('nowTime', Carbon::now() -> toFormattedDateString());
 		
-		view() ->share('schools', School::orderBy('school', 'asc') -> get());
+		
 		
 
     }

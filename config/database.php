@@ -68,7 +68,7 @@ return [
 
 
         
-		'my989989898898sql' => [
+		'my7887sql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',

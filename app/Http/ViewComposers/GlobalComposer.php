@@ -23,7 +23,7 @@ class GlobalComposer {
 	 */
 	public function compose(View $view) {
 		
-
+		$view ->with('schools', School::orderBy('school', 'asc') -> get());
 
 		if (Auth::check()) {
 			
