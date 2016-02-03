@@ -18,10 +18,11 @@ class ComposerServiceProvider extends ServiceProvider
     {
         View::composer('*', 'App\Http\ViewComposers\GlobalComposer');
 		
-		View::composer('*', 'App\Http\ViewComposers\StudentViewComposer');
+		View::composer('/principal/profilePage', 'App\Http\ViewComposers\ViewAuthUserComposer');
 		
 		View::composer('principal/create', 'App\Http\ViewComposers\CreateComposer');
-
+		
+		View::composer('*', 'App\Http\ViewComposers\AttendanceComposer');
     }
 
     /**

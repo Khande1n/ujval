@@ -1,7 +1,7 @@
 <div class="x-content">
 	<div id="Academic-tab">
 		<div class="x-content-title">
-			<h1>Academic Analysis</h1>
+			<h1>School Academic Analysis</h1>
 		</div>
 		<div class="row stacked">
 			<div class="col-md-12">
@@ -13,7 +13,7 @@
 						</div>
 
 						@include('exports.export')
-
+						
 					</div>
 					<div class="x-chart-widget-content">
 						<div class="x-chart-widget-content-head">
@@ -47,54 +47,13 @@
 							</div>
 						</div>
 
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-md-6">
 								<div class="x-chart-widget-informer">
 									<div class="row">
-										<!-- <div class="col-md-3">
-											<div class="x-chart-widget-informer-item">
-												<div class="count">
-													223<span>34% <i class="fa fa-arrow-up"></i></span>
-												</div>
-												<div class="title">
-													Views of your profile
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="x-chart-widget-informer-item">
-												<div class="count">
-													190<span>17% <i class="fa fa-arrow-up"></i></span>
-												</div>
-												<div class="title">
-													Views of your works
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="x-chart-widget-informer-item">
-												<div class="count">
-													223<span class="negative">22% <i class="fa fa-arrow-down"></i></span>
-												</div>
-												<div class="title">
-													Likes
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="x-chart-widget-informer-item last">
-												<div class="count">
-													160<span>3% <i class="fa fa-arrow-up"></i></span>
-												</div>
-												<div class="title">
-													Comments
-												</div>
-											</div>
-										</div>
-									</div> -->
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="panel panel-default">
 							<div class="panel-heading">
                             	<h3 class="panel-title">Academic Chart</h3>                                

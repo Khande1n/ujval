@@ -14,30 +14,30 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->rememberToken();
-			$table->string('role');
-			$table->date('stf_bday');
+			$table->date('bday');
 			$table->string('gender');
-			$table->string('stf_guardian1');
-			$table->bigInteger('stf_contact1');
-			$table->bigInteger('stf_contact2')->nullable();
-			$table->string('stf_add1')->nullable();
-			$table->string('stf_add2')->nullable();
-			$table->string('stf_street')->nullable();
-			$table->string('city')->default('Gurgaon');
-			$table->string('state')->default('Haryana');
-			$table->string('country')->default('India');
-			$table->string('stf_pincode');
+			$table->string('guardian1');
             $table->timestamps();
 		});
 					
-		    Schema::table('users', function (Blueprint $table) {
-			$table->integer('school_id')->unsigned();
-			$table->foreign('school_id')->references('id')->on('schools');
-        });
+					
+				
+		Schema::create('role_user', function (Blueprint $table) {
+		    $table->integer('role_id')->unsigned();
+			$table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');	
+				
+		    $table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->timestamps();
+
+		});	
+		
+	
+
     }
 
     /**
@@ -49,6 +49,9 @@ class CreateUsersTable extends Migration
     {
      	DB::statement('SET FOREIGN_KEY_CHECKS = 0');
     	Schema::dropIfExists('users');
+		Schema::dropIfExists('school_user');
+		Schema::dropIfExists('role_user');
+		Schema::dropIfExists('grade_user');
     	DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

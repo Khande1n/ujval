@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Grade;
+use App\School;
 use DB;
 use Session;
 use Auth;
@@ -30,13 +31,16 @@ class ClassController extends Controller
      */
     public function classroom()
     {
-    	$count = DB::table('students')
-   					->join('grades', 'grade_id', '=', 'grades.id') 
-   					->where('school_id', Auth::user()->school_id)
-   					->count();
+    	foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
+				$value = $v;
+		}
+		
+   		$schools = School::find($value);
+   		$countUser =  $schools->users->count();
+		
 
 			
-        return view('principal/classroom')->with('count');
+        return view('principal/classroom', compact('countUser'));
     }
 
 

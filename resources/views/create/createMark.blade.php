@@ -17,8 +17,8 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">Select Class</label>
 						<div class="col-md-2">
-							<select class="form-control select" name="grade_id" id="grade_id">
-								@foreach($grades as $grade)
+							<select class="form-control" name="grade_id" id="gradeMarkSelect">
+								@foreach($gradelists as $grade)
 								<option value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
 								@endforeach
 							</select>
@@ -30,10 +30,8 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">Select Sujbect</label>
 						<div class="col-md-2">
-							<select class="form-control select" name="subject_id" id="subject_id">
-								@foreach($marklists as $subject)
-								<option value="{{ $subject->subject_id }}">{{ $subject->subject }}</option>
-								@endforeach
+							<select class="form-control" name="subject_id" id="subjectMarkSelect">
+								<option value="">First Select Grade</option>
 							</select>
 						</div>
 					</div>
@@ -42,11 +40,9 @@
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">Select Exam</label>
-						<div class="col-md-2">
-							<select class="form-control select" name="exam_id" id="exam_id">
-								@foreach($marklists as $exam)
-								<option value="{{ $exam->exam_id }}">{{ $exam->exam }}</option>
-								@endforeach
+						<div class="col-md-3">
+							<select class="form-control" name="exam_id" id="examMarkSelect">
+								<option value="">First Select Subject</option>
 							</select>
 						</div>
 					</div>
@@ -55,11 +51,9 @@
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">Select Student</label>
-						<div class="col-md-2">
-							<select class="form-control select" name="student_id" id="student_id">
-								@foreach($students as $student)
-								<option value="{{ $student->id }}">{{ $student->student }}</option>
-								@endforeach
+						<div class="col-md-3">
+							<select class="form-control" name="student_id" id="studentMarkSelect">
+								<option value="">First Select Grade</option>
 							</select>
 						</div>
 					</div>
@@ -85,4 +79,88 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+
+@section('graphscript')
 	
+	<script>
+		//dropdownlist for academic analysis
+
+		$('#gradeMarkSelect').on('change', function(e) {
+
+			var gra_id = e.target.value;
+
+			//ajax
+
+			$.get('/api/category-dropdown?gra+id=' + gra_id, function(data) {
+
+				//success data
+				$('#subjectMarkSelect').empty();
+				console.log('EMPTY DONE');
+				$('#subjectMarkSelect').append('<option value=""> Please choose one</option>');
+				console.log('Please choose DONE');
+				$.each(JSON.parse(data), function(index, subjectObj) {
+					$('#subjectMarkSelect').append('<option value=" ' + subjectObj.id + '">' + subjectObj.subject + '</option');
+				});
+				console.log('DONE');
+			});
+			
+			$.get('/api/student-dropdown?gra+id=' + gra_id, function(data) {
+			//success data
+			$('#studentMarkSelect').empty();
+			console.log("India no 1");
+			$('#studentMarkSelect').append('<option value="">Please Choose one</option>');
+			console.log('India again no 1');
+			$.each(JSON.parse(data), function(index, studentObj) {
+				$('#studentMarkSelect').append('<option value="' + studentObj.id + '">' + studentObj.student + '</option');
+			});
+		});
+});
+</script>
+<script>
+	$('#subjectMarkSelect').on('change', function(e) {
+		var sub_id = e.target.value;
+
+		//ajax
+		$.get('/api/subject-dropdown?sub+id=' + sub_id, function(data) {
+			//success data
+			$('#examMarkSelect').empty();
+			
+			console.log("India no 1");
+			$('#examMarkSelect').append('<option value="">Please Choose one</option>');
+			console.log('India again no 1');
+			$.each(JSON.parse(data), function(index, examObj) {
+				$('#examMarkSelect').append('<option value="' + examObj.id + '">' + examObj.exam + '</option');
+			});
+			console.log('Awesome!!! Done')
+		});
+	});
+
+</script>
+
+<!-- DASHBOARD ACADEMICS -->
+
+
+
+@endsection
+
+@section('selectMarkScript')
+
+<script>
+	$('#gradeMarkSelect').select2();
+</script>
+
+<script>
+	$('#subjectMarkSelect').select2();
+</script>
+
+<script>
+	$('#examMarkSelect').select2();
+</script>
+
+<script>
+	$('#studentMarkSelect').select2();
+</script>
+
+@endsection	

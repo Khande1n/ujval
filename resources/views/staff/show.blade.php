@@ -21,28 +21,28 @@
 			<tr>
 				<th>Name </th>
 				<th>Email </th>
-				<th>Contact </th>
+				<th>Bday </th>
 				<th>Edit </th>
-				<th>Delete </th>
+				<!-- <th>Delete </th> -->
 			</tr>
 
 			<tr>
 				<td>{{ $staffData->name }} </td>
 				<td>{{ $staffData->email }} </td>
-				<td>{{ $staffData->stf_contact1 }} </td>
+				<td>{{ $staffData->bday }} </td>
 				
 				<td><a href="/staff/{{ $staffData->id }}/edit">
 				<button type="button" class="btn btn-default">
 					Edit
 				</button> </a></td>
 				
-				<td> {!! Form::model($staffData,
+				<!-- <td> {!! Form::model($staffData,
 				['route' => ['staff.destroy', $staffData->id],
 				'method' => 'DELETE'])
 				!!}
 				<div class="form-group">
 					{!! Form::submit('Delete', array('class'=>'btn btn-danger', 'Onclick' => 'return ConfirmDelete();')) !!}
-				</div> {!! Form::close() !!} </td>
+				</div> {!! Form::close() !!} </td> -->
 			</tr>
 		</table>
 	</div>

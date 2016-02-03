@@ -31,19 +31,19 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Date of birth:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" value="{{ $staffData->stf_bday }}" disabled/>
+									<input type="text" class="form-control" value="{{ $staffData->bday }}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">Primary Contact:</label>
 								<div class="col-md-9">
-									<input type="number" class="form-control" value="{{ $staffData->stf_contact1 }}" disabled/>
+									<input type="number" class="form-control" value="{{ $staffAddress[0]['contact11'] }}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">Second Contact:</label>
 								<div class="col-md-9">
-									<input type="number" class="form-control" value="{{ $staffData->stf_contact2 }}" disabled/>
+									<input type="number" class="form-control" value="{{ $staffAddress[0]['contact12'] }}" disabled/>
 								</div>
 							</div>
 						</div>
@@ -57,31 +57,31 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Guardian:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" value="{{ $staffData->stf_guardian1 }}" disabled/>
+									<input type="text" class="form-control" value="{{ $staffAddress[0]['guardian2'] }}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">Address Line 1:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" value="{{ $staffData->stf_add1 }}" disabled/>
+									<input type="text" class="form-control" value="{{ $staffAddress[0]['add1'] }}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">Address Line 2:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" value="{{ $staffData->stf_add2 }}" disabled/>
+									<input type="text" class="form-control" value="{{ $staffAddress[0]['add2'] }}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">Street:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" value="{{ $staffData->stf_street }}" disabled/>
+									<input type="text" class="form-control" value="{{ $staffAddress[0]['street'] }}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-3 control-label">Pincode:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" value="{{ $staffData->stf_pincode }}" disabled/>
+									<input type="text" class="form-control" value="{{ $staffAddress[0]['pincode'] }}" disabled/>
 								</div>
 							</div>
 						</div>
@@ -166,14 +166,14 @@
 							<div class="btn-group">
 								<ul class="nav nav-pills ranges">
 
-									@foreach($teacherlists as $teacherlist)
-									<!-- @if ( $teacherlist->grade_id == $staffData->grade_id) -->
+									@foreach($examsUser as $key =>$value)
+									
 									<button class="btn btn-default">
 										<li>
-											<a href="#" data-examId='{{ $teacherlist->exam_id }}'>{{ $teacherlist->exam }}</a>
+											<a href="#" data-examId='{{ $value['id'] }}'>{{ $value['exam'] }}.{{ $value['id'] }}</a>
 										</li>
 									</button>
-									<!-- @endif -->
+									
 									@endforeach
 
 								</ul>
@@ -286,7 +286,7 @@
 
 		console.log('Three');
 		// Request initial data for the past 7 days:
-		requestData({{ $teacherlist->exam_id }}, chart);
+		requestData({{ $value['id'] }}, chart);
 
 		console.log('Four');
 

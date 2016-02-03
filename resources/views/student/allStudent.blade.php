@@ -6,8 +6,6 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Grade</th>
-						<th>Contact</th>
 						<th>Birthday</th>
 						<th>Email</th>
 						<th>Guardian</th>
@@ -16,19 +14,19 @@
 				</thead>
 				<tbody>
 					
-					@foreach($students as $student)
+					@foreach($students as $key=>$value)
+						
 					<tr>
-						<th><a href="/student/{{$student->id}}"> {{ $student->student }} </a></th>
-						<th>{{ $student->grade }}</th>
-						<th>{{ $student->contact11 }}</th>
-						<th>{{ $student->bday }}</th>
-						<th>{{ $student->email }}</th>
-						<th>{{ $student->guardian1 }}</th>
-						<th><a href="/student/{{ $student->id }}/edit">
+						<th><a href="/student/{{$value['id']}}"> {{ $value['student'] }} </a></th>
+						<th>{{ $value['bday'] }}</th>
+						<th>{{ $value['email'] }}</th>
+						<th>{{ $value['guardian1'] }}</th>
+						<th><a href="/student/{{ $value['id'] }}/edit">
 						<button type="button" class="btn btn-default">
 							Edit
 						</button> </a></th>
 					</tr>
+						
 					@endforeach
 				</tbody>
 			</table>

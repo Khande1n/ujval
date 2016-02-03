@@ -20,16 +20,17 @@ class Attendance extends Model
      *
      * @var array
      */
-    protected $fillable = ['attendance', 'student_id'];
+    protected $fillable = ['attendance', 'present_id', 'present_type'];
 	
 	
-	/**
-     * Get the student with the attendance.
+	
+    /**
+     * Get all of the owning imageable models.
      */
-    public function students()
+    public function present()
     {
-        return $this->belongsTo('App\Student');
+        return $this->morphTo();
     }
 	
-
 }
+

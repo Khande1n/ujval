@@ -23,7 +23,7 @@
 		<table class="table">
 			<tr>
 				<th>Name </th>
-				<th>Class </th>
+				<!-- <th>Class </th> -->
 				<th>Email </th>
 				<th>Contact </th>
 				<th>Edit </th>
@@ -32,9 +32,9 @@
 			<tr>
 				<!-- <td>{{ $studentData->rollNumber }} </td> -->
 				<td>{{ $studentData->student }} </td>
-				<td>{{ $studentData->grade_id }} </td>
+				<!-- <td>{{ $studentData->grade_id }} </td> -->
 				<td>{{ $studentData->email }} </td>
-				<td>{{ $studentData->contact11 }} </td>
+				<td>{{ $studentAdd[0]['contact11'] }} </td>
 				
 				<td><a href="/student/{{ $studentData->id }}/edit">
 				<button type="button" class="btn btn-default">

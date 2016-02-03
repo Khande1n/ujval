@@ -14,14 +14,12 @@ class CreateAttendancesTable extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->increments('id');
-			$table->date('attendance');
+			$table->char('attendance');
+			$table->integer('present_id');
+			$table->string('present_type');
             $table->timestamps();
         });
 			
-		    Schema::table('attendances', function (Blueprint $table) {
-			$table->integer('student_id')->unsigned();
-			$table->foreign('student_id')->references('id')->on('students');
-        });
     }
 
     /**

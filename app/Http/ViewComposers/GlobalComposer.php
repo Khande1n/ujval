@@ -4,12 +4,16 @@ namespace App\Http\ViewComposers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Users\Repository as UserRepository;
 use Auth;
-use App\Grade;
-use App\Exam;
 use App\School;
 use App\Role;
+use App\Grade;
+use App\User;
 use App\Subject;
 use App\Student;
+use App\Attendance;
+use App\Address;
+use App\Exam;
+use Input;
 use Carbon\Carbon;
 use DB;
 
@@ -27,62 +31,80 @@ class GlobalComposer {
 
 		if (Auth::check()) {
 			
-			$view ->with('marklists', DB::table('exams')
-						->join('subjects', 'subject_id', '=', 'subjects.id')
-						->join('grades', 'grade_id', '=', 'grades.id')
-						->where('school_id', Auth::user()->school_id)
-						->select('exams.id as exam_id', 'exam', 'subject', 'subject_id', 'grade', 'grade_section', 'grade_id')
-						->orderBy('exam', 'asc')
-						->get());
-						
+			//Dashboard Academic Graph: Grade drop down list
+		
+			foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
+				$value = $v;
+			}
 			
-			$view ->with('gradelists', DB::table('subjects')
-						->join('grades', 'grade_id', '=', 'grades.id')
-						->where('school_id', Auth::user()->school_id)
-						->get());
-						
+			$view->with('schoolId', $value);   //sharing of school id across views
 			
-			$view ->with('grades', DB::table('grades')
-						->where('school_id', Auth::user()->school_id)
+			$view ->with('gradelists', DB::table('grades')
+						->where( 'school_id', '=', $value)
 						->get());
+			
+			$gradelists = DB::table('grades')->where( 'school_id', '=', $value)->get();
+						
+						
+			//Auth User School 
+			
+			$schools = School::find($value);
+			
+			//Student: All Student page - Dashboard page
+			$view ->with('students', $schools->students->flatten()->toArray());		
+					
+
+			//Staff: All Staff page- Classroom page
+   			$view ->with('staffs', $schools->users->flatten()->toArray());
+			
+			
+			
+			//All Subject lists from database
+			
+			$view->with('subjectDB', Subject::orderBy('subject', 'asc')->get());
+			
+			
+			//Subject: Create Exam Page- Create page
+			$subjectlists = array();
+			$examlists = array();
+			foreach($gradelists as $k=>$grade){
+				$subjectlists[] =	Grade::find($grade->id)->subjects->flatten()->toArray();
+				$examlists[] = Grade::find($grade->id)->exams->flatten()->toArray();		
+			}
+			
+			$view->with('subjectlists', $subjectlists);  //gives an array of all subjects of all grades of a school
+			$view->with('examlists', $examlists);       //gives an array of exams of all subjects of a grade of a school
+			
+			
+			
+			
+			
+			//User: Teacher list and their exams
+			$users = User::find(2);
+			$subjectUser123 = $users->subjects->lists('subject', 'id')->toArray();
+			$examlistUser = array();
+			foreach($subjectUser123 as $k=>$v){
+				$examsUser[] = Exam::find($k)->toArray();
+			}
+			$view->with('examsUser', $examsUser);
 		
 		
-			$view -> with('staffs', DB::table('users') 
-										-> where('school_id', Auth::user() -> school_id) 
-										-> orderBy('name') 
-										-> get());
 			
-			$view -> with('roles', Role::where('school_id', Auth::user() -> school_id) 
-										-> orderBy('role_name', 'asc') 
-										-> get());
-										
-					
-			$view ->with('students', DB::table('students') 
-						-> join('grades', 'grade_id', '=', 'grades.id') 
-						-> select('students.*' , 'grades.grade')
-						-> where('school_id', Auth::user() -> school_id) 
-						-> orderBy('student') 
-						-> get());
-					
-						
-			$view ->with('teacherlists', DB::table('marks')
-						->join('exams', 'exam_id', '=', 'exams.id')
-						->join('subjects', 'subject_id', '=', 'subjects.id') 
-						->join('gradeusers', 'subjects.grade_id', '=', 'gradeusers.grade_id')
-						->join('users', 'user_id', '=', 'users.id')
-						->select('user_id', 'name','subjects.grade_id','exam','subject','subject_id','exam_id' )
-						->get());
-// 
-			// $view->with('trial', DB::table('marks')
-				// ->join('students', 'student_id', '=', 'students.id')
-				// ->join('grades', 'grade_id', '=', 'grades.id')
-				// ->join('exams', 'exam_id', '=', 'exams.id')
-				// ->select('obt_marks', 'exam_id','exam', 'student_id')
-				// ->where('exam_id', 6)
-				// ->where('student_id', 45)
-				// ->get());
-				
-    
+			//Auth::User Data
+			
+			$addressesAU = Auth::user()->addresses->toArray();
+			
+			foreach($addressesAU as $k =>$addressesAuth){
+				$addressesAuthUser = $addressesAuth;
+				$view->with('addressAU', $addressesAuthUser);
+			}
+			
+			
+			
+			
+		
+		
+		
 		}
 	}
 

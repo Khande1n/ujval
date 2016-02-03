@@ -38,7 +38,43 @@ class ApiController extends Controller
 
    		return $jsonExams;
     }
+
 	
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function studentDropDown()
+    {
+        $gra_id = Input::get('gra_id');
+		
+		$studentdropdown = Grade::find($gra_id)->students->toArray();
+				
+		$jsonStudents = json_encode($studentdropdown);
+
+   		return $jsonStudents;
+    }
+	
+	
+	
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function examAverageChart()
+    {
+        $exam_id = Input::get('exam_id');
+		
+		$examAvg = Exam::find($exam_id)->marks->avg('obt_marks');
+		
+				
+		$jsonExamAvg = json_encode($examAvg);
+
+   		return $jsonExamAvg;
+    }	
+
 
     /**
      * Show the form for creating a new resource.

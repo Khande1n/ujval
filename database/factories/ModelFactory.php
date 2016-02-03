@@ -23,27 +23,22 @@
 $factory->define('App\School', function (Faker\Generator $faker) {
 	return [
 		'school' => $faker->company,
-		'sch_contact1' => $faker->phoneNumber,
-		'sch_contact2' => $faker->phoneNumber,
-		'sch_add1' => $faker->buildingNumber,
-		'sch_add2' => $faker->streetName,
-		'sch_street' => $faker->streetAddress,
-		'sch_pincode' => $faker->postcode,
-		'city' => $faker->city,
-		'state' => $faker->state,
-		'country' => $faker->country,
-			
+		'board' => $faker->randomElement($array = array ('CBSE', 'RAJ')),
 	];
 });
 
 
 $factory->define('App\Grade', function (Faker\Generator $faker) {
+	$schools = App\School::all()->lists('id')->toArray();
+	foreach(range(1,20) as $index){
 	return [
 		'grade' => $faker->randomElement($array = array ('I','II','III','IV','V','VI','VII','VIII')),
 		'grade_section' => $faker->randomElement($array = array ('A','B','C')),
-		'school_id' => $faker->numberBetween($min = 1, $max = 3)
+		'school_id' => $faker->randomElement($schools),
 	];
+	}
 });
+
 
 
 $factory->define('App\Subject', function (Faker\Generator $faker) {
@@ -56,30 +51,33 @@ $factory->define('App\Subject', function (Faker\Generator $faker) {
 													'Social Science',
 													'Physics',
 													'Chemistry',
-													'Biology',
-		)),
-		'grade_id' => $faker->numberBetween($min = 1, $max = 20)
-	];
+													'Biology'))	];
+	
 });
 
 
+
 $factory->define('App\Exam', function (Faker\Generator $faker) {
+	
 	return [
 		'exam' => $faker->randomElement($array = array ('FA I','FA II','SA I', 'FA III', 'FA IV', 'SA II')),
 		'exam_start' => $faker->date,
 		'exam_end' => $faker->date,
 		'max_marks' => $faker->numberBetween($min = 70, $max = 100),
 		'pass_marks' => $faker->numberBetween($min = 30, $max = 35),
-		'subject_id' => $faker->numberBetween($min = 1, $max = 20)
+		// 'subject_id' => $faker->numberBetween($min = 1, $max = 40),
 	];
+
 });
+
 
 
 $factory->define('App\Mark', function (Faker\Generator $faker) {
 	return [
 		'obt_marks' => $faker->numberBetween($min = 1, $max = 95),
-		'exam_id' => $faker->numberBetween($min = 1, $max = 6),
-		'student_id' => $faker->numberBetween($min = 1, $max = 50),
+		// 'exam_id' => $faker->numberBetween($min = 1, $max = 6),
+		// 'student_id' => $faker->numberBetween($min = 1, $max = 50),
+		
 	];
 });
   
@@ -87,19 +85,11 @@ $factory->define('App\Mark', function (Faker\Generator $faker) {
 $factory->define('App\User', function (Faker\Generator $faker) {
 	return [
 		'name' => $faker->name,
-  		'stf_bday' => $faker->date,
+		'password' => Hash::make('nikhil'),
+		'email' => $faker->safeemail,
+		'bday' => $faker->date,
   		'gender' => $faker->randomElement($array = array ('Male','Female')),
-  		'email' => $faker->safeemail,
-  		'stf_contact1' => $faker->phoneNumber,
-  		'role' => $faker->randomElement($array = array ('Subject Teacher','Class Teacher', 'Manager')),
-  		'stf_add1' => $faker->buildingNumber,
-		'stf_add2' => $faker->streetName,
-		'stf_street' => $faker->streetAddress,
-		'city' => $faker->randomElement($array = array ('Gurgaon')),
-		'state' => $faker->randomElement($array = array ('Haryana')),
-		'country' => $faker->randomElement($array = array ('India')),
-		'stf_pincode' => $faker->postcode,
-		'school_id' => $faker->numberBetween($min = 1, $max = 3),
+  		'guardian1' => $faker->name,
 	];
 });
 
@@ -107,45 +97,43 @@ $factory->define('App\User', function (Faker\Generator $faker) {
 $factory->define('App\Student', function (Faker\Generator $faker) {
 	return [
 		'student' => $faker->name,
+		'email' => $faker->safeemail,
         'bday' => $faker->date,
         'gender' => $faker->randomElement($array = array ('Male','Female')),
-        'email' => $faker->safeemail,
-        'contact11' => $faker->phoneNumber,
         'guardian1' => $faker->name,
-        'guardian2' => $faker->name,
         'parentemail' => $faker->safeemail,
-        'std_add1' => $faker->buildingNumber,
-		'std_add2' => $faker->streetName,
-		'std_street' => $faker->streetAddress,
-		'city' => $faker->randomElement($array = array ('Gurgaon')),
-		'state' => $faker->randomElement($array = array ('Haryana')),
-		'country' => $faker->randomElement($array = array ('India')),
-		'std_pincode' => $faker->postcode,
-		'grade_id' => $faker->numberBetween($min = 1, $max = 10),
+        
 	];
 });
 
 
 $factory->define('App\Attendance', function (Faker\Generator $faker) {
 	return [
-		'attendance' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
-		'student_id' => $faker->numberBetween($min = 1, $max = 50)
+		'attendance' => $faker->randomElement($array = array ('P','A')),
 	];
 });
 
 
-
-$factory->define('App\Gradeuser', function (Faker\Generator $faker) {
+$factory->define('App\Address', function (Faker\Generator $faker) {
 	return [
-		'grade_id' => $faker->numberBetween($min = 1, $max = 20),
-		'user_id' => $faker->numberBetween($min = 1, $max = 20),
-		'school_id' => $faker->numberBetween($min = 1, $max = 3),
+		'add1' => $faker->buildingNumber,
+		'add2' => $faker->streetName,
+		'street' => $faker->streetAddress,
+		'city' => $faker->randomElement($array = array ('Gurgaon')),
+		'state' => $faker->randomElement($array = array ('Haryana')),
+		'country' => $faker->randomElement($array = array ('India')),
+		'pincode' => $faker->postcode,
+		'guardian2' => $faker->name,
+        'contact11' => $faker->phonenumber,
+        'contact12' => $faker -> phonenumber,
+		// 'addressable_id' => $faker->numberBetween($min = 1, $max = 100),
+		// 'addressable_type' => $faker->randomElement($array = array ('User','School','Student')),
 	];
 });
 
-$factory->define('App\AttendanceUser', function (Faker\Generator $faker) {
+$factory->define('App\Role', function (Faker\Generator $faker) {
 	return [
-		'attendance' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
-		'user_id' => $faker->numberBetween($min = 1, $max = 20)
+		'role_name' => $faker->randomElement($array = array ('Subject Teacher','Class Teacher', 'Manager', 'Principal')),
 	];
 });
+

@@ -10,8 +10,8 @@
 
 					<div class="x-content-tabs">
                         <ul>
-                        	<li><a href="#role-tab" class="icon active"><span class="fa fa-tags"></span><span>Roles</span></a></li>
-                        	<li><a href="#grade-tab"><span class="fa fa-building-o"></span><span>Grade</span></a></li>
+                        	<!-- <li><a href="#role-tab" class="icon active"><span class="fa fa-tags"></span><span>Roles</span></a></li> -->
+                        	<li><a href="#grade-tab" class="icon active"><span class="fa fa-building-o"></span><span>Grade</span></a></li>
                         	<li><a href="#subject-tab"><span class="fa fa-book"></span><span>Subject</span></a></li>
                             <li><a href="#staff-tab"><span class="fa fa-user"></span>Staff</a></li>
                             <li><a href="#student-tab"><span class="fa fa-users"></span><span>Student</span></a></li>
@@ -28,7 +28,7 @@
 
 <!-- FIRST TAB -->
  
-@include('create.createRole')
+<!-- include('create.createRole') -->
       
                  
 <!-- SECOND TAB -->

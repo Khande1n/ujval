@@ -20,12 +20,12 @@ class CreateMarksTable extends Migration
         });
 		
 		Schema::table('marks', function (Blueprint $table) {
-            $table->integer('exam_id')->unsigned();
+			$table->integer('exam_id')->unsigned()->index();
 			$table->foreign('exam_id')->references('id')->on('exams');
-			$table->integer('student_id')->unsigned();
+			
+			$table->integer('student_id')->unsigned()->index();
 			$table->foreign('student_id')->references('id')->on('students');
         });
-
     }
 
     /**

@@ -140,7 +140,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        
+        PragmaRX\Tracker\Vendor\Laravel\ServiceProvider::class,
 	
 
         /*
@@ -234,6 +234,7 @@ return [
 		'Carbon'         => Carbon\Carbon::class,
 		'Debugbar'       => Barryvdh\Debugbar\Facade::class,
 		'Image'          => Intervention\Image\Facades\Image::class,
+		'Tracker'        => PragmaRX\Tracker\Vendor\Laravel\Facade::class,
 
     ],
 

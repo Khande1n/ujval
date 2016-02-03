@@ -45,6 +45,7 @@ class GradeController extends Controller
         	'school_id'     => $request->school_id,
         ]);
 		
+
 		return redirect('principal/create#grade-tab')->withInput();
     }
 

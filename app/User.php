@@ -29,8 +29,8 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $fillable = ['name', 'email', 'password','password_confirmation', 
-    						'role', 'stf_bday', 'gender', 'stf_guardian1', 'stf_contact1', 
-    						'stf_contact2', 'stf_add1', 'stf_add2', 'stf_street', 'stf_pincode', 'school_id'];
+    						'bday', 'gender', 'guardian1'];
+
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -40,20 +40,74 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
 
 
+
+	public function getIsAdminAttribute()
+	{
+    return true;
+	}
+
+	
 	/**
-     * Get the user which belongs to the school.
+     * Get all of the student's address.
+     */
+    public function addresses()
+    {
+        return $this->morphMany('App\Address', 'addressable');
+    }
+		
+	
+    /**
+     * Get all of the user's attendances.
+     */
+    public function attendances()
+    {
+        return $this->morphMany('App\Attendance', 'present');
+    }	
+	
+	
+	/**
+     * Get the user of the school.
      */
     public function schools()
     {
-        return $this->belongsTo('App\School');
+        return $this->morphToMany('App\School', 'schoolable');
+    }
+	
+	
+	/**
+     * User belongs to subjects.
+     */
+    public function subjects()
+    {
+        return $this->belongsToMany('App\Subject');
+    }
+	
+		
+	/**
+     * User has many through exams.
+     */
+    public function exams()
+    {
+        return $this->hasManyThrough('App\Exam');
+    }
+	
+		
+	/**
+     * User belongs to grades.
+     */
+    public function grades()
+    {
+        return $this->morphToMany('App\Grade', 'gradeable');
     }
 	
 			
 	/**
-     * Get the the attendances of the staff.
+     * Get the roles of the user.
      */
-    public function attendanceusers()
+    public function roles()
     {
-        return $this->hasMany('App\AttendanceUser');
+        return $this->belongsToMany('App\Role');
     }
+		
+	
 }

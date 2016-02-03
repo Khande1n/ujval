@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use App\Student;
+
 
 class Student extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -30,7 +30,25 @@ class Student extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['student', 'rollNumber', 'email', 'password', 'bday', 'gender', 'password_confirmation', 'guardian1', 'guardian2', 'parentemail', 'contact11', 'contact12', 'std_add1', 'std_add2', 'std_street', 'std_pincode', 'grade_id'];
+    protected $fillable = ['student', 'rollNumber', 'email', 'password', 'password_confirmation', 'bday', 'gender', 'guardian1', 'parentemail'];
+	
+	
+	/**
+     * Get all of the student's attendances.
+     */
+    public function attendances()
+    {
+        return $this->morphMany('App\Attendance', 'present');
+    }
+
+	
+	/**
+     * Get all of the student's address.
+     */
+    public function addresses()
+    {
+        return $this->morphMany('App\Address', 'addressable');
+    }
 	
 	
 	/**
@@ -39,30 +57,40 @@ class Student extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-		
+
+	
+	/**
+     * Students belongs to many schools.
+     */
+    public function schools()
+    {
+        return $this->morphToMany('App\School', 'schoolable');
+    }
+							
 	
 	/**
      * Students belongs to a grade.
      */
     public function grades()
     {
-        return $this->belongsTo('App\Grade');
+        return $this->morphToMany('App\Grade', 'gradeable');
     }
 	
-		
-	/**
-     * Get the the attendances of the student.
-     */
-    public function attendances()
-    {
-        return $this->hasMany('App\Attendance');
-    }
-	
-	/**
-     * Get the the marks of the student.
+    /**
+     * Get all of the student's marks.
      */
     public function marks()
     {
         return $this->hasMany('App\Mark');
+    }		
+
+	
+	/**
+     * Student has many through exams.
+     */
+    public function exams()
+    {
+        return $this->hasManyThrough('App\Exam', 'App\Subject');
     }
+
 }

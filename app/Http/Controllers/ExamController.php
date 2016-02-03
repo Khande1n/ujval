@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use \Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CreateExamRequest;
@@ -40,15 +41,19 @@ class ExamController extends Controller
      */
     public function store(CreateExamRequest $request)
     {
-        
-		$exam  = Exam::create([
-		'exam'        => strtoupper($request->exam),
-		'exam_start'  => $request->exam_start,
-		'exam_end'    => $request->exam_end,
-		'max_marks'   => $request->max_marks,
-		'pass_marks'  => $request->pass_marks,
-		'subject_id'  => $request->subject_id,
-		]);
+    	
+        foreach($request->subject_id as $k=>$v){
+			$exams  = Exam::create([
+				'exam'        => strtoupper($request->exam),
+				'exam_start'  => $request->exam_start,
+				'exam_end'    => $request->exam_end,
+				'max_marks'   => $request->max_marks,
+				'pass_marks'  => $request->pass_marks,
+				'subject_id'  => $v,
+			]);
+			
+			$exams->grades()->sync($request->input('grade_id'));
+		}
 
 		return redirect('principal/create#exam-tab')->withInput();
     }
@@ -84,7 +89,10 @@ class ExamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    	$exams = Exam::find($request->exam);
+        $exams->grades()->sync($request->input('grade_id'));
+		
+		return redirect('principal/create#exam-tab')->withInput();
     }
 
     /**

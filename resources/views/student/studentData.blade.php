@@ -31,7 +31,7 @@
 							<div class="form-group">
 								<label class="col-md-3 control-label">Contact:</label>
 								<div class="col-md-9">
-									<input type="number" class="form-control" value="{{ $studentData->contact11 }}" disabled/>
+									<input type="number" class="form-control" value="{{ $studentAdd[0]['contact11'] }}" disabled/>
 								</div>
 							</div>
 						</div>
@@ -42,16 +42,16 @@
 									<input type="text" class="form-control" value="{{ $studentData->gender }}" disabled/>
 								</div>
 							</div>
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label class="col-md-3 control-label">Class:</label>
 								<div class="col-md-9">
 									<input type="text" class="mask_ssn form-control" value="{{ $studentData->grade_id }}" disabled/>
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<label class="col-md-3 control-label">Guardian:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" value="{{ $studentData->guardian1 }}" disabled/>
+									<input type="text" class="form-control" value="{{ $studentData['guardian1'] }}" disabled/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -141,17 +141,15 @@
 						<div class="pull-right">
 							<div class="btn-group">
 								<ul class="nav nav-pills  acad">
-
-									@foreach($examlists as $examlist)
-									@if ( $examlist->grade_id == $studentData->grade_id)
+									@foreach($examlists as $key => $value)
+									@foreach($value as $k =>$examlist)
 									<button class="btn btn-default">
 										<li>
-											<a href="#" data-examId='{{ $examlist->id }}'>{{ $examlist->exam }}</a>
+											<a href="#" data-examId='{{ $examlist['id'] }}'>{{ $examlist['exam'] }}</a>
 										</li>
 									</button>
-									@endif
 									@endforeach
-
+									@endforeach
 								</ul>
 							</div>
 							<button class="btn btn-default">
@@ -259,7 +257,7 @@
 
 	console.log('Three');
 	// Request initial data for the past 7 days:
-	requestData({{ $examlist->id }}, chart);
+	requestData(1, chart);
 
 	console.log('Four');
 

@@ -15,32 +15,18 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
 			$table->string('rollNumber');
-			$table->string('student');
+			$table->string('student')->index();
 			$table->string('email')->unique();
             $table->string('password', 60);
             $table->rememberToken();
 			$table->date('bday');
 			$table->string('gender');
 			$table->string('guardian1');
-			$table->string('guardian2')->nullable();
 			$table->string('parentemail');
-			$table->bigInteger('contact11')->notnull();
-			$table->bigInteger('contact12')->nullable();
-			$table->string('std_add1');
-			$table->string('std_add2')->nullable();
-			$table->string('std_street');
-			$table->string('city')->default('Gurgaon');
-			$table->string('state')->default('Haryana');
-			$table->string('country')->default('India');
-			$table->string('std_pincode');
 			$table->timestamps();
         });
 		
-		    Schema::table('students', function (Blueprint $table) {
-			$table->integer('grade_id')->unsigned();
-			$table->foreign('grade_id')->references('id')->on('grades');
-			
-        });
+
 
     }
 
@@ -53,6 +39,8 @@ class CreateStudentsTable extends Migration
     {
      	DB::statement('SET FOREIGN_KEY_CHECKS = 0');
     	Schema::dropIfExists('students');
+		Schema::dropIfExists('grade_student');
+		Schema::dropIfExists('school_student');
     	DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

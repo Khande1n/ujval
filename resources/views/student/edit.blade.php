@@ -7,6 +7,7 @@
 @section('content')
 
 <div>
+	
 	<div class="panel panel-default">
 		<!-- Default panel contents -->
 		<div class="panel-heading">
@@ -15,7 +16,7 @@
 
 		<div class="panel-body"></div>
 
-		{!! Form::model($studentData, ['route' => ['student.update', $studentData->id],
+		{!! Form::model($studentData , ['route' => ['student.update', $studentData->id],
 		'method' => 'PATCH',
 		'class' => 'form',
 		]) !!}
@@ -37,34 +38,51 @@
 				{!! Form::text('parentemail', null, ['class' => 'form-control']) !!}
 			</div>
 
+			<div class="panel panel-default">
+				<div class="pull-right">
+					<div class="form-group col-md-6">
+
+					{!! Form::submit('Update Student Details', array('class'=>'btn btn-lg btn-primary')) !!}
+
+					</div>
+				</div>
+			</div>
+			
+			{!! Form::close() !!}
+			
+			{!! Form::model($addressData , ['route' => ['address.update', $addressData['id']],
+				'method' => 'PATCH',
+				'class' => 'form',
+			]) !!}
+			
 			<div class="form-group col-md-6">
 				{!! Form::label('contact11', 'Primary Contact Number') !!}
 				{!! Form::text('contact11', null, ['class' => 'form-control', 'maxlength' => '10']) !!}
 			</div>
-
+			
 			<div class="form-group col-md-6">
 				{!! Form::label('contact12', 'Secondary Contact Number') !!}
 				{!! Form::text('contact12', null, ['class' => 'form-control', 'maxlength' => '10']) !!}
 			</div>
 
 			<div class="form-group col-md-6">
-				{!! Form::label('std_add1', 'Address Line 1') !!}
-				{!! Form::text('std_add1', null, ['class' => 'form-control']) !!}
+				{!! Form::label('add1', 'Address Line 1') !!}
+				{!! Form::text('add1', null, ['class' => 'form-control']) !!}
 			</div>
 
 			<div class="form-group col-md-6">
-				{!! Form::label('std_add2', 'Address Line 2') !!}
-				{!! Form::text('std_add2', null, ['class' => 'form-control']) !!}
+				{!! Form::label('add2', 'Address Line 2') !!}
+				{!! Form::text('add2', null, ['class' => 'form-control']) !!}
 			</div>
 
 			<div class="form-group col-md-6">
-				{!! Form::label('std_street', 'Street') !!}
-				{!! Form::text('std_street', null, ['class' => 'form-control']) !!}
+				{!! Form::label('street', 'Street') !!}
+				{!! Form::text('street', null, ['class' => 'form-control']) !!}
 			</div>
 
 			<div class="form-group col-md-6">
-				{!! Form::label('std_pincode', 'Pincode') !!}
-				{!! Form::text('std_pincode', null, ['class' => 'form-control']) !!}
+				{!! Form::label('pincode', 'Pincode') !!}
+				{!! Form::text('pincode', null, ['class' => 'form-control']) !!}
 			</div>
 		</div>
 

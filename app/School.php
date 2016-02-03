@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\School;
+
 
 class School extends Model
 {
@@ -21,22 +21,50 @@ class School extends Model
      *
      * @var array
      */
-    protected $fillable = ['school', 'sch_contact1', 'sch_contact2', 'sch_add1', 'sch_add2', 'sch_street', 'sch_pincode', 'city', 'state', 'country'];	
+    protected $fillable = ['school'];	
 	
 	
 	/**
-     * School has many staffs.
+     * School belongs many staffs.
      */
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->morphedByMany('App\User', 'schoolable');
     }
+	
+		
+	/**
+     * School belongs many students.
+     */
+    public function students()
+    {
+        return $this->morphedByMany('App\Student',  'schoolable');
+    }
+	
 	
 	/**
      * School has many grades.
      */
     public function grades()
     {
-        return $this->hasMany('App\Grades');
+        return $this->hasMany('App\Grade');
+    }
+	
+	
+	/**
+     * Get all of the student's address.
+     */
+    public function addresses()
+    {
+        return $this->morphMany('App\Address', 'addressable');
+    }
+	
+		
+	/**
+     * School has many through subjects.
+     */
+    public function subjects()
+    {
+        return $this->hasManyThrough('App\Subject');
     }
 }

@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
         <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
         
+        <!-- SELECT TAGS -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+
         <!-- END META SECTION -->
         
         <!-- CSS INCLUDE -->        
@@ -67,15 +70,30 @@
         <script type="text/javascript" src="{{asset('js/plugins/summernote/summernote.js')}}"></script>    
         <!-- END THIS PAGE PLUGINS-->  
         
+        
+		<!-- TAG SELECT -->
+      	<!-- <script src="http://code.jquery.com/jquery.js"></script> -->
+      	<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+    	<!-- END TAG SCRIPTS --> 
+    
+    	@yield('selectscript') 
+    	@yield('createuserscript')
+    	@yield('createstudentscript')
+    	@yield('createExamScript')
+    	@yield('selectMarkScript')
+ 
+    	<!-- GRAPH ATTENDANCE SCRIPT -->
+    	@yield('graphscript')     
+    	<!-- GRAPH ATTENDANCE SCRIPT --> 
+        
    
         <!-- START TEMPLATE -->
         <script type="text/javascript" src="{{asset('js/settings.js')}}"></script>
-        
         <script type="text/javascript" src="{{asset('js/plugins.js')}}"></script>        
-        <script type="text/javascript" src="{{asset('js/actions.js')}}"></script>        
+        <script type="text/javascript" src="{{asset('js/actions.js')}}"></script> 
+        <script type="text/javascript" src="{{asset('js/demo_charts_morris.js')}}"></script>       
         <!-- END TEMPLATE -->
-        
-     
+
         <script>
             $(function(){
                 //Spinner
@@ -96,15 +114,6 @@
     			$(this).parent().parent().prev().html($(this).html() + '<span class="caret"></span>');    
 			});
         </script>
-
-    <!-- END SCRIPTS --> 
-    
-    
-    <!-- GRAPH ATTENDANCE SCRIPT -->
-    
-    @yield('graphscript')     
-    
-    <!-- GRAPH ATTENDANCE SCRIPT --> 
                         
     </body>
 </html>

@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Address;
 
 class AuthController extends Controller
 {
@@ -40,6 +41,7 @@ class AuthController extends Controller
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
+	 * 
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -60,12 +62,20 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $users = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'school_id' => $data['school_id'],
         ]);
+		
+		$users->schools()->attach($data['school_id']);
+		
+		$address = Address::create(['contact11'=> $data['contact11']]);
+		$users->addresses()->save($address);
+		
+		return $users;
+		
     }
 	
 	/**

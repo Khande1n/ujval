@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Mark;
+
 
 class Mark extends Model
 {
@@ -21,24 +21,24 @@ class Mark extends Model
      *
      * @var array
      */
-    protected $fillable = ['obt_marks', 'student_id', 'exam_id'];
+    protected $fillable = ['obt_marks'];
 
-	
+
 	/**
-     * Marks belongs to a exam.
-     */
-    public function exams()
-    {
-        return $this->belongsToMany('App\Exam');
-    }
-	
-		
-	/**
-     * Marks belongs to a student.
+     * Get all of the marks of the student.
      */
     public function students()
     {
-        return $this->belongsToMany('App\Student');
+        return $this->belongsTo('App\Student');
     }
-
+	
+	/**
+     * Get all of the owning marks of the exam.
+     */
+    public function exams()
+    {
+        return $this->belongsTo('App\Exam');
+    }
+	
+	
 }

@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\Exam;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model
@@ -24,23 +22,30 @@ class Exam extends Model
      */
     protected $fillable = ['exam', 'exam_start', 'exam_end', 'max_marks', 'pass_marks', 'subject_id'];
 	
+			
+	/**
+     * Exam belongs to grades.
+     */
+    public function grades()
+    {
+        return $this->morphToMany('App\Grade', 'gradeable');
+    }
+	
 		
 	/**
      * Exam belongs to a subject.
      */
     public function subjects()
     {
-        return $this->belongsToMany('App\Subject');
+        return $this->belongsTo('App\Subject');
     }
 	
-	
-	/**
-     * Exam has many marks.
+    /**
+     * Get all of the exam's marks.
      */
     public function marks()
     {
         return $this->hasMany('App\Mark');
-    }
-		
+    }		
 	
 }

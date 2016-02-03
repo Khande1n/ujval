@@ -46,8 +46,10 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('api/student/attendance', 'DashboardController@studentAttendance');
 	Route::get('api/staff/marks', 'DashboardController@staffMarks');
 	Route::get('api/staff/attendance', 'DashboardController@staffAttendance');
+	Route::get('api/student-dropdown', 'ApiController@studentDropDown');
+	Route::get('api/subject/exams/average', 'ApiController@examAverageChart');
 	
-
+	
 	// PRINCIPAL CREATE ROUTES
 
 	Route::get('principal/create', function() {
@@ -56,18 +58,21 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('principal/create#staff-tab', 'TeacherController@create');
 	Route::post('principal/create/staff', 'TeacherController@store');
+	Route::post('principal/update/staff/{id}', 'TeacherController@assignSubject');
 
 	Route::get('principal/create#student-tab', 'StudentController@create');
 	Route::post('principal/create/student', 'StudentController@store');
 
 	Route::get('principal/create#exam-tab', 'ExamController@create');
 	Route::post('principal/create/exam', 'ExamController@store');
-
+	Route::post('principal/update/exam/{id}', 'ExamController@update');
+	
 	Route::get('principal/create#role-tab', 'RoleController@create');
 	Route::post('principal/create/role', 'RoleController@store');
 
 	Route::get('principal/create#subject-tab', 'SubjectController@create');
 	Route::post('principal/create/subject', 'SubjectController@store');
+	Route::post('principal/update/subject/{id}', 'SubjectController@update');
 
 	Route::get('principal/create#mark-tab', 'MarkController@create');
 	Route::post('principal/create/mark', 'MarkController@store');
@@ -83,11 +88,23 @@ Route::group(['middleware' => 'auth'], function() {
 	// STUDENT ROUTES
 
 	Route::resource('student', 'StudentController');
+	
+	// ATTENDANCE ROUTES
 
+	Route::resource('attendance', 'AttendanceController');
+
+	// ADDRESS ROUTES
+
+	Route::resource('address', 'AddressController');
+	
 
 	// BASIC FUNCTIONS ROUTE
 
 	Route::get('principal/classroom', 'ClassController@classroom');
+	
+	Route::get('principal/attendance', function() {
+		return view('principal/attendance');
+	});
 
 	Route::get('principal/chat', function() {
 		return view('principal/chat');

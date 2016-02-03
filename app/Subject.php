@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Subject;
 
 class Subject extends Model
 {
@@ -21,18 +20,34 @@ class Subject extends Model
      *
      * @var array
      */
-    protected $fillable = ['subject', 'grade_id'];
+    protected $fillable = ['subject'];
 		
 		
 	/**
-     * A student has many guardian.
+     * Get all the subjects of the grades.
      */
     public function grades()
     {
-        return $this->belongsToMany('App\Grade');
+        return $this->morphToMany('App\Grade', 'gradeable');
     }
 	
-				
+	/**
+     * Get all the marks of the subject.
+     */
+    public function marks()
+    {
+        return $this->hasManyThrough('App\Mark', 'App\Exam');
+    }
+			
+		
+	/**
+     * Get all the tutors of the subject.
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
+			
 	/**
      * Subject has many exam.
      */
@@ -40,5 +55,6 @@ class Subject extends Model
     {
         return $this->hasMany('App\Exam');
     }
-		
+
+	
 }

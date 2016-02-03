@@ -29,9 +29,9 @@ class CreateStudentRequest extends Request
         	'email' => 'required|unique:students|email',
         	'bday' => 'required|date',
         	'guardian1' => 'string',
-        	'parentemail' => 'required|email',
-        	'contact11' => 'required|integer|digits:10',
-       		'std_pincode' => 'required|integer'
+        	// 'parentemail' => 'required|email',
+        	// 'contact11' => 'required|integer|digits:10',
+       		// 'std_pincode' => 'required|integer'
         ];
     }
 }

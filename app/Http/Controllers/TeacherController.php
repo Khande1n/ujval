@@ -8,6 +8,10 @@ use App\Http\Requests\CreateStaffRequest;
 use Illuminate\Http\Request;
 use Session;
 use App\User;
+use Auth;
+use App\School;
+use App\Subject;
+use App\Address;
 use DB;
 
 class TeacherController extends Controller
@@ -19,16 +23,14 @@ class TeacherController extends Controller
      */
     public function index()
     {
-		$staffs = User::paginate(10);
-
-   		$count =  DB::table('users')
-   					->where('school_id', Auth::user()->school_id)->count();
-
-  		if (session()->has('message')){
-      		Session::flash('noResults', 'Sorry, we found 0 results');
-   		}
+		foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
+				$value = $v;
+		}
 		
-   		return view('staff.index', compact('staffs', 'count'));
+		$schools = School::find($value);
+   		$staffs =  $schools->users->flatten()->toArray();
+	
+   		return view('staff.index', compact('staffs'));
 	}
 
     /**
@@ -45,26 +47,29 @@ class TeacherController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  CreateStaffRequest $request
+	 * 
      * @return \Illuminate\Http\Response
      */
     public function store(CreateStaffRequest $request)
     {
-			
-  		$staff = User::create
+		$staff = User::create
   		([
   		'name'         => ucwords($request->name),
-  		'stf_bday'     => $request->stf_bday,
+  		'bday'     => $request->bday,
   		'gender'       => $request->gender,
   		'email'        => $request->email,
-  		'stf_contact1' => $request->stf_contact1,
-  		'role'         => ucwords($request->role),
-  		'stf_add1'     => ucwords($request->stf_add1),
-		'stf_add2'     => ucwords($request->stf_add2),
-		'stf_street'   => ucwords($request->stf_street),
-		'stf_pincode'  => $request->stf_pincode,
-		'password'     => bcrypt($request->password),
-		'school_id'    => $request->school_id,
+  		'password'     => bcrypt($request->password),
 		]);
+		
+		$address = Address::create(['contact11'=>$request->contact11]);
+		$staff->addresses()->save($address);
+		
+		
+		foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
+				$value = $v;
+			}
+		$school = School::find($value);
+		$staff->schools()->attach($school);
 		
 		return redirect('principal/create#staff-tab')->withInput();
        		
@@ -79,8 +84,10 @@ class TeacherController extends Controller
     public function show($id)
     {
 		$staffData = User::findOrFail($id);
+		
+		$staffAddress = $staffData->addresses->toArray();
 
-		return view('staff.show', compact('staffData'));
+		return view('staff.show', compact('staffData', 'staffAddress'));
 	}
 
     /**
@@ -92,7 +99,16 @@ class TeacherController extends Controller
     public function edit($id)
     {
 		$staffData = User::findOrFail($id);
-		return view('staff.edit', compact('staffData'));
+		
+		$staffAddresses = $staffData->addresses->toArray();
+		
+		foreach($staffAddresses as $key => $value){
+			$staffAddress = $value;
+		}
+		
+		$addressStaff = Address::findOrFail($staffAddress['id']);
+		
+		return view('staff.edit', compact('staffData', 'addressStaff'));
 	}
 
     /**
@@ -104,35 +120,55 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-		$this -> validate($request, [
-			'name' => 'required|string',
-			'stf_guardian1' => 'required|string',
-			'email' => 'required|email',
-			'stf_contact1' => 'required|integer|min:1000000000|max:9999999999',
-			'stf_contact2' => 'integer|max:9999999999',
-			'stf_pincode' => 'required|integer',
-		 ]);
-
-		$staffData = User::findOrFail($id);
+    	$staffData = User::findOrFail($id);
 		
-		$staffData -> update([
-			'name'           => ucwords($request->name),
-			'email'          => $request->email,
-			'stf_bday'       => $request->stf_bday,
-			'role'           => ucwords($request->role),
-			'stf_guardian1'  => ucwords($request->stf_guardian1),
-			'stf_contact1'   => $request->stf_contact1,
-			'stf_contact2'   => $request->stf_contact2,
-			'stf_add1'       => ucwords($request->stf_add1),
-			'stf_add2'       => ucwords($request->stf_add2),
-			'stf_street'     => ucwords($request->stf_street),
-			'stf_pincode'    => $request->stf_pincode,
+		if(isset($request->name)){ 
+			$staffData->update([
+				'name' => $request->name,
+				'email' => $request->email,
+				'bday' => $request->bday,
+			]);
+		
+		}
+		
+		$staffAddresses = $staffData->addresses->flatten()->toArray();
+		foreach($staffAddresses as $key => $value){
+			$staffAddress = $value;
+		}
+		
+		$addressData = Address::findOrFail($staffAddress['id']);
+		$addressData->update([
+			'contact11' => $request->contact11,
+			'contact12' => $request->contact12,
+			'add1' => $request->add1,
+			'add2' => $request->add2,
+			'street' => $request->street,
+			'pincode' => $request->pincode
 		]);
 		
-
+		
 		return Redirect::route('staff.show', ['staff' => $staffData]);
 	}
 
+	/**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function assignSubject(Request $request, $id)
+    {
+    	$staffData = User::findOrFail($request->name);
+		
+		foreach($request->subjectCreate as $k=>$v){
+			$subjects = Subject::find($v);
+			$staffData->subjects()->attach($subjects);
+		}
+		
+		return Redirect::route('staff.show', ['staff' => $staffData]);
+	}
+	
     /**
      * Remove the specified resource from storage.
      *

@@ -9,6 +9,9 @@ use App\Http\Requests\CreateStudentRequest;
 use Session;
 use App\Student;
 use App\Attendance;
+use App\Address;
+use App\Grade;
+use App\School;
 use Auth;
 use DB;
 
@@ -23,19 +26,17 @@ class StudentController extends Controller
 	 */
 	public function index() 
 	{
-		$studentData = DB::table('students')
-						->where('school_id', Auth::user()->school_id)
-						->get();
-
-   		$count =  DB::table('students')
-   					->join('grades', 'grade_id', '=', 'grades.id') 
-   					->where('school_id', Auth::user()->school_id)->count();
+		foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
+				$value = $v;
+		}
+		
+   		$countStudent =  School::where('id', '=', $value)->students->count();
 
   		if (session()->has('message')){
       		Session::flash('noResults', 'Sorry, we found 0 results');
    		}
 		
-   		return view('student.index', compact('studentData', 'count'));
+   		return view('student.index', compact('countStudent'));
 	}
 
 	/**
@@ -56,23 +57,29 @@ class StudentController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(CreateStudentRequest $request) 
-	{
+	{ 
 		$student = Student::create([
 			'student'     	=> ucwords($request -> student), 
 			'bday' 			=> $request -> bday, 
 			'gender' 		=> $request -> gender, 
-			'email' 		=> $request -> email, 
-			'contact11' 	=> $request -> contact11, 
-			'guardian1' 	=> ucwords($request -> guardian1), 
-			'guardian2' 	=> ucwords($request -> guardian2), 
-			'parentemail' 	=> $request -> parentemail, 
-			'std_add1' 		=> ucwords($request -> std_add1), 
-			'std_add2' 		=> ucwords($request -> std_add2), 
-			'std_street' 	=> ucwords($request -> std_street), 
-			'std_pincode' 	=> $request -> std_pincode, 
-			'grade_id' 		=> $request -> grade_id, 
-			'password' 		=> bcrypt($request -> password), ]);
-
+			'email' 		=> $request -> email,  
+			]);
+		
+		$address = Address::create(['contact11'=>$request->contact11]);
+		$student->addresses()->save($address);
+		
+		
+		foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
+				$value = $v;
+			}
+		$school = School::find($value);
+		$grade = Grade::find($request->grade_id);
+		
+		
+		$student->schools()->attach($school);
+		$student->grades()->attach($grade);
+		
+		
 		return redirect('principal/create#student-tab') -> withInput();
 	}
 
@@ -86,8 +93,18 @@ class StudentController extends Controller
 	public function show($id) 
 	{
 		$studentData = Student::findOrFail($id);
-
-		return view('student.show', compact('studentData'));
+		$studentAdd = $studentData->addresses->flatten()->toArray();
+		
+		
+		$studentGradeId = $studentData->grades->lists('id')->flatten()->toArray();
+		foreach($studentGradeId as $key => $values){
+			$gradeId = $values;
+		}
+		
+		$studentGrades = Grade::find($gradeId);
+		$examlists = $studentGrades->exams->flatten()->toArray();
+		
+		return view('student.show', compact('studentData', 'examlists', 'studentAdd'));
 	}
 
 
@@ -100,7 +117,15 @@ class StudentController extends Controller
 	public function edit($id) 
 	{
 		$studentData = Student::findOrFail($id);
-		return view('student.edit', compact('studentData'));
+		$studentAdds = $studentData->addresses->flatten()->toArray();
+		
+		foreach($studentAdds as $key => $value){
+			$studentAdd = $value;
+		}
+		
+		$addressData = Address::findOrFail($studentAdd['id']);
+		
+		return view('student.edit', compact('studentData', 'studentAdd', 'addressData'));
 	}
 
 	/**
@@ -113,29 +138,26 @@ class StudentController extends Controller
 	public function update(Request $request, $id) 
 	{
 		$this -> validate($request, [
-			'student' => 'required|string',
-			'email' => 'required|email',
-			'parentemail' => 'required|email',
-			'contact11' => 'required|integer|min:1000000000|max:9999999999',
-			'contact12' => 'integer|max:9999999999',
-			'std_pincode' => 'required|integer',
+			'student' => 'string',
+			'email' => 'email',
+			'parentemail' => 'email',
 		 ]);
 
 		$studentData = Student::findOrFail($id);
+		$studentAdds = $studentData->addresses->flatten()->toArray();
+		
+		foreach($studentAdds as $key => $value){
+			$studentAdd = $value;
+		} 
+		
+		$addressData = Address::findOrFail($studentAdd['id']);
 		
 		$studentData -> update([
 			'student'     => ucwords($request->student),
 			'email'       => $request->email,
 			'parentemail' => $request->parentemail,
-			'contact11'   => $request->contact11,
-			'contact12'   => $request->contact12,
-			'std_add1'    => ucwords($request->std_add1),
-			'std_add2'    => ucwords($request->std_add2),
-			'std_street'  => ucwords($request->std_street),
-			'std_pincode' => $request->std_pincode,
 		]);
 		
-
 		return Redirect::route('student.show', ['student' => $studentData]);
 	}
 

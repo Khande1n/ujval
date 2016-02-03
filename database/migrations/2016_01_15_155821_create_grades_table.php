@@ -19,12 +19,12 @@ class CreateGradesTable extends Migration
 			$table->timestamps();	
         });
 		
-		    Schema::table('grades', function (Blueprint $table) {	
-			$table->integer('school_id')->unsigned();
+		Schema::table('grades', function (Blueprint $table) {	
+			$table->integer('school_id')->unsigned()->index();
 			$table->foreign('school_id')->references('id')->on('schools');
         });
-
 		
+
     }
 	
     /**

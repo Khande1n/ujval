@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Subject;
+use Input;
+
 
 class SubjectController extends Controller
 {
@@ -38,11 +40,11 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        $subjects = Subject::create
-        ([
-        	'subject' 	=> $request->subject,
-        	'grade_id' 	=> $request->grade_id,
-        ]);
+    	
+    	$subjects = Subject::create([
+    		'subject' => ucwords($request->subjectCreate)]);
+			
+		
 		
 		return redirect('principal/create#subject-tab')->withInput();
     }
@@ -73,12 +75,17 @@ class SubjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  array $grade_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $grade_id)
     {
-        //
+    	
+    		
+    	$subjects = Subject::find($request->subject);
+    	$subjects->grades()->sync($request->input('grade_id'));
+		
+		return redirect('principal/create#subject-tab')->withInput();
     }
 
     /**

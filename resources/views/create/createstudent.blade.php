@@ -16,24 +16,16 @@
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">Name</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" value="" name="student" placeholder="Student Name" required>
+						<div class="col-md-3">
+							<select class="form-control js-example-basic-single" name="student" id="studentCreate" placeholder="Student Name">
+								@foreach($students as $k=>$student)
+								<option value="{{ $student['id'] }}">{{ $student['student'] }}</option>
+								@endforeach
+							</select>
 						</div>
 					</div>
 
 					<!-- FORM FIELD 2 -->
-
-					<div class="form-group">
-						<label class="col-md-3 control-label">Birthday</label>
-						<div class="col-md-5">
-							<div class="input-group">
-								<input type="text" id="dp-4" class="form-control datepicker" name="bday" value="2016-01-01" required>
-								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-							</div>
-						</div>
-					</div>
-
-					<!-- FORM FIELD 3 -->
 
 					<div class="form-group">
 						<label class="col-md-3 control-label" name="gender">Gender</label>
@@ -45,54 +37,70 @@
 						</div>
 					</div>
 
+					<!-- FORM FIELD 3 -->
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label">Birthday</label>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input type="text" id="dp-4" class="form-control datepicker" name="bday" value="2016-01-01" required>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+					</div>
+
 					<!-- FORM FIELD 4 -->
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">Email</label>
-						<div class="col-md-5">
-							<input type="email" class="form-control" value="" name="email" placeholder="Enter your valid email id" required>
+						<div class="col-md-3">
+							<input type="email" class="form-control" name="email" placeholder="Enter your valid email id" required>
 						</div>
 					</div>
 
 					<!-- FORM FIELD 5 -->
-
-					<div class="form-group">
-						<label class="col-md-3 control-label">Contact</label>
-						<div class="col-md-5">
-							<input type="text" class="form-control" name="contact11" value="" maxlength="10" placeholder="Enter your 10 digit mobile number" required>
-						</div>
-					</div>
-
-					<!-- FORM FIELD 6 -->
-
-					<div class="form-group">
+					
+					<!-- <div class="form-group">
 						<label class="col-md-3 control-label">Father Name</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" name="guardian1" value="" placeholder="Father's Name">
 						</div>
-					</div>
-
-					<!-- FORM FIELD 7 -->
+					</div> -->
+					
+					<!-- FORM FIELD 6 -->
 
 					<div class="form-group">
+						<label class="col-md-3 control-label">Assign Class</label>
+						<div class="col-md-3">
+							<select class="form-control js-example-basic-single" name="grade_id" id="gradeSelect" placeholder="Select Grade">
+								@foreach($gradelists as $grade)
+								<option value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					
+					<!-- FORM FIELD 7 -->
+
+					<!-- <div class="form-group">
 						<label class="col-md-3 control-label">Mother Name</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" name="guardian2" value="" placeholder="Mother's Name">
 						</div>
-					</div>
+					</div> -->
 
 					<!-- FORM FIELD 8 -->
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-md-3 control-label" name="parentemail">Parent's Email</label>
 						<div class="col-md-5">
 							<input type="email" class="form-control" name="parentemail" value="" placeholder="Enter parent's valid email id">
 						</div>
-					</div>
+					</div> -->
 
 					<!-- FORM FIELD 9 -->
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-md-3 control-label">Address</label>
 						<div class="col-md-5">
 							<input type="text" class="form-control" value="" name="std_add1" placeholder="Address Line 1">
@@ -100,21 +108,17 @@
 							<input type="text" class="form-control" value=""name="std_street" placeholder="Street">
 							<input type="number" class="form-control" value="" name="std_pincode" placeholder="Pincode">
 						</div>
-					</div>
+					</div> -->
 
 					<!-- FORM FIELD 2 -->
-
+					
 					<div class="form-group">
-						<label class="col-md-3 control-label">Assign Class</label>
-						<div class="col-md-2">
-							<select class="form-control select" name="grade_id" id="grade_id">
-								@foreach($gradelists as $grade)
-								<option value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
-								@endforeach
-							</select>
+						<label class="col-md-3 control-label">Contact</label>
+						<div class="col-md-3">
+							<input type="text" class="form-control" name="contact11"  maxlength="10" placeholder="Enter your 10 digit mobile number" required>
 						</div>
 					</div>
-
+					
 					<!-- FORM FIELD 11 -->
 
 					<!-- <div class="form-group"> -->
@@ -125,12 +129,29 @@
 					<!-- FORM FIELD 'SAVE'-->
 
 					<div class="panel-footer">
-						<button class="btn btn-primary pull-right" name="Save" type="submit" value="Save">
+						<button class="btn btn-primary pull-right"  type="submit" >
 							Save
 						</button>
 					</div>
 				</form>
+			
 			</div>
 		</div>
 	</div>
 </div>
+
+
+@section('createstudentscript')
+
+<script>
+	$('#studentCreate').select2({
+		
+		tags: true
+	});
+</script>
+
+<script>
+	$('#gradeSelect').select2();
+</script>
+
+@endsection

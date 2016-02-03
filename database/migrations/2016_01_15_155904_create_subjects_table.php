@@ -14,14 +14,21 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('subject');
+			$table->string('subject')->index();
             $table->timestamps();
         });
+	
+	
+		Schema::create('subject_user', function (Blueprint $table) {
+		    $table->integer('subject_id')->unsigned();
+			$table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+				
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->timestamps();
+		});
 		
-		   	Schema::table('subjects', function (Blueprint $table) {
-			$table->integer('grade_id')->unsigned();
-			$table->foreign('grade_id')->references('id')->on('grades');
-        });
+
     }
 
     /**
@@ -31,8 +38,10 @@ class CreateSubjectsTable extends Migration
      */
     public function down()
     {
-    	DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-    	Schema::dropIfExists('subjects');
-    	DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+    	DB::statement('SET FOREIGN_KEY_CHECKS = 0');	
+    	Schema::dropIfExists('subjects');	
+    	Schema::dropIfExists('grade_subject');
+		Schema::dropIfExists('subject_user');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');	
     }
 }

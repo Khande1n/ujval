@@ -18,10 +18,7 @@ class CreateRolesTable extends Migration
             $table->timestamps();
         });
 		
-		Schema::table('roles', function (Blueprint $table) {
-			$table->integer('school_id')->unsigned();
-			$table->foreign('school_id')->references('id')->on('schools');
-		});
+
     }
 
     /**

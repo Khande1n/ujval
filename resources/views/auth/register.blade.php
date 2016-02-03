@@ -59,13 +59,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="contact11" id="contact11" maxlength="10" placeholder="Enter your 10 digit mobile number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <!-- <div class="col-md-6">
                             <a href="/password/email" class="btn btn-link btn-block">Forgot your password?</a>
                         </div> -->
                         <div class="col-md-6">
                             <button class="btn btn-info btn-block" name="register" type="submit">Sign Up</button>
                         </div>
-                        <!-- <input type="checkbox" name="remember"> Remember me -->
+                        <input type="checkbox" name="remember"> Remember me
                     </div>
                     </form>
                 </div>

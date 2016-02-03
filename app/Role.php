@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Role;
+
 
 class Role extends Model
 {
@@ -21,23 +21,16 @@ class Role extends Model
      *
      * @var array
      */
-    protected $fillable = ['role_name', 'school_id'];
+    protected $fillable = ['role_name'];
 
 	
 	/**
-     * Roles belongs to a school.
+     * Roles belongs to many users.
      */
-    public function schools()
+    public function users()
     {
-        return $this->belongsTo('App\School');
+        return $this->belongsToMany('App\User')->withTimestamps();
     }
 	
-		
-	/**
-     * Roles belongs to a staff.
-     */
-    public function staff()
-    {
-        return $this->belongsToMany('App\Staff');
-    }
+
 }

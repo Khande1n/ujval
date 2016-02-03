@@ -68,7 +68,23 @@ return [
 
 
         
-		'my7887sql' => [
+		'myssfsdfsdql' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST', 'localhost'),
+            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
+            'database'  => env('DB_DATABASE', 'User'),
+            'username'  => env('DB_USERNAME', 'root'),
+            'password'  => env('DB_PASSWORD', 'root'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+        
+		
+
+        
+		'tracker' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',

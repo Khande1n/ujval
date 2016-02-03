@@ -418,11 +418,11 @@
   }
 }
 /* FUNCTIONS */
-/* EOF FUNCTIONS */
+/* EOF FUNCTIONS #F9FAFB */
 /* X-Dashboard */
 .x-dashboard .page-container .page-content {
   margin-left: 0px;
-  background: #F9FAFB;
+  background: #33414E;
 }
 .x-dashboard .page-container .page-content .page-content-wrap .x-hnavigation {
   float: left;
@@ -865,7 +865,7 @@
 .x-dashboard .page-container .page-content .page-content-wrap .x-content .x-chart-widget .x-chart-widget-content {
   float: left;
   width: 100%;
-  background: #DEE4EC;
+  background: #33414E;
   padding: 20px;
 }
 .x-dashboard .page-container .page-content .page-content-wrap .x-content .x-chart-widget .x-chart-widget-content .x-chart-widget-content-head {
@@ -875,7 +875,7 @@
 }
 .x-dashboard .page-container .page-content .page-content-wrap .x-content .x-chart-widget .x-chart-widget-content .x-chart-widget-content-head h4 {
   font-size: 13px;
-  color: #95ABBB;
+  color: #FFF;
   float: left;
   line-height: 30px;
   margin-bottom: 0px;

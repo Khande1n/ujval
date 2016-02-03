@@ -14,7 +14,7 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('exam'); 
+			$table->string('exam')->index(); 
 			$table->datetime('exam_start');
 			$table->datetime('exam_end');
 			$table->integer('max_marks');
@@ -22,8 +22,8 @@ class CreateExamsTable extends Migration
             $table->timestamps();
         });
 		
-		    Schema::table('exams', function (Blueprint $table) {
-			$table->integer('subject_id')->unsigned();
+		Schema::table('exams', function (Blueprint $table) {
+			$table->integer('subject_id')->unsigned()->index();
 			$table->foreign('subject_id')->references('id')->on('subjects');
         });
     }

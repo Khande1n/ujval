@@ -16,6 +16,7 @@ use Session;
 use Input;
 use DB;
 use Auth;
+use Tracker;
 
 
 class DashboardController extends Controller
@@ -29,37 +30,37 @@ class DashboardController extends Controller
      */
     public function index()
     {
+    	$visitor = Tracker::currentSession();
+		
+		// $schoolvisitor = $visitor ->user->school_id->Auth::user()->school_id)
 			
-		return response()->view('principal/dashboard');
+		return response()->view('principal/dashboard', compact('visitor'));
 	
 	}
 		
 	/**
-     * Display a listing of the resource.
+     * Return attendance of all students.
      *
      * @return \Illuminate\Http\Response
      */
     public function getApi()
     {
-    	$nowTime = Carbon::now()->toFormattedDateString();
-   		 $days = Input::get('days', 7);
+   		$days = Input::get('days', 7);
 	
     	$range = Carbon::now()->subDays($days);
 
 		$stats = DB::table('attendances')
- 	 		->join('students', 'student_id', '=', 'students.id')
-			->join('grades', 'grade_id', '=', 'grades.id')
-    		->where('attendance', '>=', $range)
-			->where('school_id', Auth::user()->school_id)
-    		->groupBy('date')
+ 	 		->where('attendance', '>=', $range)
+			->groupBy('date')
     		->orderBy('date', 'ASC')
     		->get([
-      			DB::raw('Date(attendance) as date'),
+      			DB::raw('Date(created_at) as date'),
       			DB::raw('COUNT(*) as value')
     	]);
     
         return $stats;
     }
+	
 	
 	/**
      * Display a listing of the resource.
@@ -68,20 +69,20 @@ class DashboardController extends Controller
      */
     public function studentAttendance()
     {
-    	$nowTime = Carbon::now()->toFormattedDateString();
+    	
    		 $days = Input::get('days', 7);
 		 $Idstudent = Input::get('Idstudent');
 	
     	$range = Carbon::now()->subDays($days);
 
 		$stats = DB::table('attendances')
- 	 		->join('students', 'student_id', '=', 'students.id')
-			->where('attendance', '>=', $range)
-			->where('student_id', $Idstudent)
+ 	 		->where('attendance', '>=', $range)
+			->where('present_type', 'App\Student')
+			->where('present_id', $Idstudent)
     		->groupBy('date')
     		->orderBy('date', 'ASC')
     		->get([
-      			DB::raw('Date(attendance) as date'),
+      			DB::raw('Date(created_at) as date'),
       			DB::raw('COUNT(*) as value')
     	]);
     
@@ -96,20 +97,20 @@ class DashboardController extends Controller
      */
     public function staffAttendance()
     {
-    	$nowTime = Carbon::now()->toFormattedDateString();
+    	
    		 $days = Input::get('days', 7);
 		 $Idstaff = Input::get('Idstaff');
 	
     	$range = Carbon::now()->subDays($days);
 
 		$stats = DB::table('attendances')
- 	 		->join('users', 'user_id', '=', 'users.id')
-			->where('attendance', '>=', $range)
-			->where('user_id', $Idstaff)
+ 	 		->where('attendance', '>=', $range)
+			->where('present_type', 'App\User')
+			->where('present_id', $Idstaff)
     		->groupBy('date')
     		->orderBy('date', 'ASC')
     		->get([
-      			DB::raw('Date(attendance) as date'),
+      			DB::raw('Date(created_at) as date'),
       			DB::raw('COUNT(*) as value')
     	]);
     
@@ -125,10 +126,7 @@ class DashboardController extends Controller
     {
         $gra_id = Input::get('gra_id');
 		
-		$subjectdropdown = DB::table('subjects')
-					->where('grade_id', $gra_id)
-					->orderBy('subject', 'asc')
-                	->get();
+		$subjectdropdown = Grade::find($gra_id)->subjects->toArray();
 				
 		$jsonSubjects = json_encode($subjectdropdown);
 
@@ -150,15 +148,12 @@ class DashboardController extends Controller
 		$Idstudent = Input::get('Idstudent');
 	
 		$studentMarks = DB::table('marks')
-				->join('students', 'student_id', '=', 'students.id')
-				->join('grades', 'grade_id', '=', 'grades.id')
-				->join('exams', 'exam_id', '=', 'exams.id')
 				->where('exam_id', '=', $examId)
 				->where('student_id', '=', $Idstudent)
 				->groupBy('exam_id')
 				->orderBy('obt_marks', 'ASC')
 				->get([
-					DB::raw('exam as mark'),
+					DB::raw('obt_marks as mark'),
 					DB::raw('obt_marks as value')
 				]);
     
@@ -180,15 +175,15 @@ class DashboardController extends Controller
 		$Idstaff = Input::get('Idstaff');
 		
 		$staffMarks = DB::table('marks')
-				->join('exams', 'exam_id', '=', 'exams.id')
-				->join('subjects', 'subject_id', '=', 'subjects.id') 
-				->join('gradeusers', 'subjects.grade_id', '=', 'gradeusers.grade_id')
-				->join('users', 'user_id', '=', 'users.id')
-				->select('user_id', 'name','subjects.grade_id','exam','subject','subject_id','exam_id' )
-				->where('exam_id', '=', $examId)
-				->where('user_id', '=', $Idstaff)
-				->groupBy('obt_marks')
-				->orderBy('obt_marks', 'ASC')
+				// ->join('exams', 'exam_id', '=', 'exams.id')
+				// ->join('subjects', 'subject_id', '=', 'subjects.id') 
+				// ->join('gradeusers', 'subjects.grade_id', '=', 'gradeusers.grade_id')
+				// ->join('users', 'user_id', '=', 'users.id')
+				// ->select('user_id', 'name','subjects.grade_id','exam','subject','subject_id','exam_id' )
+				// ->where('exam_id', '=', $examId)
+				// ->where('user_id', '=', $Idstaff)
+				// ->groupBy('obt_marks')
+				// ->orderBy('obt_marks', 'ASC')
 				->get([
 					DB::raw('obt_marks as mark'),
 					DB::raw('Count(*) as value')

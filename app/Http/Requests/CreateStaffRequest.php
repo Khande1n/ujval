@@ -26,10 +26,8 @@ class CreateStaffRequest extends Request
     {
         return [
         	'name'         => 'required|string',
-        	'stf_bday'     => 'required|date',
+        	'bday'         => 'required|date',
         	'email'        => 'required|unique:users|email',
-            'stf_contact1' => 'required|integer|digits:10',
-       		'stf_pincode'  => 'required|integer', 
         ];
     }
 }
