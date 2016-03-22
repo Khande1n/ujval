@@ -81,14 +81,15 @@
 								<li>
 									<a href="/principal/create#exam-tab"><span class="fa fa-pencil-square"></span>Exam</a>
 								</li>
-								<li>
-									<a href="/principal/create#mark-tab"><span class="fa fa-star"></span>Mark</a>
-								</li>
+								
 								<!-- <li><a href="#"><span class="fa fa-calendar"></span> KPI Alarm</a></li> -->
 								<!-- <li><a href="#"><span class="fa fa-university"></span> Time-Table</a></li>
 								<li><a href="#"><span class="fa fa-calendar"></span>Group</a></li>
 								<li><a href="#"><span class="fa fa-calendar"></span>Marks Cut Criteria</a></li> -->
 							</ul>
+						</li>
+						<li>
+							<a href="/principal/marks"><span class=""></span>Marks</a>
 						</li>
 					</ul>
 

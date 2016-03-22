@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use App\Subject;
 use App\Exam;
 use App\Grade;
+use App\Mark;
 use App\Attendance;
 use App\Student;
 use DB;
@@ -48,14 +49,25 @@ class ApiController extends Controller
     public function studentDropDown()
     {
         $gra_id = Input::get('gra_id');
-		
-		$studentdropdown = Grade::find($gra_id)->students->toArray();
-				
-		$jsonStudents = json_encode($studentdropdown);
+        $sub_id = Input::get('sub');
+        $exam_id = Input::get('exam');
 
-   		return $jsonStudents;
+        $studentdropdown = Grade::find($gra_id)->students->toArray();
+        for($i=0;$i<sizeof($studentdropdown);$i++){
+            if($mark = Mark::where('exam_id', $exam_id)->where('student_id', $studentdropdown[$i]['id'])->first()){
+                $studentdropdown[$i]['mark'] =  $mark['obt_marks'];  
+            }
+            else
+                $studentdropdown[$i]['mark'] =  ''; 
+        } 
+        $jsonStudents = json_encode($studentdropdown);
+        return $jsonStudents;
     }
 	
+    public function allmarks()
+    {
+
+    }
 	
 	
 	/**

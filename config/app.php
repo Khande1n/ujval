@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 
     'key' => env('APP_KEY', 'SomeRandomString'),
 
-    'cipher' => 'AES-256-CBC',
+    'cipher' => 'AES-128-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -141,7 +141,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         PragmaRX\Tracker\Vendor\Laravel\ServiceProvider::class,
-	
+    
 
         /*
          * Application Service Providers...
@@ -205,36 +205,36 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Breadcrumb'     => Bootstrapper\Facades\Breadcrumb::class,
         'Gravatar'       => Creativeorange\Gravatar\Facades\Gravatar::class,
-		'Accordion'      => Bootstrapper\Facades\Accordion::class,
-		'Alert'          => Bootstrapper\Facades\Alert::class,
-		'Badge'          => Bootstrapper\Facades\Badge::class,
-		'Breadcrumb'     => Bootstrapper\Facades\Breadcrumb::class,
-		'Button'         => Bootstrapper\Facades\Button::class,
-		'ButtonGroup'    => Bootstrapper\Facades\ButtonGroup::class,
-		'Carousel'       => Bootstrapper\Facades\Carousel::class,
-		'ControlGroup'   => Bootstrapper\Facades\ControlGroup::class,
-		'DropdownButton' => Bootstrapper\Facades\DropdownButton::class,
-		'Form'           => Bootstrapper\Facades\Form::class,
-		'Helpers' 		 => Bootstrapper\Facades\Helpers::class,
-		'Icon' 			 => Bootstrapper\Facades\Icon::class,
-		'InputGroup'  	 => Bootstrapper\Facades\InputGroup::class,
-		'Images' 		 => Bootstrapper\Facades\Image::class,
-		'Label' 		 => Bootstrapper\Facades\Label::class,
-		'MediaObject' 	 => Bootstrapper\Facades\MediaObject::class,
-		'Modal'  		 => Bootstrapper\Facades\Modal::class,
-		'Navbar' 		 => Bootstrapper\Facades\Navbar::class,
-		'Navigation' 	 => Bootstrapper\Facades\Navigation::class,
-		'Panel' 		 => Bootstrapper\Facades\Panel::class,
-		'ProgressBar'    => Bootstrapper\Facades\ProgressBar::class,
-		'Tabbable' 		 => Bootstrapper\Facades\Tabbable::class,
-		'Table' 		 => Bootstrapper\Facades\Table::class,
-		'Thumbnail'      => Bootstrapper\Facades\Thumbnail::class,
-		'Formhtml'		 => Illuminate\Html\FormFacade::class,
-		'Html'		     => Illuminate\Html\HtmlFacade::class,
-		'Carbon'         => Carbon\Carbon::class,
-		'Debugbar'       => Barryvdh\Debugbar\Facade::class,
-		'Image'          => Intervention\Image\Facades\Image::class,
-		'Tracker'        => PragmaRX\Tracker\Vendor\Laravel\Facade::class,
+        'Accordion'      => Bootstrapper\Facades\Accordion::class,
+        'Alert'          => Bootstrapper\Facades\Alert::class,
+        'Badge'          => Bootstrapper\Facades\Badge::class,
+        'Breadcrumb'     => Bootstrapper\Facades\Breadcrumb::class,
+        'Button'         => Bootstrapper\Facades\Button::class,
+        'ButtonGroup'    => Bootstrapper\Facades\ButtonGroup::class,
+        'Carousel'       => Bootstrapper\Facades\Carousel::class,
+        'ControlGroup'   => Bootstrapper\Facades\ControlGroup::class,
+        'DropdownButton' => Bootstrapper\Facades\DropdownButton::class,
+        'Form'           => Bootstrapper\Facades\Form::class,
+        'Helpers'        => Bootstrapper\Facades\Helpers::class,
+        'Icon'           => Bootstrapper\Facades\Icon::class,
+        'InputGroup'     => Bootstrapper\Facades\InputGroup::class,
+        'Images'         => Bootstrapper\Facades\Image::class,
+        'Label'          => Bootstrapper\Facades\Label::class,
+        'MediaObject'    => Bootstrapper\Facades\MediaObject::class,
+        'Modal'          => Bootstrapper\Facades\Modal::class,
+        'Navbar'         => Bootstrapper\Facades\Navbar::class,
+        'Navigation'     => Bootstrapper\Facades\Navigation::class,
+        'Panel'          => Bootstrapper\Facades\Panel::class,
+        'ProgressBar'    => Bootstrapper\Facades\ProgressBar::class,
+        'Tabbable'       => Bootstrapper\Facades\Tabbable::class,
+        'Table'          => Bootstrapper\Facades\Table::class,
+        'Thumbnail'      => Bootstrapper\Facades\Thumbnail::class,
+        'Formhtml'       => Illuminate\Html\FormFacade::class,
+        'Html'           => Illuminate\Html\HtmlFacade::class,
+        'Carbon'         => Carbon\Carbon::class,
+        'Debugbar'       => Barryvdh\Debugbar\Facade::class,
+        'Image'          => Intervention\Image\Facades\Image::class,
+        'Tracker'        => PragmaRX\Tracker\Vendor\Laravel\Facade::class,
 
     ],
 

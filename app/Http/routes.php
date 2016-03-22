@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('api/student-dropdown', 'ApiController@studentDropDown');
 	Route::get('api/subject/exams/average', 'ApiController@examAverageChart');
 	
+
+
 	
 	// PRINCIPAL CREATE ROUTES
 
@@ -74,11 +76,12 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('principal/create/subject', 'SubjectController@store');
 	Route::post('principal/update/subject/{id}', 'SubjectController@update');
 
-	Route::get('principal/create#mark-tab', 'MarkController@create');
-	Route::post('principal/create/mark', 'MarkController@store');
 
 	Route::get('principal/create#grade-tab', 'GradeController@create');
 	Route::post('principal/create/grade', 'GradeController@store');
+
+	Route::get('principal/create#mark-tab', 'MarkController@create');
+	Route::post('principal/create/mark', 'MarkController@store');
 
 
 	// STAFF ROUTES
@@ -102,7 +105,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('principal/classroom', 'ClassController@classroom');
 	
-	Route::get('principal/attendance', function() {
+	Route::get('principal/marks', function() {
+		return view('principal/marks');
+	});
+
+	Route::get('api/marks', 'ApiController@allmarks');
+
+ 	Route::get('principal/attendance', function() {
 		return view('principal/attendance');
 	});
 

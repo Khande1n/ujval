@@ -91,7 +91,8 @@ class ExamController extends Controller
     {
     	$exams = Exam::find($request->exam);
         $exams->grades()->sync($request->input('grade_id'));
-		
+		$marks = Marks::find();
+
 		return redirect('principal/create#exam-tab')->withInput();
     }
 

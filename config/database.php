@@ -51,46 +51,27 @@ return [
             'database' => database_path('database.sqlite'),
             'prefix'   => '',
         ],
-
-        
-		'mysql' => [
+ 
+        'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('RDS_HOST', 'ujvaldbapp.cdof00xdxqt6.us-west-2.rds.amazonaws.com'),
-            'port'   	=> env('RDS_PORT', '3306'),
-            'database'  => env('RDS_DATABASE', 'ujvaldbapp'),
-            'username'  => env('RDS_USERNAME', 'dbusername'),
-            'password'  => env('RDS_PASSWORD', 'dbpassword'),
+            'host'      => env('DB_HOST', 'localhost'),
+            'database'  => env('DB_DATABASE', 'flaged'),
+            'username'  => env('DB_USERNAME', 'root'),
+            'password'  => env('DB_PASSWORD', 'sahil'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
             'strict'    => false,
+            'engine'    => null,
         ],
-
-
+ 
         
-		'myssfsdfsdql' => [
+        'tracker' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
-            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
-            'database'  => env('DB_DATABASE', 'User'),
+            'database'  => env('DB_DATABASE', 'flaged'),
             'username'  => env('DB_USERNAME', 'root'),
-            'password'  => env('DB_PASSWORD', 'root'),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ],
-        
-		
-
-        
-		'tracker' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
-            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
-            'database'  => env('DB_DATABASE', 'User'),
-            'username'  => env('DB_USERNAME', 'root'),
-            'password'  => env('DB_PASSWORD', 'root'),
+            'password'  => env('DB_PASSWORD', 'sahil'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

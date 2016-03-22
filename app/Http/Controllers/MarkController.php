@@ -37,21 +37,22 @@ class MarkController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
-        $marks = Mark::create
-        ([	
-        	'exam_id' =>$request->exam_id,
-        	'student_id' => $request->student_id,
-        	'obt_marks' => $request->obt_marks,
-        ]);
+    {
+        echo $request->obt_marks;
+  //       $marks = Mark::create
+  //       ([	
+  //       	'exam_id' =>$request->exam_id,
+  //       	'student_id' => $request->student_id,
+  //       	'obt_marks' => $request->obt_marks,
+  //       ]);
+
+		// $exams = Exam::find($request->exam_id);
+		// $students = Student::find($request->student_id);
 		
-		$exams = Exam::find($request->exam_id);
-		$students = Student::find($request->student_id);
+		// $marks->exams()->save($exams);
+		// $marks->students()->save($students);
 		
-		$marks->exams()->save($exams);
-		$marks->students()->save($students);
-		
-		return redirect('principal/create#mark-tab')->withInput();
+		// return redirect('principal/create#mark-tab')->withInput();
     }
 
     /**
