@@ -203,4 +203,17 @@ class StudentController extends Controller
 
         return Redirect::route('student.index')->with('message', ['Sorry, no results!']);
     }
+
+    public function studentMarks($classId){
+		// $studentData = Student::findOrFail($id);
+		// $studentAdd = $studentData->addresses->flatten()->toArray();
+		
+		// $studentGradeId = $studentData->grades->lists('id')->flatten()->toArray();
+		// foreach($studentGradeId as $key => $values){
+		// 	$gradeId = $values;
+		// }
+		
+		// $studentGrades = Grade::find($gradeId);
+		// $examlists = $studentGrades->exams->flatten()->toArray()
+    }
 }

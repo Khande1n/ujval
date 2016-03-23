@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Grade;
 use App\School;
+use App\Mark;
 use DB;
 use Session;
 use Auth;
@@ -37,12 +38,37 @@ class ClassController extends Controller
 		
    		$schools = School::find($value);
    		$countUser =  $schools->users->count();
-		
-
-			
+					
         return view('principal/classroom', compact('countUser'));
     }
 
+    public function students($classId)
+    {
+        $studentGrades = Grade::find($classId);
+        $studentdropdown = $studentGrades->students->toArray();                
+        $jsonStudents = json_encode($studentdropdown);
+        // print_r($jsonStudents);
+        $examlists = $studentGrades->exams->flatten()->toArray();
+        // print_r(json_encode($examlists));
+        $i=0;
+
+        foreach ($studentdropdown as $student) {
+            $student_id = $student['id'];
+            $studentdropdown[$i]['exams'] = [];
+            foreach ($examlists as $exam) {
+                $exam_id = $exam['id'];
+                $marks = Mark::where('exam_id',$exam_id)->where('student_id',$student_id);
+                $obt_marks = "";
+                if($marks->count()){
+                    $obt_marks = $marks->first()['obt_marks'];
+                }
+                $exam["obt_marks"] = $obt_marks;
+                array_push($studentdropdown[$i]['exams'],$exam);
+             }
+            $i++;
+        }
+        print_r(json_encode($studentdropdown));
+    }
 
     /**
      * Show the form for creating a new resource.

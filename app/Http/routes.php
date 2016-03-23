@@ -104,7 +104,12 @@ Route::group(['middleware' => 'auth'], function() {
 	// BASIC FUNCTIONS ROUTE
 
 	Route::get('principal/classroom', 'ClassController@classroom');
-	
+
+	Route::get('principal/classroom/{classId}', function($classId) {
+		return view('principal/classes');
+	});
+	Route::get('principal/create/classroom/{classId}', 'ClassController@students');
+ 	
 	Route::get('principal/create/mark', 'MarkController@savemarks');
 	Route::get('principal/update/mark', 'MarkController@update');
 	Route::get('principal/marks', function() {
