@@ -23,6 +23,7 @@ class CreateExamRequest extends Request
      */
     public function rules()
     {
+ 
         return [
         	'exam' => 'string',
         	'exam_start' => 'required|date',

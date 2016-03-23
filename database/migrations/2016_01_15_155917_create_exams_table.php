@@ -19,6 +19,7 @@ class CreateExamsTable extends Migration
 			$table->datetime('exam_end');
 			$table->integer('max_marks');
 			$table->integer('pass_marks');
+            $table->float('weightage');
             $table->timestamps();
         });
 		

@@ -66,7 +66,6 @@
 
 
 @section('graphscript')
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>	
 	<script>
 		var dataSet = []; 
 		var studentTable ;
@@ -189,7 +188,7 @@
 
  	 } 	
  	 function clearExamOptions(){
- 	 	
+
  	 } 
 </script>
 

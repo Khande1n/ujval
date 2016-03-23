@@ -48,7 +48,7 @@
 							<select class="form-control js-example-basic-single" name="exam" id="examsSelect" placeholder="eg. FA II or SA I">
 								@foreach($examlists as $key=>$exams)
 								@foreach($exams as $k=>$exam)
-								<option value="{{ $exam['id'] }}">{{ $exam['exam'] }}</option>
+								<option value="{{ $exam['exam'] }}">{{ $exam['exam'] }}</option>
 								@endforeach
 								@endforeach
 							</select>
@@ -100,7 +100,12 @@
 							<input type="text" class="form-control" name="pass_marks" required>
 						</div>
 					</div>
-
+					<div class="form-group">
+						<label class="col-md-3 control-label">Weightage</label>
+						<div class="col-md-2">
+							<input type="text" class="form-control" name="weightage" required>
+						</div>
+					</div>
 					<!-- FORM FIELD 'SAVE'-->
 
 					<div class="panel-footer">

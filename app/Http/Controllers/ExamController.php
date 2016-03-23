@@ -49,6 +49,7 @@ class ExamController extends Controller
 				'exam_end'    => $request->exam_end,
 				'max_marks'   => $request->max_marks,
 				'pass_marks'  => $request->pass_marks,
+                'weightage'  => $request->weightage,                
 				'subject_id'  => $v,
 			]);
 			
@@ -91,8 +92,7 @@ class ExamController extends Controller
     {
     	$exams = Exam::find($request->exam);
         $exams->grades()->sync($request->input('grade_id'));
-		$marks = Marks::find();
-
+		
 		return redirect('principal/create#exam-tab')->withInput();
     }
 
