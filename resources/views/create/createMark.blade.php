@@ -46,9 +46,7 @@
 						</div>
 
 						<div class="form-group col-md-3"> 
-								 <button class="btn btn-primary search-all m-t-md" type="submit" value="Save">
-									Search
-								</button>							 
+							 <input class="btn btn-primary search-all m-t-md" onclick="showStudents()" value="Search" type="button"/>							 
 						</div>
 					 
 				</form>
@@ -103,7 +101,7 @@
 				});
 				console.log('DONE');
 			});
-			findAllstudent(gra_id,sub_id,exam_id);
+			$('#allstudents').empty(); 
 		});
 
 </script>
@@ -125,26 +123,23 @@
 			console.log('Awesome!!! Done')
 		});
 
-		findAllstudent(gra_id,sub_id,exam_id);
+		$('#allstudents').empty(); 
 	});
 
 	$('#examMarkSelect').on('change', function(e) {
 			exam_id = e.target.value;
-			findAllstudent(gra_id,sub_id,exam_id);
+			$('#allstudents').empty(); 
 		});
+ 	function showStudents(){
+ 		findAllstudent(gra_id,sub_id,exam_id);
+ 	 }
 
 	 function findAllstudent(gra_id,sub_id,exam_id){
 	 	if(gra_id&&sub_id&&exam_id){
 			$.get('/api/student-dropdown?gra+id=' + gra_id+"&sub="+sub_id+"&exam="+exam_id, function(data) {
 				//success data
-				console.log(data)
-				$('#studentMarkSelect').empty();
 				$('#allstudents').empty(); 
-							
-								  
-				$('#studentMarkSelect').append('<option value="">Please Choose one</option>');
 				$.each(JSON.parse(data), function(index, studentObj) {
-					$('#studentMarkSelect').append('<option value="' + studentObj.id + '">' + studentObj.student + '</option');
 					var studentInfo = createStudentRow(studentObj);
 					$('#allstudents').append(studentInfo)
 				});
@@ -166,10 +161,10 @@
  		// row += " <th>"+'<input type="integer" class="form-control" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required></th>';
 	 	
 	 	if(studentObj.mark ===''){
-	 		row += '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control" id="marksField'+studentObj.id+'"value="" name="obt_marks" placeholder="Enter marks" required=""></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="addStudentMark('+studentObj.id+')">Save </button></div> </div></th>';
+	 		row += '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control" id="marksField'+studentObj.id+'"value="" name="obt_marks" placeholder="Enter marks" required=""><p class="hidden" id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default hidden" onclick="showInput('+studentObj.id+')" id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button></div> <span id="status'+studentObj.id+'"class="text-success" style="display: none;">saved!</span> </div></th>';
 	 	}
 	 	else{
-	 		row += '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control hidden" id="marksField'+studentObj.id+'" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required=""><p id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="showInput('+studentObj.id+')"id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default hidden" id="saveBtn'+studentObj.id+'" onclick="saveStudentMark('+studentObj.id+')">Save </button>	 </div> </div></th>';
+	 		row += '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control hidden" id="marksField'+studentObj.id+'" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required=""><p id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="showInput('+studentObj.id+')"id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default hidden" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button><span id="status'+studentObj.id+'" class="text-success"style="display: none;">saved!</span> </div> </div></th>';
 	 	}
 	 	row += "</form></tr>"; 
 		return row; 	 	
@@ -186,23 +181,18 @@
 		var obt_marks = $('#marksField'+studentId).val();
 		if(obt_marks!==""){
 			var url = "?exam_id="+exam_id+"&student_id="+studentId+"&obt_marks="+obt_marks ;
+			$.get('/principal/create/mark' + url, function(data) {
 
-			$.post( "/principal/create/mark", {
-			  'exam_id' : exam_id,
-			  'student_id' : studentId,
-			  'obt_marks' : obt_marks
-			})
-			.done(function(data) {
-                console.log(data);
-            })
-		}
-		console.log(exam_id);
-		console.log();
-		
+				$('#studentMarks'+studentId).html(obt_marks);
+		 	 	$('#studentMarks'+studentId).removeClass("hidden");
+		 	 	$('#marksField'+studentId).addClass("hidden");
+		 	 	$('#editBtn'+studentId).removeClass("hidden");
+		 	 	$('#saveBtn'+studentId).addClass("hidden");
+				$('#status'+studentId).fadeIn(1000);
+				$('#status'+studentId).fadeOut(3000);
+			});
+		}		
  	 } 	 
- 	 function saveStudentMark(studentId){
- 	 	
- 	 }
 </script>
 
 <!-- DASHBOARD ACADEMICS -->

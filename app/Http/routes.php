@@ -80,8 +80,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('principal/create#grade-tab', 'GradeController@create');
 	Route::post('principal/create/grade', 'GradeController@store');
 
-	Route::get('principal/create#mark-tab', 'MarkController@create');
-	Route::post('principal/create/mark', 'MarkController@store');
+	// Route::get('principal/create#mark-tab', 'MarkController@create');
+	// Route::get('principal/create/mark', 'MarkController@savemarks');
 
 
 	// STAFF ROUTES
@@ -105,9 +105,12 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('principal/classroom', 'ClassController@classroom');
 	
+	Route::get('principal/create/mark', 'MarkController@savemarks');
+	Route::get('principal/update/mark', 'MarkController@update');
 	Route::get('principal/marks', function() {
 		return view('principal/marks');
 	});
+
 
 	Route::get('api/marks', 'ApiController@allmarks');
 
