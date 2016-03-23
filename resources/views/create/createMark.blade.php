@@ -51,133 +51,125 @@
 					 
 				</form>
 			</div>
-		</div> 		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="table-responsive">
-					<table id="customers2" class="table datatable">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Email</th>
-								<th>Sex</th>
-								<th>Marks</th> 
-							</tr>
-						</thead>
-						<tbody id="allstudents">
-						
-						</tbody>
-					</table>
+		</div> 		
+		<div class="x-chart-widget-content">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="table-responsive">						
+						<table id="example" class="table datatable" width="100%"></table>
+					</div>
 				</div>
-			</div>
+			</div> 
 		</div> 
-
 	</div>
 </div>
 
 
 @section('graphscript')
-	
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>	
 	<script>
+		var dataSet = []; 
+		var studentTable ;
+		$(document).ready(function() {
+	    	$('#example').DataTable( {
+		        data: dataSet,
+		        columns: [
+		            { title: "Name" },
+		            { title: "Email" },
+		            { title: "Sex" },
+		            { title: "Marks" }
+		        ]
+	    	} );
+	    	studentTable = $('#example').dataTable();
+	} );
 		//dropdownlist for academic analysis
 		var gra_id = null;
 		var sub_id = null; 
 		var exam_id = null; 
-		
+		 
 		$('#gradeMarkSelect').on('change', function(e) {
 
 			gra_id = e.target.value;
-
-			//ajax
-
 			$.get('/api/category-dropdown?gra+id=' + gra_id, function(data) {
-
 				//success data
 				$('#subjectMarkSelect').empty();
-				console.log('EMPTY DONE');
 				$('#subjectMarkSelect').append('<option value=""> Please choose one</option>');
-				console.log('Please choose DONE');
 				$.each(JSON.parse(data), function(index, subjectObj) {
 					$('#subjectMarkSelect').append('<option value="' + subjectObj.id + '">' + subjectObj.subject + '</option');
 				});
-				console.log('DONE');
 			});
-			$('#allstudents').empty(); 
+			studentTable.fnClearTable();
 		});
 
 </script>
 <script>
 	$('#subjectMarkSelect').on('change', function(e) {
 		sub_id = e.target.value;
-
 		//ajax
 		$.get('/api/subject-dropdown?sub+id=' + sub_id, function(data) {
 			//success data
 			$('#examMarkSelect').empty();
-			
-			console.log("India no 1");
 			$('#examMarkSelect').append('<option value="">Please Choose one</option>');
-			console.log('India again no 1');
 			$.each(JSON.parse(data), function(index, examObj) {
 				$('#examMarkSelect').append('<option value="' + examObj.id + '">' + examObj.exam + '</option');
 			});
-			console.log('Awesome!!! Done')
 		});
 
-		$('#allstudents').empty(); 
+		studentTable.fnClearTable(); 
 	});
 
 	$('#examMarkSelect').on('change', function(e) {
 			exam_id = e.target.value;
-			$('#allstudents').empty(); 
+			studentTable.fnClearTable(); 
 		});
  	function showStudents(){
  		findAllstudent(gra_id,sub_id,exam_id);
  	 }
 
 	 function findAllstudent(gra_id,sub_id,exam_id){
+	 	dataSet = [];
 	 	if(gra_id&&sub_id&&exam_id){
 			$.get('/api/student-dropdown?gra+id=' + gra_id+"&sub="+sub_id+"&exam="+exam_id, function(data) {
 				//success data
-				$('#allstudents').empty(); 
-				$.each(JSON.parse(data), function(index, studentObj) {
-					var studentInfo = createStudentRow(studentObj);
-					$('#allstudents').append(studentInfo)
+				studentTable.fnClearTable();
+				$.each(JSON.parse(data), function(index, studentObj) {					 
+					dataSet.push(createStudentData(studentObj));
 				});
+				studentTable.fnAddData(dataSet);
 			});
 	 	}
 	 	else{
 	 		$('#studentMarkSelect').empty();
-	 		$('#allstudents').empty(); 
+			studentTable.fnClearTable();
 	 	}
 	 }
-	 function createStudentRow(studentObj){
-	 	var row = " <tr>"; 
-	 	row += '<form role="form" method="POST" > <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />">';
 
-	 	row += " <th>"+ studentObj.student +"</th>"; 
-	 	row += " <th>"+ studentObj.email +"</th>"; 
-	 	row += " <th>"+ studentObj.gender +"</th>"; 
- 	
- 		// row += " <th>"+'<input type="integer" class="form-control" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required></th>';
-	 	
+	 function createStudentData(studentObj){
+	 	var marksColumn;
 	 	if(studentObj.mark ===''){
-	 		row += '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control" id="marksField'+studentObj.id+'"value="" name="obt_marks" placeholder="Enter marks" required=""><p class="hidden" id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default hidden" onclick="showInput('+studentObj.id+')" id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button></div> <span id="status'+studentObj.id+'"class="text-success" style="display: none;">saved!</span> </div></th>';
+	 		marksColumn = '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control" id="marksField'+studentObj.id+'"value="" name="obt_marks" placeholder="Enter marks" required=""><p class="hidden" id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default hidden" onclick="showInput('+studentObj.id+')" id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button></div> <span id="status'+studentObj.id+'"class="text-success" style="display: none;">saved!</span> </div></th>';
 	 	}
 	 	else{
-	 		row += '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control hidden" id="marksField'+studentObj.id+'" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required=""><p id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="showInput('+studentObj.id+')"id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default hidden" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button><span id="status'+studentObj.id+'" class="text-success"style="display: none;">saved!</span> </div> </div></th>';
+	 		marksColumn = '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control hidden" id="marksField'+studentObj.id+'" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required=""><p id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="showInput('+studentObj.id+')"id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default hidden" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button><span id="status'+studentObj.id+'" class="text-success"style="display: none;">saved!</span> </div> </div></th>';
 	 	}
-	 	row += "</form></tr>"; 
-		return row; 	 	
+		var data = [studentObj.student, studentObj.email, studentObj.gender , marksColumn] ;
+		return data; 	 	
  	 }
-
+	/**
+	 * showInput: handles save and edit btn and input filed for marks.
+	 * @param  {int} studentId 
+	 */
  	 function showInput(studentId){
  	 	$('#studentMarks'+studentId).addClass("hidden");
  	 	$('#marksField'+studentId).removeClass("hidden");
  	 	$('#editBtn'+studentId).addClass("hidden");
  	 	$('#saveBtn'+studentId).removeClass("hidden"); 	 	
  	 }
+ 	 /**
+ 	  * saves obtained marks for individual student and finds obt marks a then handles show hide elments.
+ 	  * @param {[int]} studentId [take studentId for a exam id.]
+ 	  */
  	 function addStudentMark(studentId){
- // /principal/create/mark 		
 		var obt_marks = $('#marksField'+studentId).val();
 		if(obt_marks!==""){
 			var url = "?exam_id="+exam_id+"&student_id="+studentId+"&obt_marks="+obt_marks ;
@@ -192,7 +184,13 @@
 				$('#status'+studentId).fadeOut(3000);
 			});
 		}		
- 	 } 	 
+ 	 }
+ 	 function clearSubjectOptions(){
+
+ 	 } 	
+ 	 function clearExamOptions(){
+ 	 	
+ 	 } 
 </script>
 
 <!-- DASHBOARD ACADEMICS -->
