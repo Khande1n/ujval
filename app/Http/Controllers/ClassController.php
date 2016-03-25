@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Grade;
 use App\School;
 use App\Mark;
+use App\Subject;
 use DB;
 use Session;
 use Auth;
@@ -42,13 +43,18 @@ class ClassController extends Controller
         return view('principal/classroom', compact('countUser'));
     }
 
+    public function grade($grade_id){
+        $grade = Grade::find($grade_id);
+        return json_encode($grade);
+    }
+
     public function students($classId)
     {
-        $studentGrades = Grade::find($classId);
-        $studentdropdown = $studentGrades->students->toArray();                
-        $jsonStudents = json_encode($studentdropdown);
+        $grade = Grade::find($classId);
+        $studentdropdown = $grade->students->toArray();
+        // $jsonStudents = json_encode($studentdropdown);
         // print_r($jsonStudents);
-        $examlists = $studentGrades->exams->flatten()->toArray();
+        $examlists = $grade->exams->flatten()->toArray();
         // print_r(json_encode($examlists));
         $i=0;
 
@@ -60,14 +66,16 @@ class ClassController extends Controller
                 $marks = Mark::where('exam_id',$exam_id)->where('student_id',$student_id);
                 $obt_marks = "";
                 if($marks->count()){
-                    $obt_marks = $marks->first()['obt_marks'];
+                    $obt_marks = $marks->first()["obt_marks"];
                 }
                 $exam["obt_marks"] = $obt_marks;
-                array_push($studentdropdown[$i]['exams'],$exam);
+                $subject = Subject::find($exam["subject_id"]);
+                $exam["subject"] = $subject["subject"];
+                array_push($studentdropdown[$i]["exams"],$exam);
              }
             $i++;
         }
-        print_r(json_encode($studentdropdown));
+        return json_encode($studentdropdown);
     }
 
     /**
