@@ -108,7 +108,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('principal/grade/{grade_id}', 'ClassController@grade');
 
 	Route::get('principal/create/classroom/{classId}', 'ClassController@students');
- 	
+
+	Route::get('principal/pdf','ClassController@createpdf');
+
 	Route::get('principal/create/mark', 'MarkController@savemarks');
 	Route::get('principal/update/mark', 'MarkController@update');
 	Route::get('principal/marks', function() {
@@ -117,6 +119,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('principal/classroom/marks', function() {
 		return view('principal/classes');
 	});
+	        
+	
 	Route::get('api/marks', 'ApiController@allmarks');
 
  	Route::get('principal/attendance', function() {

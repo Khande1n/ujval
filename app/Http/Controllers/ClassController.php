@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App;
+use PDF;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 use App\Grade;
 use App\School;
 use App\Mark;
@@ -51,16 +52,14 @@ class ClassController extends Controller
     public function students($classId)
     {
         $grade = Grade::find($classId);
-        $studentdropdown = $grade->students->toArray();
-        // $jsonStudents = json_encode($studentdropdown);
-        // print_r($jsonStudents);
+        $students = $grade->students->toArray();
         $examlists = $grade->exams->flatten()->toArray();
         // print_r(json_encode($examlists));
         $i=0;
-
-        foreach ($studentdropdown as $student) {
+        
+        foreach ($students as $student) {
             $student_id = $student['id'];
-            $studentdropdown[$i]['exams'] = [];
+            $students[$i]['exams'] = [];
             foreach ($examlists as $exam) {
                 $exam_id = $exam['id'];
                 $marks = Mark::where('exam_id',$exam_id)->where('student_id',$student_id);
@@ -71,13 +70,58 @@ class ClassController extends Controller
                 $exam["obt_marks"] = $obt_marks;
                 $subject = Subject::find($exam["subject_id"]);
                 $exam["subject"] = $subject["subject"];
-                array_push($studentdropdown[$i]["exams"],$exam);
+                array_push($students[$i]["exams"],$exam);
              }
             $i++;
         }
-        return json_encode($studentdropdown);
+        return json_encode($students);
     }
+    public function createpdf() {
+        $grade = Input::get('grad_id') ;
+        $student_id = Input::get('student_id');
 
+        $grade = Grade::find($grade);
+        $student = $grade->students->find($student_id)->toArray();
+        $examlists = $grade->exams->flatten()->toArray();
+        $student['subjects'] = [];
+        // print_r(typeof($student)); 
+        // $student['exams'] = [];
+        foreach ($examlists as $exam) {
+            // print_r(typeof($exam));
+            $subject = Subject::find($exam["subject_id"])['subject'];
+            $exam_id = $exam['id'];
+            $marks = Mark::where('exam_id',$exam_id)->where('student_id',$student_id);
+            $obt_marks = "";
+            if($marks->count()){
+                $obt_marks = $marks->first()["obt_marks"];
+            }            
+            $exam["obt_marks"] = $obt_marks;
+            if($student['subjects']){         
+                if(isset($student['subjects'][$subject])){
+                    array_push($student['subjects'][$subject],$exam);                 
+                }
+                else{
+                    $student['subjects'][$subject]=[];
+                    array_push($student['subjects'][$subject],$exam);                                         
+                }                
+            }
+            else{
+                $student['subjects'][$subject]=[];
+                array_push($student['subjects'][$subject],$exam);  
+            }
+        }
+        $student = json_encode($student);
+        // print_r(json_encode($student));
+        $html = view('pdf/marksheet',compact('student'));
+        // return $html;
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($html);
+        return $pdf->stream();
+
+    }
+    public function createhtml(){
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

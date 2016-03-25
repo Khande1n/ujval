@@ -88,9 +88,18 @@
 								<li><a href="#"><span class="fa fa-calendar"></span>Marks Cut Criteria</a></li> -->
 							</ul>
 						</li>
-						<li>
-							<a href="/principal/marks"><span class=""></span>Marks</a>
-						</li>
+						<li class="xn-openable">
+							<a href="/principal/marks">Marks</a>
+							<ul>
+								<li>
+									<a href="/principal/marks"><span class="fa fa-pencil-square"></span>Create</a>
+								</li>
+								<li>
+									<a href="/principal/classroom/marks"><span class="fa fa-building-o"></span>Classroom</a>
+								</li>
+							</ul>
+						</li>										
+
 					</ul>
 
 					<!-- NAV LINKS ENDS  -->

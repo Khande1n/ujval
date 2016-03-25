@@ -17,7 +17,7 @@
 					 
 				</div>
 				<div class="form-group col-md-3"> 
-					 <input class="btn btn-primary search-all m-t-md" onclick="showClass()" value="Search" type="button"/>							 					
+					 <input class="btn btn-primary search-all m-t-md" onclick="showClass()" value="Search" type="button"/>
 			 	</div>
 				 
 			</form>
@@ -25,7 +25,7 @@
 	</div> 
 	<div id="mark-tab"  >
 		<div class="x-content-title">
-			<h1> Class:</h1>
+			<h1> Class:<span id="className"></span></h1>
 		</div>
 
 		<!-- FORM DETAILS -->
@@ -74,6 +74,8 @@
 		$('#mark-tab').addClass('hidden');
 		gra_id = $('#gradeMarkSelect').val();
 		$.get('/principal/grade/' + gra_id, function(data) {
+			var grade = JSON.parse(data);
+			$('#className').html(" " + grade.grade + grade.grade_section);
 		});
 		$.get('/principal/create/classroom/'+gra_id, function(data){
 			cols = [ {title: "Name"},
@@ -84,14 +86,17 @@
 					title: examObj.exam + " (" + examObj.subject + ")"
 				});
 			});
+			cols.push({title:"MarkSheet"});
 			$.each(JSON.parse(data), function(index, studentObj) {
 				var studentInfo = [];
 				studentInfo.push(studentObj.student,studentObj.guardian1);
 				$.each(studentObj.exams, function(index, examObj) {
 					studentInfo.push(examObj.obt_marks);
 				});
+				exportBtn = '<input class="btn btn-info search-all" value="Export" type="button"/>';
+				studentInfo.push(exportBtn);
 				dataSet.push(studentInfo);
-			});			 
+			});
 			drawDataTable(cols, dataSet);
 		});
 		$('#mark-tab').removeClass('hidden');

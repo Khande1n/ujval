@@ -140,9 +140,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        PragmaRX\Tracker\Vendor\Laravel\ServiceProvider::class,
-    
-
+        PragmaRX\Tracker\Vendor\Laravel\ServiceProvider::class, 
         /*
          * Application Service Providers...
          */
@@ -154,7 +152,7 @@ return [
         App\Providers\ComposerServiceProvider::class,
         Bootstrapper\BootstrapperL5ServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -235,7 +233,7 @@ return [
         'Debugbar'       => Barryvdh\Debugbar\Facade::class,
         'Image'          => Intervention\Image\Facades\Image::class,
         'Tracker'        => PragmaRX\Tracker\Vendor\Laravel\Facade::class,
-
+        'PDF'            => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
