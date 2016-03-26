@@ -93,7 +93,7 @@
 				$.each(studentObj.exams, function(index, examObj) {
 					studentInfo.push(examObj.obt_marks);
 				});
-				exportBtn = '<input class="btn btn-info search-all" value="Export" type="button"/>';
+				exportBtn = '<button class="btn btn-info search-all"> <a target="_"href="marksheet?grad_id='+gra_id+'&student_id='+studentObj.id+'"> Export</a></button>';
 				studentInfo.push(exportBtn);
 				dataSet.push(studentInfo);
 			});

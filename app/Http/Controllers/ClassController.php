@@ -77,11 +77,20 @@ class ClassController extends Controller
         return json_encode($students);
     }
     public function createpdf() {
+
+        
         $grade = Input::get('grad_id') ;
         $student_id = Input::get('student_id');
 
+
         $grade = Grade::find($grade);
         $student = $grade->students->find($student_id)->toArray();
+        foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
+                $value = $v;
+        }
+        $schools = School::find($value);
+        $student['school'] = $schools['school'];
+        $student['grade'] = $grade["grade"].$grade["grade_section"] ;
         $examlists = $grade->exams->flatten()->toArray();
         $student['subjects'] = [];
         // print_r(typeof($student)); 
@@ -110,7 +119,7 @@ class ClassController extends Controller
                 array_push($student['subjects'][$subject],$exam);  
             }
         }
-        $student = json_encode($student);
+        // $student = json_encode($student);
         // print_r(json_encode($student));
         $html = view('pdf/marksheet',compact('student'));
         // return $html;

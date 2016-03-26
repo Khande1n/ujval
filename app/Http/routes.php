@@ -109,13 +109,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('principal/create/classroom/{classId}', 'ClassController@students');
 
-	Route::get('principal/pdf','ClassController@createpdf');
 
 	Route::get('principal/create/mark', 'MarkController@savemarks');
 	Route::get('principal/update/mark', 'MarkController@update');
 	Route::get('principal/marks', function() {
 		return view('principal/marks');
 	});
+	Route::get('principal/classroom/marksheet','ClassController@createpdf');
 	Route::get('principal/classroom/marks', function() {
 		return view('principal/classes');
 	});

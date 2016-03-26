@@ -1,4 +1,16 @@
 <style type="text/css">
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.googleapis.com/css?family=Source+Sans+Pro) format('truetype');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700) format('truetype');
+}
 	html, body, div, span, applet, object, iframe,
 	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 	a, abbr, acronym, address, big, cite, code,
@@ -54,45 +66,48 @@
 	.col-off-5{margin-left: 50%!important;} 
 	.col-off-9{margin-left: 90%!important;} 
 */
-	.bd-lg-green{border:5px solid green;}
-	.bd-default{border: 1px solid green;}
+	.bd-lg-green{border:4px solid green;}
+	.bd-default{border: 1px solid #000;}
 	.bd-none{border: none;}
 	.wrapper{padding: 15px;}
-	td{padding-left:5px; }
+	.m-sm{margin:10px; }
+	td{padding-left:5px;}
 	.col-1,.col-4{float:left;}
 	.col-1 p,.col-4 p{min-height: 24px; }
-	.m-l-xl{margin-left:40px;}
-	.m-t-lg{margin-left:30px;}
+	.m-l-xl{margin-left:40px!important;}
+	.m-l-lg{margin-left:30px!important;}
+	.m-l-md{margin-left:20px!important;}
+	.m-l-sm{margin-left:10px!important;}
+	.m-l-xs{margin-left:5px!important;}
+	.m-r-sm{margin-right:10px!important;}
+	.m-t-xl{margin-top:40px!important;}
+	.m-t-lg{margin-top:30px!important;}
 	.m-t-md{margin-top:20px!important;}	
+	.m-t-sm{margin-top:10px!important;}
+	.m-t-xs{margin-top:5px!important;}
+	.m-b-xl{margin-bottom:40px!important;}
+
+	.text-sm{}
 	.ucase{text-transform: uppercase;}
-	.bold{font-weight: 700;}
 	.pull-left{float: left;}
 	.pull-right{float: right;}
+	.full-height{height: 1090px;}
 </style>
  
-<div class="row">
+<div class="row bd-lg-green m-sm full-height">
     <div class="center">
-    <h4 class="text-success"> 1st Semester Gradesheet
-    </h4>
- <!--    <div class = "wrapper m-l-xl m-t-lg marksheet">
-	    <div class="col-3"><p class="bold ucase bd-default">name</p></div>
-	     
-	    <div class="col-3 "><p class="bd-default">Class-2</p></div>
-	    <div class="col-1"><p class="bd-default">Roll NO</p></div>
-	    
-    </div>
- -->
-
-	 <div class = "wrapper m-l-xl m-t-lg marksheet">
- 	 	<table style="width:100%" class="m-t-md">
+    <h4 class="text-success ucase m-t-md" style="font-weight:bold"> {{$student['school']}} <br>1st Semester Gradesheet
+    </h4> 
+	 <div class = "m-l-sm m-r-sm m-t-xs marksheet">
+ 	 	<table style="width:100%">
 	 		<tr>
 	 			<td>
 				 <table style="width:100%">
 				  <tr>
-				    <td class="col-4 bd-default">Jill</td> 		
+				    <td class="col-4 bd-default text-bold">Name: {{$student['student']}}</td> 		
 				    <td class="col-1"></td>
-				    <td class="col-4"></td> 		
-				    <td class="col-1 bd-default">50</td>
+				    <td class="col-4 bd-default text-bold">Class: {{$student['grade']}} </td> 		
+				    <td class="col-1 bd-default">R. No. {{$student['rollNumber']}} </td>
 
 				  </tr>		  
 				   
@@ -105,36 +120,67 @@
 	 			<td>
 					 <table style="width:100%">
 					  <tr>
-					    <td class="col-4 bd-default">Jill</td> 		
-					    <td class="col-1 bd-default">50</td>
-					  </tr>		  
-					  <tr>
-					    <td>John</td> 
-					    <td>80</td>
+					    <td class="col-4 bd-default">SUBJECTS</td> 		
+					    <td class="col-1 bd-default">  </td>
 					  </tr>
+					  <tr>
+					    <td class="col-4 bd-default"> </td> 		
+					    <td class="col-1 bd-default"> </td>
+					  </tr>	
+					   <tr>
+						    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
+						    <td class="col-1 bd-default"> </td>
+					    </tr>
+					  @foreach($student['subjects'] as $subj => $exams)
+							<tr>
+							    <td class="col-4 bd-default ucase"> {{$subj}}</td> 
+							    <td class="col-1 bd-default"> </td>
+						    </tr>
+						    @foreach($exams as $exam)
+						    	<tr>
+							    <td class="col-4 bd-default m-l-xs"> {{$exam['exam']}}</td> 
+							    <td class="col-1 bd-default"> A+</td>
+						   		</tr>
+						    @endforeach
+						    <tr>
+							    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
+							    <td class="col-1 bd-default"> </td>
+						    </tr>
+					  @endforeach	  
+					  
 					</table>	 				
 	 			</td>
 
 	 			<td>
-				 <table  style="width:100%">
-				  <tr>
-				    <td class="col-4 bd-default">Jill</td> 	
-				    <td class="col-1 bd-default">50</td>
-				  </tr>
-				  <tr>
-				    <td>Eve</td> 
-				    <td>94</td>
-				  </tr>
-				  <tr>
-				    <td>John</td> 		
-				    <td>80</td>
-				  </tr>
-				</table> 
-	 				
+					 <table style="width:100%">
+					  <tr>
+					    <td class="col-4 bd-default">TALENT</td> 		
+					    <td class="col-1 bd-default">  </td>
+					  </tr>
+					  <tr>
+					    <td class="col-4 bd-default"> </td> 		
+					    <td class="col-1 bd-default"> </td>
+					  </tr>	
+					   <tr>
+						    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
+						    <td class="col-1 bd-default"> </td>
+					    </tr>
+					   	  
+					  
+					</table>	 				
 	 			</td>
 	 		</tr>
 	 	</table>
  
+ 		<table style="width:100%" class="m-t-xl m-b-xl">
+ 			<tr>
+ 				<td class="col-4 ">Teacher</td>
+ 				<td class="col-1 ">Principal</td>
+ 				<td class="col-4 "></td>
+ 				<td class="col-1 ">Parents</td>
+ 				
+ 			</tr>
+ 		</table>
 	</div>
 
     </div>
