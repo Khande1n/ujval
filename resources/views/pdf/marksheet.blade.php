@@ -60,8 +60,8 @@
 	.row{width: 100%;position: relative;}
 	.marksheet{line-height: 1.2;} 
 	/*tr td{border: 1px solid #000;}*/
-	.col-4{width: 40%;}
-	.col-1{width: 10%;} 
+	.col-4{width: 250px! important;}
+	.col-1{width: 70px! important;}
 /*	.col-off-4{margin-left: 40%!important;}
 	.col-off-1{margin-left: 10%!important;} 
 	.col-off-5{margin-left: 50%!important;} 
@@ -87,6 +87,9 @@
 	.m-t-sm{margin-top:10px!important;}
 	.m-t-xs{margin-top:5px!important;}
 	.m-b-xl{margin-bottom:40px!important;}
+	.center{text-align: center;}
+	.left{text-align: left;}
+	.right{text-align: right;}
 
 	.text-sm{}
 	.ucase{text-transform: uppercase;}
@@ -106,7 +109,7 @@
 				 <table style="width:100%">
 				  <tr>
 				    <td class="col-4 bd-default text-bold">Name: {{$student['student']}}</td> 		
-				    <td class="col-1"></td>
+				    <td class="col-1"><p style="opacity:0"></p> </td>
 				    <td class="col-4 bd-default text-bold">Class: {{$student['grade']}} </td> 		
 				    <td class="col-1 bd-default">R. No. {{$student['rollNumber']}} </td>
 
@@ -123,11 +126,7 @@
 					  <tr>
 					    <td class="col-4 bd-default">SUBJECTS</td> 		
 					    <td class="col-1 bd-default">  </td>
-					  </tr>
-					  <tr>
-					    <td class="col-4 bd-default"> </td> 		
-					    <td class="col-1 bd-default"> </td>
-					  </tr>	
+					  </tr> 
 					   <tr>
 						    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
 						    <td class="col-1 bd-default"> </td>
@@ -142,7 +141,7 @@
 						    @foreach($subjs['exams'] as $exam)
 						    	<tr>
 							    <td class="col-4 bd-default m-l-xs"> {{$exam['exam']}}</td> 
-							    <td class="col-1 bd-default"> {{$exam['obt_grade']}} </td>
+							    <td class="col-1 bd-default center"> {{$exam['obt_grade']}} </td>
 						   		</tr>
 						   		<?php $i++; ?>
 						    @endforeach
@@ -162,10 +161,7 @@
 					    <td class="col-4 bd-default">TALENT</td> 		
 					    <td class="col-1 bd-default">  </td>
 					  </tr>
-					  <tr>
-					    <td class="col-4 bd-default"> </td> 		
-					    <td class="col-1 bd-default"> </td>
-					  </tr>	
+
 					   	<tr>
 						    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
 						    <td class="col-1 bd-default"> </td>
@@ -177,10 +173,6 @@
 					  <tr >
 					    <td style="width:100%;height:{{($i-2)*20}}px;" class="bd-default"><p style="opacity:0;"> empty coln</p></td> 	
 					  </tr>
-					  <tr >
-					    <td style="width:100%;" class="bd-default"></td> 	
-					  </tr>
-					    </tr>
 					</table>						 				
 	 			</td>
 	 		</tr>
@@ -188,10 +180,10 @@
  
  		<table style="width:100%" class="m-t-xl m-b-xl">
  			<tr>
- 				<td class="col-4 ">Teacher</td>
- 				<td class="col-1 ">Principal</td>
- 				<td class="col-4 "></td>
- 				<td class="col-1 ">Parents</td>
+ 				<td class="col-4">Teacher</td>
+ 				<td class="col-1 left">Principal</td>
+ 				<td class="col-4 right">Parents</td>
+ 				<td class="col-1"><p style="opacity:0"></p></td>
  				
  			</tr>
  		</table>

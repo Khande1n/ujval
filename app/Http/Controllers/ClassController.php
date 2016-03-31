@@ -80,23 +80,21 @@ class ClassController extends Controller
     }
     public function createpdf() {
 
-        
         $grade = Input::get('grad_id') ;
         $student_id = Input::get('student_id');
-
-
         $grade = Grade::find($grade);
         $student = $grade->students->find($student_id)->toArray();
+
         foreach(Auth::user()->schools()->lists('school_id')->toArray() as $k => $v){
                 $value = $v;
         }
+
         $schools = School::find($value);
         $student['school'] = $schools['school'];
         $student['grade'] = $grade["grade"].$grade["grade_section"] ;
         $examlists = $grade->exams->flatten()->toArray();
         $student['subjects'] = [];
-        // print_r(typeof($student)); 
-        // $student['exams'] = [];
+
         foreach ($examlists as $exam) {
             $subject = Subject::find($exam["subject_id"])['subject'];
             $exam_id = $exam['id'];
@@ -104,10 +102,11 @@ class ClassController extends Controller
             $obt_marks = "";
             if($marks->count()){
                 $obt_marks = $marks->first()["obt_marks"];
-            }            
+            }
             $exam["obt_marks"] = $obt_marks;
             $opt_marks = (intval($obt_marks) * 100)/intval($exam['max_marks']);
             $sub_marks = ($opt_marks*$exam['weightage'])/100;
+            // absolute marks for grade calculation
             $abs_marks = intval(round($opt_marks));
             $exam["opt_marks"] = $obt_marks;
             if($abs_marks >=90)
@@ -120,11 +119,13 @@ class ClassController extends Controller
                 $exam["obt_grade"] = "C";
             else
                 $exam["obt_grade"] = "D";
+            // create subeject json, if not exist create subject key else add elements to it.
             if($student['subjects']){
                 if(isset($student['subjects'][$subject])){
                     $student['subjects'][$subject]['opt_marks'] += $sub_marks;
                     array_push($student['subjects'][$subject]['exams'],$exam);                 
                 }
+                // particular subject occur for the first time.
                 else{
                     $student['subjects'][$subject]=[];
                     $student['subjects'][$subject]['opt_marks'] = $sub_marks;
@@ -132,6 +133,7 @@ class ClassController extends Controller
                     array_push($student['subjects'][$subject]['exams'],$exam);
                 }                
             }
+            // a subject occur for the first time.
             else{
                 $student['subjects'][$subject]=[];
                 $student['subjects'][$subject]['opt_marks'] = $sub_marks;
@@ -139,7 +141,7 @@ class ClassController extends Controller
                 array_push($student['subjects'][$subject]['exams'],$exam);
             }
         }
-
+        // find final grade of each subject
         foreach ($student['subjects'] as $key => $subject) {
             $abs_marks = intval(round($subject['opt_marks']));
             if($abs_marks >=90)
@@ -153,21 +155,11 @@ class ClassController extends Controller
             else
                 $student['subjects'][$key]["obt_grade"] = "D";
         }
-        // print_r(json_encode($student['subjects']));
+        // create dompdf laravel pdf
         $html = view('pdf/marksheet',compact('student'));
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML($html);
-       return $pdf->stream();
-
-//        $snappy = new SPDF(base_path('vendor/bin/wkhtmltopdf-amd64'));
-        // return new Response(
-        //     $snappy->getOutputFromHtml($html),
-        //     200,
-        //     array(
-        //         'Content-Type'          => 'application/pdf',
-        //         'Content-Disposition'   => 'attachment; filename="'.$student_id.'.pdf"'
-        //     )
-        // );
+        return $pdf->stream();
     }
     public function createhtml(){
     }
