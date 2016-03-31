@@ -153,6 +153,7 @@ return [
         Bootstrapper\BootstrapperL5ServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'Image'          => Intervention\Image\Facades\Image::class,
         'Tracker'        => PragmaRX\Tracker\Vendor\Laravel\Facade::class,
         'PDF'            => Barryvdh\DomPDF\Facade::class,
+        'SPDF'           => Barryvdh\Snappy\Facades\SnappyPdf::class,
     ],
 
 ];

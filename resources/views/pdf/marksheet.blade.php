@@ -1,3 +1,4 @@
+<style type="text/css" href=""></style>
 <style type="text/css">
 @font-face {
   font-family: 'Open Sans';
@@ -97,7 +98,7 @@
 <div class="row bd-lg-green m-sm full-height">
     <div class="center">
     <h4 class="text-success ucase m-t-md" style="font-weight:bold"> {{$student['school']}} <br>1st Semester Gradesheet
-    </h4> 
+    </h4>
 	 <div class = "m-l-sm m-r-sm m-t-xs marksheet">
  	 	<table style="width:100%">
 	 		<tr>
@@ -118,7 +119,7 @@
 	 	<table style="width:100%" class="m-t-md">
 	 		<tr>
 	 			<td>
-					 <table style="width:100%">
+					 <table style="width:100%" id="leftTable">
 					  <tr>
 					    <td class="col-4 bd-default">SUBJECTS</td> 		
 					    <td class="col-1 bd-default">  </td>
@@ -131,28 +132,32 @@
 						    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
 						    <td class="col-1 bd-default"> </td>
 					    </tr>
-					  @foreach($student['subjects'] as $subj => $exams)
+					    <?php $i=2; ?>
+					  @foreach($student['subjects'] as $subj => $subjs)
 							<tr>
 							    <td class="col-4 bd-default ucase"> {{$subj}}</td> 
-							    <td class="col-1 bd-default"> </td>
+							    <td class="col-1 bd-default"></td>
 						    </tr>
-						    @foreach($exams as $exam)
+						    <?php $i++; ?>
+						    @foreach($subjs['exams'] as $exam)
 						    	<tr>
 							    <td class="col-4 bd-default m-l-xs"> {{$exam['exam']}}</td> 
-							    <td class="col-1 bd-default"> A+</td>
+							    <td class="col-1 bd-default"> {{$exam['obt_grade']}} </td>
 						   		</tr>
+						   		<?php $i++; ?>
 						    @endforeach
 						    <tr>
 							    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
 							    <td class="col-1 bd-default"> </td>
 						    </tr>
-					  @endforeach	  
+						    <?php $i++; ?>
+					  @endforeach  
 					  
 					</table>	 				
 	 			</td>
 
 	 			<td>
-					 <table style="width:100%">
+					 <table style="width:100%" id="rightTableHeader">
 					  <tr>
 					    <td class="col-4 bd-default">TALENT</td> 		
 					    <td class="col-1 bd-default">  </td>
@@ -161,13 +166,22 @@
 					    <td class="col-4 bd-default"> </td> 		
 					    <td class="col-1 bd-default"> </td>
 					  </tr>	
-					   <tr>
+					   	<tr>
 						    <td class="col-4 bd-default"><p style="opacity:0"> empty coln</p></td> 
 						    <td class="col-1 bd-default"> </td>
 					    </tr>
 					   	  
 					  
-					</table>	 				
+					</table>
+					<table style="width:100%;" id="remarksTable">
+					  <tr >
+					    <td style="width:100%;height:{{($i-2)*20}}px;" class="bd-default"><p style="opacity:0;"> empty coln</p></td> 	
+					  </tr>
+					  <tr >
+					    <td style="width:100%;" class="bd-default"></td> 	
+					  </tr>
+					    </tr>
+					</table>						 				
 	 			</td>
 	 		</tr>
 	 	</table>
