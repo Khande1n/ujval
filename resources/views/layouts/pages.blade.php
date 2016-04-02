@@ -98,8 +98,18 @@
 									<a href="/principal/classroom/marks"><span class="fa fa-building-o"></span>Classroom</a>
 								</li>
 							</ul>
+						</li>
+						<li class="xn-openable">
+							<a href="/principal/marks">Attendance</a>
+							<ul>
+								<li>
+									<a href="/principal/attendance"><span class="fa fa-pencil-square"></span>Create</a>
+								</li>
+								<li>
+									<a href="/principal/classroom/attendance"><span class="fa fa-building-o"></span>View Attendance</a>
+								</li>
+							</ul>
 						</li>										
-
 					</ul>
 
 					<!-- NAV LINKS ENDS  -->

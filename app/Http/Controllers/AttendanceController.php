@@ -68,6 +68,16 @@ class AttendanceController extends Controller
 		return redirect('principal/classroom#attendance-tab') -> withInput();
 	}
 
+	public function allAttendance(){
+        $gra_id = Input::get('gra_id');
+		$attendances = Attendance::all();
+		$attendanceStudents = $attendances->students->flatten()->toArray();
+	}
+	
+	public function saveAttendance(){
+		// /api/student-dropdown?gra+id=' + gra_id+"&sub="+sub_id+"&exam="+exam_id
+		echo 'sahil';
+	}
     /**
      * Display the specified resource.
      *
