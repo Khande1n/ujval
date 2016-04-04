@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('api/staff/marks', 'DashboardController@staffMarks');
 	Route::get('api/staff/attendance', 'DashboardController@staffAttendance');
 	Route::get('api/student-dropdown', 'ApiController@studentDropDown');
-	Route::get('api/student-dropdown2', 'ApiController@studentDropDown2');
+	Route::get('api/student-dropdown2/{grad_id}', 'ApiController@studentDropDown2');
 	Route::get('api/subject/exams/average', 'ApiController@examAverageChart');
 	
 
@@ -124,7 +124,9 @@ Route::group(['middleware' => 'auth'], function() {
 	
 	Route::get('api/marks', 'ApiController@allmarks');
 
- 	Route::get('principal/create/attendance', 'AttendanceController@saveAttendance'); 
+ 	Route::get('principal/create/attendance', 'AttendanceController@saveAttendance');
+ 	Route::get('principal/attendances/{gra_id}', 'AttendanceController@allAttendance'); 
+
  	Route::get('principal/attendance', function() {
 		return view('principal/attendance');
 	}); 	

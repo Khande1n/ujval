@@ -64,9 +64,9 @@ class ApiController extends Controller
         return $jsonStudents;
     }
 
-    public function studentDropDown2()
+    public function studentDropDown2($gra_id)
     {
-        $gra_id = Input::get('gra_id');
+        // $gra_id = Input::get('gra_id');
         $studentdropdown = Grade::find($gra_id)->students->toArray();
         $jsonStudents = json_encode($studentdropdown);
         return $jsonStudents;

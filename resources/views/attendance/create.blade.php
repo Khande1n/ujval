@@ -55,8 +55,7 @@
 		            { title: "Guardian" },
 		            { title: "Email" },
 		            { title: "Sex" },
-		            { title: "Present" },
-		            { title: "Save" }
+		            { title: "Mark if Absent" }
 		        ]
 	    	} );
 	    	studentTable = $('#example').dataTable();
@@ -76,27 +75,32 @@
 	 function findAllstudent(gra_id){
 	 	dataSet = [];
 
-		$.get('/api/student-dropdown2?gra+id=' + gra_id, function(data) {
+		$.get('/api/student-dropdown2/' + gra_id, function(data) {
 			//success data
 			console.log(data);
-			// studentTable.fnClearTable();
-			// $.each(JSON.parse(data), function(index, studentObj) {
-			// 	dataSet.push(createStudentData(studentObj));
+			$.each(JSON.parse(data), function(index, studentObj) {
+				dataSet.push(createStudentData(studentObj));
+			});
+			studentTable.fnClearTable();
+			studentTable.fnAddData(dataSet);
+			
+			// $.get('/principal/attendances', function(data) {
+			// 		console.log(data);
+			
 			// });
-			// studentTable.fnAddData(dataSet);
+			
 		});
 	 }
 
 	 function createStudentData(studentObj){
-	 	// var marksColumn;
+	 	var AttendanceColumn;
 	 	// if(studentObj.mark ===''){
 	 	// 	marksColumn = '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control" id="marksField'+studentObj.id+'"value="" name="obt_marks" placeholder="Enter marks" required=""><p class="hidden" id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default hidden" onclick="showInput('+studentObj.id+')" id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button></div> <span id="status'+studentObj.id+'"class="text-success" style="display: none;">saved!</span> </div></th>';
 	 	// }
 	 	// else{
-	 	// 	marksColumn = '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control hidden" id="marksField'+studentObj.id+'" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required=""><p id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="showInput('+studentObj.id+')"id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default hidden" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button><span id="status'+studentObj.id+'" class="text-success"style="display: none;">saved!</span> </div> </div></th>';
+	 		AttendanceColumn = '<th><div class="row"><div class="col-md-8"> <input type="integer" class="form-control hidden" id="marksField'+studentObj.id+'" value="'+studentObj.mark+'" name="obt_marks" placeholder="Enter marks" required=""><p id="studentMarks'+studentObj.id+'">'+studentObj.mark+'</p></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="showInput('+studentObj.id+')"id="editBtn'+studentObj.id+'">Edit </button><button type="button" class="btn btn-default hidden" id="saveBtn'+studentObj.id+'" onclick="addStudentMark('+studentObj.id+')">Save </button><span id="status'+studentObj.id+'" class="text-success"style="display: none;">saved!</span> </div> </div></th>';
 	 	// }
-		// var data = [studentObj.student, studentObj.email, studentObj.gender , marksColumn] ;
-		var data = [1, 2, 3 , 4, 5, 6] ;
+		var data = [studentObj.student, studentObj.guardian1, studentObj.email, studentObj.gender , AttendanceColumn ] ;
 		return data; 	 	
  	 }
 	/**
