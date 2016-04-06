@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\CreateStudentRequest;
-
+use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
 use App\Student;
 use App\User;
+use App\Grade;
 use App\Attendance;
 use App\AttendanceUser;
 use App\ApiController as API;
@@ -71,36 +72,6 @@ class AttendanceController extends Controller
 		return redirect('principal/classroom#attendance-tab') -> withInput();
 	}
 
-	public function allAttendance($gra_id){
-
-		// $attendances = Attendance::all();
-		$students = app('App\Http\Controllers\ApiController')->studentDropDown2($gra_id);
-		$students =  json_decode($students);
-		// print_r(sizeof($students));
-		$attendances = [];
-		foreach ($students as $student) { 
-	        $attendance = Attendance::where('present_id',$student->id)->get();
-			$attendances[$student->id] = $attendance; 			 
-		}
-		return $attendances;
-	}
-
-	// public function students()
- //    {
- //    	print_r($this->present_id);
-        // return $this->hasOne('App\Student');
-    // }
-	
-	public function saveAttendance(){
-		// /api/student-dropdown?gra+id=' + gra_id+"&sub="+sub_id+"&exam="+exam_id
-		$student_id = Input::get('student_id');
-
-		$attendanceStudent = Attendance::create([
-			'attendance' 	=> 'A',
-			'present_id' 	=> $student_id			 
-		]);
-			 
-	}
 
 
     /**
@@ -191,5 +162,58 @@ class AttendanceController extends Controller
 	public function search(Request $request)
     {
     	
+	}
+
+	public function allAttendance($gra_id){
+ 
+		$students = app('App\Http\Controllers\ApiController')->studentDropDown2($gra_id);
+		$students =  json_decode($students);
+		// print_r(sizeof($students));
+		$attendances = [];
+		foreach ($students as $student) { 
+	        $attendance = Attendance::where('present_id',$student->id)->get();
+			$attendances[$student->id] = $attendance; 			 
+		}
+		return view('principal.attendances', compact('attendances','students'));
+	}
+
+	public function saveAttendance(){ 
+
+		$student_id = Input::get('student_id');
+		$attendance = Input::get('attendance');
+		$dt = Carbon::now();
+		$dt = $dt->toDateString();		
+		$att = Attendance::where('present_id',$student_id)->where('created_at','LIKE',"%$dt%")->first();
+		if(count($att)){
+			Attendance::destroy($att->id);
+			$data = array('status'=>'success',
+						'response' => 'marked present'
+					);
+		}
+		else{
+			$attendanceStudent = Attendance::create([
+				'attendance' 	=> $attendance,
+				'present_id' 	=> $student_id,
+				'present_type'	=> 'App\Student'		 
+			]);			
+			$data = array('status'=>'success',
+						'response' => 'marked absent'
+					);
+		}
+		return json_encode($data);
+	}
+
+	public function students($gra_id){
+		$studentdropdown = Grade::find($gra_id)->students->toArray();
+		$dt = Carbon::now();
+		$dt = $dt->toDateString();
+		foreach ($studentdropdown as $key => $student) {
+			$att = Attendance::where('present_id',$student['id'])->where('created_at','LIKE',"%$dt%")->first();
+			if(count($att)){
+				$studentdropdown[$key]['attendance'] = $att->attendance;
+			}
+		}
+        $jsonStudents = json_encode($studentdropdown);
+        return $jsonStudents;
 	}
 }

@@ -11221,3 +11221,20 @@ li.ext_zip {
   }
 }
 .m-t-md{margin-top: 20px;}
+
+.squaredCheck input[type=checkbox] {
+  visibility: hidden;
+}
+.squaredCheck label {
+    cursor: pointer;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 0;
+    border-radius: 4px;
+    background-image: url('../img/icons/lite-x-red.png');
+    background-repeat: no-repeat; 
+    background-position: 0% 0%;
+}
+.label-x-red{    background-position: 0% 100%!important;} 
+.label-x-blank{    background-position: 0% 0%!important;} 
