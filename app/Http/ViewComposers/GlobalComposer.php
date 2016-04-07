@@ -39,13 +39,18 @@ class GlobalComposer {
 			
 			$view->with('schoolId', $value);   //sharing of school id across views
 			
-			$view ->with('gradelists', DB::table('grades')
-						->where( 'school_id', '=', $value)
-						->get());
-			
 			$gradelists = DB::table('grades')->where( 'school_id', '=', $value)->get();
-						
-						
+			foreach($gradelists as $k=>$grade){
+				$students = Grade::find($grade->id)->students->flatten()->toArray();
+				$studentlists[] = $students;
+				$gradelists[$k]->studentCount = sizeof($students);
+			}
+ 
+			$view ->with('gradelists', $gradelists);
+			
+
+
+			// print_r(json_encode($gradelists));						
 			//Auth User School 
 			
 			$schools = School::find($value);

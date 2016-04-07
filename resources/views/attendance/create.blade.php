@@ -18,7 +18,7 @@
 							 
 								<select class="form-control" name="grade_id" id="gradeMarkSelect">
 									@foreach($gradelists as $grade)
-									<option value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
+									<option id = "gradeMark{{ $grade->id }}" class="hidden" value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
 									@endforeach
 								</select>
 							 
@@ -54,12 +54,37 @@
                 <h4 class="modal-title">Select Classes for attendance.</h4>
             </div>
             <div class="modal-body">
-                <p>Do you want to save changes you made to document before closing?</p>
-                <p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>
+            	<div class="row m-b-sm">
+	            	<div class="btn-group pull-right">
+						<button class="btn btn-default">TODAY: {{$nowTime}}</button>
+					</div>
+				</div>
+				<div class="row">	
+					@foreach($gradelists as $grade)
+		            	<div class="col-md-4">
+			            	<div class="content-box">
+		            			<div class="box-image" id="grade{{$grade->id}}" onClick="selectClass({{$grade->id}})">
+		            				<span class="helper"></span>
+		            				<img class="class-icon" src="../img/icons/class.png">            				
+		            				<img class="check-icon hidden" src="../img/icons/check2.png">
+		            			</div>
+		            			<div class="info m-t-sm">            				
+					                <p>Class: {{ $grade->grade }}.{{ $grade->grade_section }}</p>
+					                <p class="text-warning"><small>Total Students: {{$grade->studentCount}} </small></p>
+		            			</div>
+		            		</div>    
+		                </div>
+					@endforeach				
+				</div>
+				<div class="row m-t-md">	
+					<div class="pull-right">
+						 <p class="text-warning"><small>*if no class today then click on save changes directly</small></p>
+					</div>
+				</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" onclick="saveClasses()">Save changes</button>
             </div>
         </div>
     </div>
@@ -67,9 +92,58 @@
 @section('graphscript')
 
 	<script>
+
 	$(document).ready(function(){
-        $("#myModal").modal('show');
+		$.get("/principal/classroom/attendances/classes",function(data){
+			console.log(data);
+			if(!data.length)
+		        $("#myModal").modal('show');			
+			else{
+				for(var i=0;i<data.length;i++){
+					console.log(data[i]);
+					$("#gradeMark"+data[i]['grade_id']).removeClass('hidden');
+				}
+			}
+
+		},"json");
 	});
+
+	var selectedGrades = []
+	function selectClass(gra_id){
+		var index = selectedGrades.indexOf(gra_id);
+		if(index==-1)
+			selectedGrades.push(gra_id);
+		else
+			selectedGrades.splice(index,1);
+
+		var checkImg = $("#grade"+gra_id).find("img.check-icon");
+
+		if(checkImg.hasClass('hidden')){
+			$("#grade"+gra_id).find("img.check-icon").removeClass("hidden");
+			$("#grade"+gra_id).find("img.class-icon").addClass("on-hover");
+		}
+		else{
+			$("#grade"+gra_id).find("img.check-icon").addClass("hidden");
+			$("#grade"+gra_id).find("img.class-icon").removeClass("on-hover");
+		}
+	}
+	function saveClasses(){
+		var len = selectedGrades.length;
+		var count = 0;
+		if(len){			
+			for(i in selectedGrades){
+				$.get( "/principal/classroom/attendances/save/"+selectedGrades[i], function( data ) {
+					count+=1;					
+					if(count==len){
+						$('#myModal').modal('hide');
+					}
+				});
+			}
+		}
+		else
+			$('#myModal').modal('hide');
+	}
+
 	</script>
 
 	<script>

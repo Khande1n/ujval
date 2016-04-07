@@ -11220,7 +11220,6 @@ li.ext_zip {
     margin-left: 0px;
   }
 }
-.m-t-md{margin-top: 20px;}
 
 .squaredCheck input[type=checkbox] {
   visibility: hidden;
@@ -11238,3 +11237,50 @@ li.ext_zip {
 }
 .label-x-red{    background-position: 0% 100%!important;} 
 .label-x-blank{    background-position: 0% 0%!important;} 
+
+.content-box{
+  text-align: center;
+}
+.content-box .box-image{
+  height: 150px; 
+  text-align: center;
+  cursor: pointer;
+}
+.content-box .box-image .class-icon{  
+  width:150px;
+  height: 150px;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.content-box .box-image .check-icon{
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    /*display: none;*/
+    position: absolute;
+    top: 55px;
+    left: 75px;
+    opacity: 0.8;
+}
+
+.content-box .box-image:hover .class-icon, .content-box .box-image .class-icon.on-hover{
+    background: #fff;
+    opacity: 0.4;
+    white-space: nowrap;
+}
+.content-box .box-image:hover .check-icon{
+  display: inline-block! important;
+}
+.info p{
+  font-size: 13px;
+  font-weight: 700;
+}
+.info p small{font-size: 11px;}
+p.text-warning{margin-bottom: 0}
+.m-t-md{margin-top: 20px;}
+.m-t-sm{margin-top: 10px;}
+.m-b-sm{margin-bottom: 10px;}

@@ -45,7 +45,7 @@ class ClassController extends Controller
                     
         return view('principal/classroom', compact('countUser'));
     }
-
+    
     public function grade($grade_id){
         $grade = Grade::find($grade_id);
         return json_encode($grade);
@@ -78,6 +78,7 @@ class ClassController extends Controller
         }
         return json_encode($students);
     }
+
     public function createpdf() {
 
         $grade = Input::get('grad_id') ;

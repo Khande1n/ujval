@@ -13,6 +13,7 @@ use App\Student;
 use App\User;
 use App\Grade;
 use App\Attendance;
+use App\AttendanceDay;
 use App\AttendanceUser;
 use App\ApiController as API;
 use Auth;
@@ -215,5 +216,26 @@ class AttendanceController extends Controller
 		}
         $jsonStudents = json_encode($studentdropdown);
         return $jsonStudents;
+	}
+
+	public function classes(){
+		$dt = Carbon::now();
+		$dt = $dt->toDateString();
+
+		$days = AttendanceDay::where('date','=',"2016-04-07")->get();
+		print_r(json_encode($days));
+	}
+	public function saveClasses($gra_id){
+
+		$dt = Carbon::now();
+		$dt = $dt->toDateString();
+		$attendanceStudent = AttendanceDay::create([
+			'grade_id' 	=> $gra_id,
+			'date' 	=> $dt
+		]);
+		$data = array('status'=>'success',
+			'response' => 'class present'
+		);
+		return json_encode($data);
 	}
 }

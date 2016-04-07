@@ -131,8 +131,11 @@ Route::group(['middleware' => 'auth'], function() {
 		return view('principal.attendances');
 	});
 
+ 	Route::get('principal/classroom/attendances/classes', 'AttendanceController@classes'); 
+ 	Route::get('principal/classroom/attendances/save/{gra_id}', 'AttendanceController@saveClasses'); 
+ 	
  	Route::get('principal/attendances/{gra_id}', 'AttendanceController@allAttendance'); 
-
+ 	
 
  	Route::get('principal/attendance', function() {
 		return view('principal/attendance');
