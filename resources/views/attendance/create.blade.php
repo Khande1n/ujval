@@ -17,6 +17,7 @@
 							<label class="">Select Class</label>
 							 
 								<select class="form-control" name="grade_id" id="gradeMarkSelect">
+									<option  class="hidden" value=""></option>
 									@foreach($gradelists as $grade)
 									<option id = "gradeMark{{ $grade->id }}" class="hidden" value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
 									@endforeach
@@ -38,10 +39,20 @@
 		<div class="x-chart-widget-content">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<div class="table-responsive">						
+
+					<div class="row" id="students">	
+						 			
+					</div>
+<!-- 					<div class="table-responsive">						
 						<table id="example" class="table datatable" width="100%"></table>
 					</div>
-				</div>
+ -->			</div>
+ 				<div class="panel-footer">
+ 					<div class="pull-right m-t-sm">
+			            <!-- <button type="button" class="btn btn-default" onclick="noClass()">No Class Today</button> -->
+			            <button type="button" class="btn btn-primary" onclick="submitAttendance()">Save changes</button> 						
+ 					</div>
+ 				</div>
 			</div> 
 		</div> 
 	</div>
@@ -84,7 +95,7 @@
             </div>
             <div class="modal-footer">
             	<p class="text-danger pull-left hidden" id="noClassMsg"> <small> *no class today</small></p>
-                <button type="button" class="btn btn-default" onclick="noClass()">No Class Today</button>
+                <button type="button" class="btn btn-default" onclick="selectGradeNone()">No Class Today</button>
                 <button type="button" class="btn btn-primary" onclick="saveClasses()">Save changes</button>
             </div>
         </div>
@@ -109,7 +120,9 @@
 	});
 
 	var selectedGrades = []
+	var selectedStudents = []
 	function selectClass(gra_id){
+
 		var index = selectedGrades.indexOf(gra_id);
 		if(index==-1)
 			selectedGrades.push(gra_id);
@@ -127,7 +140,26 @@
 			$("#grade"+gra_id).find("img.class-icon").removeClass("on-hover");
 		}
 	}
-	function noClass(){
+
+	function selectStudent(student_id){
+
+		var index = selectedStudents.indexOf(student_id);
+		if(index==-1)
+			selectedStudents.push(student_id);
+		else
+			selectedStudents.splice(index,1);
+
+		var checkImg = $("#student"+student_id).find(".cross-icon img");
+		if(checkImg.hasClass('hidden')){ 
+			$("#student"+student_id).find(".cross-icon img").removeClass("hidden");
+			$("#student"+student_id).find("img.class-icon").addClass("on-hover");
+		}
+		else{ 
+			$("#student"+student_id).find(".cross-icon img").addClass("hidden");
+			$("#student"+student_id).find("img.class-icon").removeClass("on-hover");
+		}
+	}
+	function selectGradeNone(){
 		$("#noClassMsg").removeClass("hidden");
 		window.setTimeout(function () {
 	        window.location.href = "/principal/dashboard";
@@ -143,6 +175,8 @@
 					count+=1;					
 					if(count==len){
 						$('#myModal').modal('hide');
+						window.location.href = "/principal/attendance";
+					    	 
 					}
 				});
 			}
@@ -152,46 +186,26 @@
 	}
 
 	</script>
-
-	<script>
-		var dataSet = []; 
-		var studentTable ;
-		$(document).ready(function() {
-	    	$('#example').DataTable( {
-		        data: dataSet,
-		        columns: [
-		            { title: "Name" },
-		            { title: "Guardian" },
-		            { title: "Email" },
-		            { title: "Sex" },
-		            { title: "Mark if Absent" }
-		        ]
-	    	} );
-	    	studentTable = $('#example').dataTable();
-	});
+ 
+<script>
 
 	var gra_id = null;
 	gra_id = $('#gradeMarkSelect').val();
-
-</script>
-<script>
-
  	function showStudents(){
 		gra_id = $('#gradeMarkSelect').val();
  		findAllstudent(gra_id);
  	 }
-
+ 	 var students="";
 	 function findAllstudent(gra_id){
-	 	dataSet = [];
-
+	 	 
 		$.get('/principal/attendances/classroom/' + gra_id, function(data) {
 			//success data
+			students = data;
+			$("#students").html("");
 			$.each(JSON.parse(data), function(index, studentObj) {
-				dataSet.push(createStudentData(studentObj));
-			});
-			studentTable.fnClearTable();
-			studentTable.fnAddData(dataSet);
-			 	
+				var html = createStudentDiv(studentObj);
+				$("#students").append(html);
+			}); 			 	
 		});
 	 }
 	function checkBoxStyle(studentId){
@@ -204,36 +218,40 @@
 			$('#checkBox'+studentId).addClass('label-x-red');
 			$('#checkBox'+studentId).removeClass('label-x-blank');			
 	}
+ 
+// AttendanceColumn = '<th><div class="row"><div class="col-md-8 squaredCheck"> <input type="checkbox" value="None" id="squaredCheck'+studentObj.id+'" name="check"'+checked+'" onclick="checkBoxStyle('+studentObj.id+')"/><label id="checkBox'+studentObj.id+'" for="squaredCheck'+studentObj.id+'" class="'+cssClass+'"></label></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="submitForm('+studentObj.id+')" > Save </button> <span id="status'+studentObj.id+'" class="text-success" style="display: none;">saved!</span> </div> </div></th>';
 
-	 function createStudentData(studentObj){
-	 	var AttendanceColumn;
- 		var checked = "";
- 		var cssClass = "label-x-blank";
- 		if(studentObj.attendance){
- 			checked = "checked";
- 			cssClass = "label-x-red";
- 		}
- 		AttendanceColumn = '<th><div class="row"><div class="col-md-8 squaredCheck"> <input type="checkbox" value="None" id="squaredCheck'+studentObj.id+'" name="check"'+checked+'" onclick="checkBoxStyle('+studentObj.id+')"/><label id="checkBox'+studentObj.id+'" for="squaredCheck'+studentObj.id+'" class="'+cssClass+'"></label></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="submitForm('+studentObj.id+')" > Save </button> <span id="status'+studentObj.id+'" class="text-success" style="display: none;">saved!</span> </div> </div></th>';
-
-		var data = [studentObj.student, studentObj.guardian1, studentObj.email, studentObj.gender , AttendanceColumn ] ;
-		return data; 	 	
- 	 }
 	/**
 	 * submitForm: saves student attendance
 	 * @param  {int} studentId 
 	 */
- 	 function submitForm(studentId){
-		var val = $('#squaredCheck'+studentId).is(":checked") ;
-		 
-		if(val)
-			attendance = 'A';
-		else
-			attendance = 'P';
-		var url = '?student_id=' + studentId + '&attendance=' + attendance ;
-		$.get('/principal/create/attendance'+url , function(data) {
-			$('#status'+studentId).fadeIn(1000);
-			$('#status'+studentId).fadeOut(3000);
-		});		 		
+ 	 function submitAttendance(){
+		var len = selectedStudents.length; 	 	
+ 	 	for(var i in selectedStudents){
+			var url = '?student_id=' + selectedStudents[i]+'&attendance=A';
+			$.get('/principal/create/attendance'+url , function(data) {
+				if(i==len-1){
+					window.location.href = "/principal/attendance";		
+				}	
+			});	
+ 	 	}
+ 	 }
+
+ 	 function createStudentDiv(studentObj){
+ 	 	var html= '<div class="col-md-2">';
+			html += '<div class="content-box">';
+			html += '<div class="box-image" id="student'+studentObj.id+'" onClick="selectStudent('+studentObj.id+')">';
+			html += '<span class="helper"></span>';
+			html += '<img class="class-icon" src="../img/icons/class.png">'     ;       				
+			html += '<div class="cross-icon"><img class="hidden" src="../img/icons/cross3.png"></div>';
+			html += '</div>';
+			html += '<div class="info m-t-sm">' ;           				
+			html += '<p>'+studentObj.student+'</p>';
+			// html += '<p class="text-warning"> Total Students: 5  </p>';
+			html += '</div>';
+			html += '</div>';    
+			html += '</div>';
+	    return html;
  	 }
 
 </script>

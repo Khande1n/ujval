@@ -186,10 +186,12 @@ class AttendanceController extends Controller
 		$dt = $dt->toDateString();		
 		$att = Attendance::where('present_id',$student_id)->where('created_at','LIKE',"%$dt%")->first();
 		if(count($att)){
-			Attendance::destroy($att->id);
-			$data = array('status'=>'success',
-						'response' => 'marked present'
-					);
+			if($attendance=="P"){				
+				Attendance::destroy($att->id);
+				$data = array('status'=>'success',
+							'response' => 'marked present'
+						);
+			}
 		}
 		else{
 			$attendanceStudent = Attendance::create([
