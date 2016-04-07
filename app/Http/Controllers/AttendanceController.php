@@ -175,7 +175,8 @@ class AttendanceController extends Controller
 	        $attendance = Attendance::where('present_id',$student->id)->get();
 			$attendances[$student->id] = $attendance; 			 
 		}
-		return view('principal.attendances', compact('attendances','students'));
+		return json_encode($attendances);
+		// return view('principal.attendances', compact('attendances','students'));
 	}
 
 	public function saveAttendance(){ 
@@ -185,6 +186,7 @@ class AttendanceController extends Controller
 		$dt = Carbon::now();
 		$dt = $dt->toDateString();		
 		$att = Attendance::where('present_id',$student_id)->where('created_at','LIKE',"%$dt%")->first();
+		$data="";
 		if(count($att)){
 			if($attendance=="P"){				
 				Attendance::destroy($att->id);
@@ -192,16 +194,18 @@ class AttendanceController extends Controller
 							'response' => 'marked present'
 						);
 			}
-		}
+		}		
 		else{
-			$attendanceStudent = Attendance::create([
-				'attendance' 	=> $attendance,
-				'present_id' 	=> $student_id,
-				'present_type'	=> 'App\Student'		 
-			]);			
+			if($attendance=="A"){
+				$attendanceStudent = Attendance::create([
+					'attendance' 	=> $attendance,
+					'present_id' 	=> $student_id,
+					'present_type'	=> 'App\Student'		 
+				]);			
+			}
 			$data = array('status'=>'success',
 						'response' => 'marked absent'
-					);
+			);
 		}
 		return json_encode($data);
 	}
@@ -215,6 +219,8 @@ class AttendanceController extends Controller
 			if(count($att)){
 				$studentdropdown[$key]['attendance'] = $att->attendance;
 			}
+			else
+				$studentdropdown[$key]['attendance'] = "P";	
 		}
         $jsonStudents = json_encode($studentdropdown);
         return $jsonStudents;

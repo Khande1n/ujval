@@ -101,23 +101,7 @@
 		var data = [studentObj.student, studentObj.guardian1, studentObj.email, studentObj.gender , AttendanceColumn ] ;
 		return data; 	 	
  	 }
-	/**
-	 * submitForm: saves student attendance
-	 * @param  {int} studentId 
-	 */
- 	 function submitForm(studentId){
-		var val = $('#squaredCheck'+studentId).is(":checked") ;
-		 
-		if(val)
-			attendance = 'A';
-		else
-			attendance = 'P';
-		var url = '?student_id=' + studentId + '&attendance=' + attendance ;
-		$.get('/principal/create/attendance'+url , function(data) {
-			$('#status'+studentId).fadeIn(1000);
-			$('#status'+studentId).fadeOut(3000);
-		});		 		
- 	 }
+	 
 
 </script>
 @endsection

@@ -1,60 +1,66 @@
 <div class="x-content">
 	<div id="mark-tab">
-		<div class="x-content-title">
-			<h1> Attendance</h1>
+		<div class="row">
+			<div class="content-title center">
+				<h1 class=""> Attendance</h1>
+			</div>
 		</div>
-
-		<!-- FORM DETAILS -->
-
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<h6>Please fill the details below</h6>
-				<form role="form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="x-content-title">
+					<h1> </h1>
+				</div>
+			</div>
+			<!-- FORM DETAILS -->
+			<div class="col-md-6 padding-default">
+				<form role="form" class="form-inline">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
 					<!-- FORM FIELD 1 --> 
-						<div class="form-group col-md-3">
-							<label class="">Select Class</label>
-							 
-								<select class="form-control" name="grade_id" id="gradeMarkSelect">
-									<option  class="hidden" value=""></option>
-									@foreach($gradelists as $grade)
-									<option id = "gradeMark{{ $grade->id }}" class="hidden" value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
-									@endforeach
-								</select>
-							 
-						</div>
-				 
+						<div class="form-group col-md-9">
+							<label class="m-r-sm">Select Class</label>										
+							<select class="form-control" name="grade_id" id="gradeMarkSelect" style="width:inherit">
+								<option  class="hidden" value=""></option>
+								@foreach($gradelists as $grade)
+								<option id = "gradeMark{{ $grade->id }}" class="hidden" value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
+								@endforeach
+							</select>						 
+						</div>			 
 						<div class="form-group col-md-3"> 
-							 <input class="btn btn-primary search-all m-t-md" onclick="showStudents()" value="Search" type="button"/>							 
+							 <input class="btn btn-primary" onclick="showStudents()" value="Search" type="button"/>
 						</div>
 					 
-				</form>
+				</form>				
+			</div>
+			<div class="col-md-3 padding-default">						
 				<div class="btn-group pull-right">
 					<button class="btn btn-default">TODAY: {{$nowTime}}</button>
 				</div>	
-
 			</div>
-		</div> 		
-		<div class="x-chart-widget-content">
-			<div class="panel panel-default">
-				<div class="panel-body">
+		</div>	
+ 		<div class="row student-list">
+ 			<div class="no-data-msg" id="noStudents">
+ 				<h3> No students to show.</h3>
+ 			</div>
+			<div class="x-chart-widget-content hidden" id="studentsList">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h3 class="default-title m-b-sm">Select Absent Students.</h3>
 
-					<div class="row" id="students">	
-						 			
-					</div>
-<!-- 					<div class="table-responsive">						
-						<table id="example" class="table datatable" width="100%"></table>
-					</div>
- -->			</div>
- 				<div class="panel-footer">
- 					<div class="pull-right m-t-sm">
-			            <!-- <button type="button" class="btn btn-default" onclick="noClass()">No Class Today</button> -->
-			            <button type="button" class="btn btn-primary" onclick="submitAttendance()">Save changes</button> 						
- 					</div>
- 				</div>
+						<div class="row" id="students">	
+							 			
+						</div>
+	 			</div>
+					<div class="text-success" style="display:none" id="successMsg"> <p> students attendance marked successfully!</p> </div>
+	 				<div class="panel-footer">
+	 					<div class="m-t-sm m-r-sm">
+				            <button type="button" class="btn btn-danger pull-left m-r-sm" onclick="allAbsents()">All absent</button>
+				            <button type="button" class="btn btn-success pull-left m-r-sm" onclick="allPresents()">All absent</button>		            
+				            <button type="button" class="btn btn-primary btn-lg pull-right " onclick="submitAttendance()">Save changes</button> 						
+	 					</div>
+	 				</div>
+				</div> 
 			</div> 
-		</div> 
+		</div>
 	</div>
 </div>
 <div id="myModal" class="modal fade">
@@ -117,10 +123,13 @@
 			}
 
 		},"json");
+		
 	});
 
 	var selectedGrades = []
 	var selectedStudents = []
+	var absentIds = [];
+		
 	function selectClass(gra_id){
 
 		var index = selectedGrades.indexOf(gra_id);
@@ -142,7 +151,7 @@
 	}
 
 	function selectStudent(student_id){
-
+		console.log(selectedStudents);
 		var index = selectedStudents.indexOf(student_id);
 		if(index==-1)
 			selectedStudents.push(student_id);
@@ -185,6 +194,30 @@
 			$('#myModal').modal('hide');
 	}
 
+	function findAbsentStudents(gra_id){
+		$.get("/principal/attendances/classroom/"+gra_id ,function(data){
+			if(data.length){
+				for(var i=0;i<data.length;i++){ 
+					if(data[i].attendance=="A"){
+						// selectedStudents.push((data[i].id).toString());
+						selectStudent(data[i].id);
+					}
+				}	
+			}
+		},"json");
+	}
+	function allAbsents(){		
+		selectedStudents = [];
+		for(var i=0;i<studentIds;i++){ 
+			selectStudent(data[i].id);
+		}			
+	}
+	function allPresents(){		
+		selectedStudents = studentIds;
+		for(var i=0;i<studentIds;i++){ 
+			selectStudent(data[i].id);
+		}			
+	}
 	</script>
  
 <script>
@@ -194,44 +227,46 @@
  	function showStudents(){
 		gra_id = $('#gradeMarkSelect').val();
  		findAllstudent(gra_id);
+ 		$("#noStudents").addClass("hidden");
  	 }
- 	 var students="";
-	 function findAllstudent(gra_id){
-	 	 
+ 	 var studentIds=[];
+	 function findAllstudent(gra_id){ 
 		$.get('/principal/attendances/classroom/' + gra_id, function(data) {
+			studentIds = [];
+			data.sort(function(a, b) {
+			    return b["gender"].localeCompare(a["gender"]);
+			});
 			//success data
-			students = data;
 			$("#students").html("");
-			$.each(JSON.parse(data), function(index, studentObj) {
+			$.each(data , function(index, studentObj) {
+				studentIds.push(studentObj.id);
 				var html = createStudentDiv(studentObj);
 				$("#students").append(html);
-			}); 			 	
-		});
+			});
+
+		 	findAbsentStudents(gra_id);
+			$("#studentsList").removeClass('hidden');	 	
+		},"json");
 	 }
-	function checkBoxStyle(studentId){
-		
-		if($('#checkBox'+studentId).hasClass('label-x-red')){			
-			$('#checkBox'+studentId).removeClass('label-x-red');
-			$('#checkBox'+studentId).addClass('label-x-blank');			
-		}
-		else
-			$('#checkBox'+studentId).addClass('label-x-red');
-			$('#checkBox'+studentId).removeClass('label-x-blank');			
-	}
- 
-// AttendanceColumn = '<th><div class="row"><div class="col-md-8 squaredCheck"> <input type="checkbox" value="None" id="squaredCheck'+studentObj.id+'" name="check"'+checked+'" onclick="checkBoxStyle('+studentObj.id+')"/><label id="checkBox'+studentObj.id+'" for="squaredCheck'+studentObj.id+'" class="'+cssClass+'"></label></div><div class="col-md-4"> <button type="button" class="btn btn-default" onclick="submitForm('+studentObj.id+')" > Save </button> <span id="status'+studentObj.id+'" class="text-success" style="display: none;">saved!</span> </div> </div></th>';
 
 	/**
 	 * submitForm: saves student attendance
 	 * @param  {int} studentId 
 	 */
  	 function submitAttendance(){
-		var len = selectedStudents.length; 	 	
- 	 	for(var i in selectedStudents){
-			var url = '?student_id=' + selectedStudents[i]+'&attendance=A';
+		var len = selectedStudents.length; 
+ 	 	for(var i in studentIds){
+ 	 		var url = '?student_id=' + studentIds[i]+'&attendance=';
+ 	 		var isSelected = selectedStudents.indexOf(parseInt(studentIds[i]));
+ 	 		if(isSelected==-1)
+				url += 'P';
+			else
+				url += 'A';
 			$.get('/principal/create/attendance'+url , function(data) {
 				if(i==len-1){
-					window.location.href = "/principal/attendance";		
+					// window.location.href = "/principal/attendance";							 
+					$("#successMsg").fadeIn(1000);
+					$("#successMsg").fadeOut(3000);
 				}	
 			});	
  	 	}
@@ -242,15 +277,17 @@
 			html += '<div class="content-box">';
 			html += '<div class="box-image" id="student'+studentObj.id+'" onClick="selectStudent('+studentObj.id+')">';
 			html += '<span class="helper"></span>';
-			html += '<img class="class-icon" src="../img/icons/class.png">'     ;       				
+			if(studentObj.gender=="Male")
+				html += '<img class="class-icon" src="../img/icons/boy.png">';       				
+			else
+				html += '<img class="class-icon" src="../img/icons/girl.png">';       				
+
 			html += '<div class="cross-icon"><img class="hidden" src="../img/icons/cross3.png"></div>';
 			html += '</div>';
 			html += '<div class="info m-t-sm">' ;           				
 			html += '<p>'+studentObj.student+'</p>';
 			// html += '<p class="text-warning"> Total Students: 5  </p>';
-			html += '</div>';
-			html += '</div>';    
-			html += '</div>';
+			html += '</div> </div> </div>';
 	    return html;
  	 }
 

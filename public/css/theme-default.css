@@ -11289,9 +11289,20 @@ li.ext_zip {
   margin-left: -50px;  
   margin-top: -50px;  
 }
-
 .content-box .box-image:hover .cross-icon img{ 
   display: inline-block! important;  
+}
+h3.default-title{  
+    padding: 0px 10px;
+}
+h3.default-title::after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+    border-top: 2px solid #D7D7D7;
+    margin: 15px 0px;
+    /* height: 1px!important; */
+    border-bottom: none;
 }
 .info p{
   font-size: 13px;
@@ -11302,3 +11313,28 @@ p.text-warning{margin-bottom: 0}
 .m-t-md{margin-top: 20px;}
 .m-t-sm{margin-top: 10px;}
 .m-b-sm{margin-bottom: 10px;}
+.m-r-sm{margin-right: 10px;}
+.padding-default{    padding: 10px 20px;}
+.center{text-align: center;}
+.content-title h1{
+    font-size: 22px;
+    font-weight: 700;
+}
+.student-list{
+  border: 1px solid #f8f8f8;
+  min-height: 500px;
+}
+.no-data-msg{
+     margin-top: 30px;
+    width: 50%;
+    margin-left: 20%;
+    height: 40px;
+    border-radius: 15px;
+    background-color: #f8f8f8;
+}
+.no-data-msg h3{
+    vertical-align: middle;
+    line-height: 40px;
+    text-align: center;
+    font-size: 13px;
+}
