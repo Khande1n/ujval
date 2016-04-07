@@ -70,7 +70,7 @@
 		            			</div>
 		            			<div class="info m-t-sm">            				
 					                <p>Class: {{ $grade->grade }}.{{ $grade->grade_section }}</p>
-					                <p class="text-warning"><small>Total Students: {{$grade->studentCount}} </small></p>
+					                <p class="text-warning"> Total Students: {{$grade->studentCount}}  </p>
 		            			</div>
 		            		</div>    
 		                </div>
@@ -83,7 +83,8 @@
 				</div>
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+            	<p class="text-danger pull-left hidden" id="noClassMsg"> <small> *no class today</small></p>
+                <button type="button" class="btn btn-default" onclick="noClass()">No Class Today</button>
                 <button type="button" class="btn btn-primary" onclick="saveClasses()">Save changes</button>
             </div>
         </div>
@@ -99,8 +100,7 @@
 			if(!data.length)
 		        $("#myModal").modal('show');			
 			else{
-				for(var i=0;i<data.length;i++){
-					console.log(data[i]);
+				for(var i=0;i<data.length;i++){ 
 					$("#gradeMark"+data[i]['grade_id']).removeClass('hidden');
 				}
 			}
@@ -126,6 +126,13 @@
 			$("#grade"+gra_id).find("img.check-icon").addClass("hidden");
 			$("#grade"+gra_id).find("img.class-icon").removeClass("on-hover");
 		}
+	}
+	function noClass(){
+		$("#noClassMsg").removeClass("hidden");
+		window.setTimeout(function () {
+	        window.location.href = "/principal/dashboard";
+	    }, 3000)
+
 	}
 	function saveClasses(){
 		var len = selectedGrades.length;
