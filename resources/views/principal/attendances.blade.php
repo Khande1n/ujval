@@ -3,7 +3,7 @@
 
 @section('title')
 
-	<title>Monthly Attendance Chart</title>
+	<title>Class Attendance Chart</title>
 @endsection
  
 @section('content-tabs')
@@ -20,7 +20,7 @@
 
 <!-- SEVENTH TAB -->
 			
-@include('attendance.class')
+@include('attendance.all')
 
 
 @endsection

@@ -442,8 +442,7 @@
 .x-dashboard .page-container .page-content .page-content-wrap .x-hnavigation .x-hnavigation-logo > a {
   float: left;
   width: 100%;
-  height: 70px;
-  background: url("../images/logo-black.png") left center no-repeat;
+  heigh../images/logo-black.png") left center no-repeat;
   font-size: 0px;
   text-indent: 9999px;
   overflow: hidden;
@@ -1361,8 +1360,7 @@
 .x-dashboard-dark .page-container .page-content .page-content-wrap .x-hnavigation .x-hnavigation-logo > a {
   float: left;
   width: 100%;
-  height: 70px;
-  background: url("../imgages/logo-white.png") left center no-repeat;
+  heigh../imgages/logo-white.png") left center no-repeat;
   font-size: 0px;
   text-indent: 9999px;
   overflow: hidden;
@@ -2503,8 +2501,7 @@ body {
   background: #33414e;
   min-height: 100%;
 }
-body.page-container-boxed {
-  background: url("../images/backgrounds/wall_1.jpg") left top no-repeat fixed;
+body.page-container../images/backgrounds/wall_1.jpg") left top no-repeat fixed;
   padding: 20px 0px;
 }
 body.page-container-boxed .page-container {
@@ -2523,35 +2520,25 @@ body.page-container-boxed .page-container.page-navigation-top .page-content {
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-body.page-container-boxed.wall_1 {
-  background-image: url("../img/backgrounds/wall_1.jpg");
+body.page-container-boxed.wall_1../img/backgrounds/wall_1.jpg ;
 }
-body.page-container-boxed.wall_2 {
-  background-image: url("../img/backgrounds/wall_2.jpg");
+body.page-container-boxed.wall_2../img/backgrounds/wall_2.jpg ;
 }
-body.page-container-boxed.wall_3 {
-  background-image: url("../img/backgrounds/wall_3.jpg");
+body.page-container-boxed.wall_3../img/backgrounds/wall_3.jpg ;
 }
-body.page-container-boxed.wall_4 {
-  background-image: url("../img/backgrounds/wall_4.jpg");
+body.page-container-boxed.wall_4../img/backgrounds/wall_4.jpg ;
 }
-body.page-container-boxed.wall_5 {
-  background-image: url("../img/backgrounds/wall_5.jpg");
+body.page-container-boxed.wall_5../img/backgrounds/wall_5.jpg ;
 }
-body.page-container-boxed.wall_6 {
-  background-image: url("../img/backgrounds/wall_6.jpg");
+body.page-container-boxed.wall_6../img/backgrounds/wall_6.jpg ;
 }
-body.page-container-boxed.wall_7 {
-  background-image: url("../img/backgrounds/wall_7.jpg");
+body.page-container-boxed.wall_7../img/backgrounds/wall_7.jpg ;
 }
-body.page-container-boxed.wall_8 {
-  background-image: url("../img/backgrounds/wall_8.jpg");
+body.page-container-boxed.wall_8../img/backgrounds/wall_8.jpg ;
 }
-body.page-container-boxed.wall_9 {
-  background-image: url("../img/backgrounds/wall_9.jpg");
+body.page-container-boxed.wall_9../img/backgrounds/wall_9.jpg ;
 }
-body.page-container-boxed.wall_10 {
-  background-image: url("../img/backgrounds/wall_10.jpg");
+body.page-container-boxed.wall_10../img/backgrounds/wall_10.jpg ;
 }
 /* END PAGE CONTAINER */
 /* X-Dashboard */
@@ -3093,8 +3080,7 @@ body.page-container-boxed.wall_10 {
 }
 .x-navigation.x-navigation-minimized > li.xn-logo > a:first-child {
   padding: 0px;
-  width: 50px;
-  background-image: url("../img/logo-small.png");
+  width: 50p../img/logo-small.png ;
 }
 .x-navigation.x-navigation-minimized .xn-search input {
   width: 30px;
@@ -3250,8 +3236,7 @@ body.page-container-boxed.wall_10 {
 }
 .x-navigation > li.xn-logo > a:first-child {
   font-size: 0px;
-  text-indent: -9999px;
-  background: url("../img/logo.png") top center no-repeat #e34724;
+  text-indent: ../img/logo.png") top center no-repeat #e34724;
   padding: 0px;
   border-bottom: 0px;
   color: #FFF;
@@ -6422,8 +6407,7 @@ td.dataTables_empty {
 .lockscreen-container {
   float: left;
   width: 100%;
-  min-height: 100%;
-  background: url("../img/bg.png") left top repeat #33414e;
+  min-heigh../img/bg.png") left top repeat #33414e;
 }
 .lockscreen-container .lockscreen-box {
   width: 200px;
@@ -6605,16 +6589,14 @@ td.dataTables_empty {
 .registration-container {
   float: left;
   width: 100%;
-  min-height: 100%;
-  background: url("../img/bg.png") left top repeat #33414e;
+  min-heigh../img/bg.png") left top repeat #33414e;
 }
 .registration-container .registration-box {
   width: 400px;
   margin: 0px auto;
   padding-top: 100px;
 }
-.registration-container .registration-box .registration-logo {
-  background: url("../img/logo-lr.png") top center no-repeat;
+.registration-container .registration-box .registratio../img/logo-lr.png") top center no-repeat;
   width: 100%;
   height: 100px;
   float: left;
@@ -6687,16 +6669,14 @@ td.dataTables_empty {
 .login-container {
   float: left;
   width: 100%;
-  min-height: 100%;
-  background: url("../img/bg.png") left top repeat #33414e;
+  min-heigh../img/bg.png") left top repeat #33414e;
 }
 .login-container .login-box {
   width: 400px;
   margin: 0px auto;
   padding-top: 100px;
 }
-.login-container .login-box .login-logo {
-  background: url("../img/logo-lr.png") top center no-repeat;
+.login-container .login-box .logi../img/logo-lr.png") top center no-repeat;
   width: 100%;
   height: 100px;
   float: left;
@@ -6786,8 +6766,7 @@ td.dataTables_empty {
 .login-container .login-box .login-footer a {
   color: #FFF;
 }
-.login-container.lightmode {
-  background: url("../img/backgrounds/wall_1.jpg") left top no-repeat;
+.login-container.lig../img/backgrounds/wall_1.jpg") left top no-repeat;
 }
 .login-container.lightmode .login-box .login-body {
   background: rgba(255, 255, 255, 0.2);
@@ -6799,11 +6778,9 @@ td.dataTables_empty {
 .login-container.lightmode .login-box .login-subtitle a {
   color: #33414e;
 }
-.login-container.login-v2 {
-  background: url("../img/bg.png") left top repeat #f5f5f5;
+.login-container.lo../img/bg.png") left top repeat #f5f5f5;
 }
-.login-container.login-v2 .login-box .login-logo {
-  background: url("../img/logo-grey.png") top center no-repeat;
+.login-container.login-v2 .login-box .logi../img/logo-grey.png") top center no-repeat;
 }
 .login-container.login-v2 .login-box .login-body .login-title {
   color: #33414e;
@@ -8113,8 +8090,7 @@ td.dataTables_empty {
 }
 .sidebar .sidebar-wrapper {
   width: 100%;
-  height: 100%;
-  background: url("../img/bg.png") left top repeat #27313c;
+  heigh../img/bg.png") left top repeat #27313c;
   color: #ffffff;
 }
 .sidebar .sidebar-wrapper .sidebar-tabs {
@@ -8679,8 +8655,7 @@ body.sidebar-opened .sidebar {
   margin: 0;
   padding: 0;
   width: 18px;
-  height: 18px;
-  background: url("../img/icheck/grey.png") no-repeat;
+  heigh../img/icheck/grey.png") no-repeat;
   border: none;
   cursor: pointer;
 }
@@ -11185,28 +11160,22 @@ li.ext_zip {
 /* HiDPI support */
 @media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   .icheckbox_minimal,
-  .iradio_minimal {
-    background-image: url("../img/icheck/grey@2x.png");
+  .iradio_minimal {../img/icheck/grey@2x.png ;
     -webkit-background-size: 200px 20px;
     background-size: 200px 20px;
   }
-  .ui-resizable-se {
-    background-image: url("../img/jqyery/resize-icon@2x.png");
+  .ui-resizable-se {../img/jqyery/resize-icon@2x.png ;
   }
-  .x-navigation > li.xn-logo > a:first-child {
-    background-image: url("../img/logo@2x.png");
+  .x-navigation > li.xn-logo > a:first-child {../img/logo@2x.png ;
     background-size: 220px 50px;
   }
-  .x-navigation.x-navigation-minimized > li.xn-logo > a:first-child {
-    background-image: url("../img/logo-small@2x.png");
+  .x-navigation.x-navigation-minimized > li.xn-logo > a:first-child {../img/logo-small@2x.png ;
     background-size: 50px 50px;
   }
-  .login-container .login-box .login-logo {
-    background-image: url("../img/logo@2x.png");
+  .login-container .login-box .login-logo {../img/logo@2x.png ;
     background-size: 220px 50px;
   }
-  .page-content-header .logo {
-    background-image: url("../img/logo-grey-big@2x.png");
+  .page-content-header .logo {../img/logo-grey-big@2x.png ;
     background-size: 140px 50px;
   }
 }
@@ -11340,3 +11309,28 @@ p.text-warning{margin-bottom: 0}
     text-align: center;
     font-size: 13px;
 }
+.bd-default{
+    border:1px solid #D5D5D5;
+}
+.wrapper{padding: 15px;}
+.wrapper-sm{padding: 10px;}
+.wrapper-md{padding: 20px;}
+.heading-sp{
+    position: absolute;
+    margin: -20px 20px;
+    background: #fff;
+    padding: 0px 10px;
+    font-size: 14px;
+}
+label.w-label{
+    padding: 10px 15px ;
+    border: 1px solid #f8f8f8 ;
+    margin-top: 5px ;
+    background: #EAEAEA;
+}
+.bg-grey{
+  background-color: #ccc;
+}
+/*label.w-label{
+    padding: 10px 13px ;      
+}*/

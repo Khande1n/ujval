@@ -106,7 +106,7 @@
 									<a href="/principal/attendance"><span class="fa fa-pencil-square"></span>Create</a>
 								</li>
 								<li>
-									<a href="/principal/classroom/attendance"><span class="fa fa-building-o"></span>View Attendance</a>
+									<a href="/principal/attendance/all"><span class="fa fa-building-o"></span>View Attendance</a>
 								</li>
 							</ul>
 						</li>										

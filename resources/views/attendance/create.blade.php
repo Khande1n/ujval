@@ -51,10 +51,10 @@
 						</div>
 						<div class="show-info" style="display:none" id="successMsg"> <p class="text-success"> students attendance marked successfully!</p> </div>
 		 			</div>
-	 				<div class="panel-footer">
+	 				<div class="panel-footer" style="position:fixed;bottom:0px">
 	 					<div class="m-t-sm m-r-sm">
 				            <button type="button" class="btn btn-danger pull-left m-r-sm" onclick="allAbsents()">All absent</button>
-				            <button type="button" class="btn btn-success pull-left m-r-sm" onclick="allPresents()">All absent</button>		            
+				            <button type="button" class="btn btn-success pull-left m-r-sm" onclick="allPresents()">All Present</button>		            
 				            <button type="button" class="btn btn-primary btn-lg pull-right " onclick="submitAttendance()">Save changes</button> 						
 	 					</div>
 	 				</div>
@@ -286,12 +286,9 @@
 			$.get('/principal/create/attendance'+url , function(data) {
 				
 			});	
-			if(i==len-1){
-				// window.location.href = "/principal/attendance";							 
-				$("#successMsg").fadeIn(1000);
-				$("#successMsg").fadeOut(3000);
-			}
  	 	}
+ 	 	$("#successMsg").fadeIn(1000);
+		$("#successMsg").fadeOut(3000);
  	 }
 
  	 function createStudentDiv(studentObj){
@@ -303,12 +300,8 @@
 				html += '<img class="class-icon" src="../img/icons/boy.png">';       				
 			else
 				html += '<img class="class-icon" src="../img/icons/girl.png">';       				
-
-			html += '<div class="cross-icon"><img class="hidden" src="../img/icons/cross3.png"></div>';
-			html += '</div>';
-			html += '<div class="info m-t-sm">' ;           				
-			html += '<p>'+studentObj.student+'</p>';
-			// html += '<p class="text-warning"> Total Students: 5  </p>';
+			html += '<div class="cross-icon"><img class="hidden" src="../img/icons/cross3.png"></div></div>';
+			html += '<div class="info m-t-sm"> <p>'+studentObj.student+'</p>';
 			html += '</div> </div> </div>';
 	    return html;
  	 }

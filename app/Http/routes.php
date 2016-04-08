@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	// Route::get('api/student-dropdown2/{grad_id}', 'ApiController@studentDropDown2');
 
+	// Attendance related routes  
  	Route::get('principal/create/attendance', 'AttendanceController@saveAttendance');
  	Route::get('principal/attendances/classroom/{gra_id}', 'AttendanceController@students');
  	Route::get('principal/classroom/attendances', function() {
@@ -133,14 +134,20 @@ Route::group(['middleware' => 'auth'], function() {
 
  	Route::get('principal/classroom/attendances/classes', 'AttendanceController@classes'); 
  	Route::get('principal/classroom/attendances/save/{gra_id}', 'AttendanceController@saveClasses'); 
+
+ 	Route::get('principal/attendances/days/{gra_id}', 'AttendanceController@attendanceDays'); 
  	
  	Route::get('principal/attendances/{gra_id}', 'AttendanceController@allAttendance'); 
- 	
-
+	
  	Route::get('principal/attendance', function() {
 		return view('principal/attendance');
 	});
 
+	Route::get('principal/attendance/all', function() {
+		return view('principal/attendances');
+	});
+
+ 	//
 	Route::get('principal/chat', function() {
 		return view('principal/chat');
 	});

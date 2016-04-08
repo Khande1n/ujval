@@ -170,21 +170,45 @@ class AttendanceController extends Controller
 		$students = app('App\Http\Controllers\ApiController')->studentDropDown2($gra_id);
 		$students =  json_decode($students);
 		// print_r(sizeof($students));
+		$dt = Carbon::now();
+		$year = (string)$dt->year;		
+		$month = (string)$dt->month;
+		$dt = $dt->toDateString();		
+		if(sizeof($month)==1)
+			$month = "0".$month;		
+		$query = $year . "-".$month;
+
 		$attendances = [];
+
 		foreach ($students as $student) { 
-	        $attendance = Attendance::where('present_id',$student->id)->get();
-			$attendances[$student->id] = $attendance; 			 
+	        $attendance = Attendance::where('present_id',$student->id)->where('created_at','LIKE',"%$query%")->get();
+			$attendances[$student->id]["attendance"] = $attendance;
+			$attendances[$student->id]["name"] = $student->student;
+			
 		}
 		return json_encode($attendances);
 		// return view('principal.attendances', compact('attendances','students'));
 	}
 
+	public function attendanceDays($gra_id){
+		$dt = Carbon::now();
+		$year = (string)$dt->year;		
+		$month = (string)$dt->month;
+		$dt = $dt->toDateString();		
+		if(sizeof($month)==1)
+			$month = "0".$month;		
+		$query = $year . "-".$month;
+	 		
+		$attendanceDays = AttendanceDay::where('grade_id',$gra_id)->where('date','LIKE',"%$query%")->get();
+		print_r(json_encode($attendanceDays));		
+	}
 	public function saveAttendance(){ 
 
 		$student_id = Input::get('student_id');
 		$attendance = Input::get('attendance');
 		$dt = Carbon::now();
 		$dt = $dt->toDateString();		
+
 		$att = Attendance::where('present_id',$student_id)->where('created_at','LIKE',"%$dt%")->first();
 		$data="";
 		if(count($att)){
