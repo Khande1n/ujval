@@ -38,8 +38,8 @@
 			</div>
 		</div>	
  		<div class="row student-list">
- 			<div class="no-data-msg" id="noStudents">
- 				<h3> No students to show.</h3>
+ 			<div class="show-info no-data-msg" id="noStudents">
+ 				<p> No students to show.</p>
  			</div>
 			<div class="x-chart-widget-content hidden" id="studentsList">
 				<div class="panel panel-default">
@@ -49,8 +49,8 @@
 						<div class="row" id="students">	
 							 			
 						</div>
-	 			</div>
-					<div class="text-success" style="display:none" id="successMsg"> <p> students attendance marked successfully!</p> </div>
+						<div class="show-info" style="display:none" id="successMsg"> <p class="text-success"> students attendance marked successfully!</p> </div>
+		 			</div>
 	 				<div class="panel-footer">
 	 					<div class="m-t-sm m-r-sm">
 				            <button type="button" class="btn btn-danger pull-left m-r-sm" onclick="allAbsents()">All absent</button>
@@ -151,22 +151,34 @@
 	}
 
 	function selectStudent(student_id){
-		console.log(selectedStudents);
+
+		updateSelectedStudents(student_id);
+		var isSelected = $("#student"+student_id).find(".cross-icon img");
+		if(isSelected.hasClass('hidden'))
+			addStudentCSS(student_id);
+		else
+			removeStudentCSS(student_id);		
+	}
+
+	function updateSelectedStudents(student_id){
+		student_id = parseInt(student_id);
 		var index = selectedStudents.indexOf(student_id);
 		if(index==-1)
 			selectedStudents.push(student_id);
-		else
-			selectedStudents.splice(index,1);
-
-		var checkImg = $("#student"+student_id).find(".cross-icon img");
-		if(checkImg.hasClass('hidden')){ 
-			$("#student"+student_id).find(".cross-icon img").removeClass("hidden");
-			$("#student"+student_id).find("img.class-icon").addClass("on-hover");
+		else{
+			selectedStudents = $.grep(selectedStudents, function(value) {
+			  return value != student_id;
+			});			 
 		}
-		else{ 
-			$("#student"+student_id).find(".cross-icon img").addClass("hidden");
-			$("#student"+student_id).find("img.class-icon").removeClass("on-hover");
-		}
+	}
+	function addStudentCSS(student_id){
+		$("#student"+student_id).find(".cross-icon img").removeClass("hidden");
+		$("#student"+student_id).find("img.class-icon").addClass("on-hover");		
+	}
+	function removeStudentCSS(student_id){
+	
+		$("#student"+student_id).find(".cross-icon img").addClass("hidden");
+		$("#student"+student_id).find("img.class-icon").removeClass("on-hover");		
 	}
 	function selectGradeNone(){
 		$("#noClassMsg").removeClass("hidden");
@@ -199,24 +211,31 @@
 			if(data.length){
 				for(var i=0;i<data.length;i++){ 
 					if(data[i].attendance=="A"){
-						// selectedStudents.push((data[i].id).toString());
-						selectStudent(data[i].id);
+						selectStudent(data[i].id);						
 					}
 				}	
 			}
 		},"json");
 	}
-	function allAbsents(){		
-		selectedStudents = [];
-		for(var i=0;i<studentIds;i++){ 
-			selectStudent(data[i].id);
-		}			
+	function allAbsents(){ 
+		var allStudents = studentIds;
+		if(selectedStudents.length!=allStudents.length){
+			selectedStudents = [];
+			for(var i in allStudents){
+				updateSelectedStudents(studentIds[i]);
+				addStudentCSS(studentIds[i]);
+			}						
+		}
 	}
-	function allPresents(){		
-		selectedStudents = studentIds;
-		for(var i=0;i<studentIds;i++){ 
-			selectStudent(data[i].id);
-		}			
+	function allPresents(){
+		var allStudents = studentIds;
+		if(selectedStudents.length!=0){
+			selectedStudents = allStudents;
+			for(var i in allStudents){
+				updateSelectedStudents(studentIds[i]);
+				removeStudentCSS(studentIds[i]);
+			}
+		}		
 	}
 	</script>
  
@@ -224,12 +243,14 @@
 
 	var gra_id = null;
 	gra_id = $('#gradeMarkSelect').val();
+
  	function showStudents(){
 		gra_id = $('#gradeMarkSelect').val();
  		findAllstudent(gra_id);
  		$("#noStudents").addClass("hidden");
  	 }
  	 var studentIds=[];
+
 	 function findAllstudent(gra_id){ 
 		$.get('/principal/attendances/classroom/' + gra_id, function(data) {
 			studentIds = [];
@@ -239,7 +260,7 @@
 			//success data
 			$("#students").html("");
 			$.each(data , function(index, studentObj) {
-				studentIds.push(studentObj.id);
+				studentIds.push(parseInt(studentObj.id));
 				var html = createStudentDiv(studentObj);
 				$("#students").append(html);
 			});
@@ -257,18 +278,19 @@
 		var len = selectedStudents.length; 
  	 	for(var i in studentIds){
  	 		var url = '?student_id=' + studentIds[i]+'&attendance=';
- 	 		var isSelected = selectedStudents.indexOf(parseInt(studentIds[i]));
+ 	 		var isSelected = selectedStudents.indexOf(studentIds[i]);
  	 		if(isSelected==-1)
 				url += 'P';
 			else
 				url += 'A';
 			$.get('/principal/create/attendance'+url , function(data) {
-				if(i==len-1){
-					// window.location.href = "/principal/attendance";							 
-					$("#successMsg").fadeIn(1000);
-					$("#successMsg").fadeOut(3000);
-				}	
+				
 			});	
+			if(i==len-1){
+				// window.location.href = "/principal/attendance";							 
+				$("#successMsg").fadeIn(1000);
+				$("#successMsg").fadeOut(3000);
+			}
  	 	}
  	 }
 

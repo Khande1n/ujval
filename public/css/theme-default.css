@@ -11324,15 +11324,17 @@ p.text-warning{margin-bottom: 0}
   border: 1px solid #f8f8f8;
   min-height: 500px;
 }
-.no-data-msg{
-     margin-top: 30px;
+.show-info{
     width: 50%;
-    margin-left: 20%;
+    margin-left: 25%;
     height: 40px;
     border-radius: 15px;
+}
+.no-data-msg{
+    margin-top: 30px;
     background-color: #f8f8f8;
 }
-.no-data-msg h3{
+.show-info p{
     vertical-align: middle;
     line-height: 40px;
     text-align: center;

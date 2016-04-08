@@ -230,7 +230,7 @@ class AttendanceController extends Controller
 		$dt = Carbon::now();
 		$dt = $dt->toDateString();
 
-		$days = AttendanceDay::where('date','=',"2016-04-07")->get();
+		$days = AttendanceDay::where('date','=',$dt)->get();
 		print_r(json_encode($days));
 	}
 	public function saveClasses($gra_id){
