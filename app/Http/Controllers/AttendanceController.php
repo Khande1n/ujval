@@ -209,6 +209,10 @@ class AttendanceController extends Controller
 		$dt = Carbon::now();
 		$dt = $dt->toDateString();		
 
+		$date = Input::get('date');
+		if($date){
+			$dt = $date;
+		}
 		$att = Attendance::where('present_id',$student_id)->where('created_at','LIKE',"%$dt%")->first();
 		$data="";
 		if(count($att)){

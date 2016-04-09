@@ -11190,22 +11190,6 @@ li.ext_zip {
   }
 }
 
-.squaredCheck input[type=checkbox] {
-  visibility: hidden;
-}
-.squaredCheck label {
-    cursor: pointer;
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    top: 0;
-    border-radius: 4px;
-    background-image: url('../img/icons/lite-x-red.png');
-    background-repeat: no-repeat; 
-    background-position: 0% 0%;
-}
-.label-x-red{    background-position: 0% 100%!important;} 
-.label-x-blank{    background-position: 0% 0%!important;} 
 
 .content-box{
   text-align: center;
@@ -11331,6 +11315,36 @@ label.w-label{
 .bg-grey{
   background-color: #ccc;
 }
+select.select-btn{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #FFFFFF;
+    text-overflow: "";
+    /* border-radius: 10px; */
+    border: 1px solid #E0E0E0;
+    border-right: none;
+    margin-top: 5px;
+    padding: 5px;
+    width: 90%;
+    text-align: center;
+    height: 36px;
+    cursor: pointer;
+}
+select + .fa-caret-down{
+    color: #000;
+    position: absolute;
+    /* background: #EAEAEA; */
+    padding-top: 9px;
+    margin-top: 5px;
+    margin-left: -9px;
+    width: 13px;
+    height: 36px;
+    border: 1px solid#E0E0E0;
+    border-left: none;
+    cursor: pointer;
+}
+
 /*label.w-label{
     padding: 10px 13px ;      
 }*/
