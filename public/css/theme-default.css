@@ -11265,6 +11265,7 @@ h3.default-title::after {
 p.text-warning{margin-bottom: 0}
 .m-t-md{margin-top: 20px;}
 .m-t-sm{margin-top: 10px;}
+.m-t-xl{margin-top: 40px;}
 .m-b-sm{margin-bottom: 10px;}
 .m-r-sm{margin-right: 10px;}
 .padding-default{    padding: 10px 20px;}
@@ -11326,7 +11327,7 @@ select.select-btn{
     border-right: none;
     margin-top: 5px;
     padding: 5px;
-    width: 90%;
+    width: 85%;
     text-align: center;
     height: 36px;
     cursor: pointer;
@@ -11337,14 +11338,24 @@ select + .fa-caret-down{
     /* background: #EAEAEA; */
     padding-top: 9px;
     margin-top: 5px;
-    margin-left: -9px;
-    width: 13px;
+    margin-left: -6px;
+    width: 12px;
     height: 36px;
     border: 1px solid#E0E0E0;
     border-left: none;
     cursor: pointer;
 }
-
+.add-btn.fa-plus{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #E8E8E8;
+    border-radius: 50%;
+    padding: 8px 9px;
+    cursor: pointer;
+}
+.add-btn.fa-plus:hover {
+    background: #F7F7F7;
+}
 /*label.w-label{
     padding: 10px 13px ;      
 }*/

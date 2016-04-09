@@ -200,7 +200,7 @@ class AttendanceController extends Controller
 		$query = $year . "-".$month;
 	 		
 		$attendanceDays = AttendanceDay::where('grade_id',$gra_id)->where('date','LIKE',"%$query%")->get();
-		print_r(json_encode($attendanceDays));		
+		print_r(json_encode($attendanceDays));
 	}
 	public function saveAttendance(){ 
 
@@ -273,5 +273,39 @@ class AttendanceController extends Controller
 			'response' => 'class present'
 		);
 		return json_encode($data);
+	}
+	public function AttendanceAnalysis(){
+		$gra_id = Input::get('gra_id');
+		$days = Input::get('days');
+		$students = Grade::find($gra_id)->students->toArray();
+		$studentCount = sizeof($students);
+		$data = [];
+		$dt = Carbon::now();
+		for($i=0;$i<$days;$i++){
+			$dtStr = $dt->toDateString();
+			$attDay = AttendanceDay::where('grade_id',$gra_id)->where('date','LIKE',"%$dtStr%")->get();
+			if(count($attDay)){
+				$attCount = 0;
+				foreach ($students  as $key => $student) {
+					$att = Attendance::where('present_id',$student['id'])->where('created_at','LIKE',"%$dtStr%")->first();
+					if(count($att))
+						$attCount++;
+				}
+				array_push($data,(array(
+				          'date' => $dtStr,
+				          $gra_id => $attCount
+				      ))); 
+			}
+			else{
+				array_push($data,(array(
+			          'date' => $dtStr 
+			      ))); 
+
+			}
+
+			$dt = $dt->subDay();
+			 
+		}
+		return $data;
 	}
 }

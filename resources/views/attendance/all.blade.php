@@ -2,9 +2,50 @@
 	<div class="wrapper">
 		<div class="wrapper-sm bd-default">
 			<div class="heading-sp"> <p> Attendance</p></div>
+
+
+			
+			<div class="row">				 
+				<div class="col-md-4 btn-group">
+					<button class="btn btn-default" id="todayBtn" onclick="todaysAttendance()">Today</button>
+					<button class="btn btn-default" id="weekBtn"  onclick="weeksAttendance()">This Week</button>
+					<button class="btn btn-default active" id="monthBtn" onclick="monthsAttendance()">This Month</button>		
+				</div>
+				<div class="col-md-4" >
+					<div class="col-md-9">
+						<select class="form-control" name="graph_grade" id="graphGrade">
+							@foreach($gradelists as $grade)
+							<option id = "gradeMark{{ $grade->id }}" value="{{ $grade->id }}">{{ $grade->grade }}.{{ $grade->grade_section }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="col-md-3">
+						 <span class="fa fa-plus add-btn" onclick="addGradeToGraph()"></span> 
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+			</div>
+			<div class="col-md-4 m-t-xl">
+				 <h3> Chart: ABSENT STUDENTS</h3>
+			</div>
+
+			<div class="row m-t-sm m-b-sm">
+				<div class="row wrapper bd-default">
+					<div class="x-chart-holder">
+						<div id="class-chart" style="height: 400px;"></div>
+					</div>
+				</div>
+			</div>
+
+			
+		</div>
+		
+		<div class="wrapper-sm bd-default m-t-xl">
+			<div class="heading-sp"> <p> Attendance</p></div>
 			<div class="row">
 				
-<!-- 				<div class="btn-group pull-right">
+ 				<!--<div class="btn-group pull-right">
 					<button class="btn btn-default" onclick="undo()"><span class="fa fa-undo m-r-sm"></span>Undo</button>
 				</div> -->
 				<!-- 
@@ -35,22 +76,24 @@
 					 <div class="table-responsive hidden" id="attendanceTable">						
 						<table id="example" class="table datatable" width="100%"></table>
 					</div>
+					<div class="show-info" style="display:none" id="successMsg"> <p class="text-success"> students attendance marked successfully!</p> </div>
 				</div>				
-
 			</div>
 			<div class="row m-t-sm"> 
 				<div class="btn-group pull-right">
-					<!-- <button class="btn btn-default btn-lg m-r-sm bg-grey">Cancel</button> -->
+					<button class="btn btn-default btn-lg m-r-sm bg-grey">Cancel</button>
 					<button class="btn btn-default btn-lg bg-grey" onclick="submitAttendance()">Submit Attendance</button>
 				</div>
 			</div>	
-		</div>
-			
+		</div>	
 	</div>
 </div>
  
 
 @section('graphscript')
+	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
 <script>
 	var today = new Date();
 	var dd = today.getDate();
@@ -90,6 +133,7 @@
     	});
     	$("#gradeMarkSelect").val($("#gradeMarkSelect option:first").val());
     	showClass();
+    	addGradeToGraph();
 	});
 
 	$('#gradeMarkSelect').on('change', function(e) {
@@ -231,15 +275,12 @@
 	}
 
 	function submitAttendance(){
-		console.log(attendancesArray); 
-		console.log(changedAttendance);
-		console.log(studentIds); 
-		
-		$.each(studentIds, function(studentId){
+
+		console.log(changedAttendance);		
+		$.each(studentIds, function(index,studentId){
 			if(changedAttendance[studentId]){
 				$.each(changedAttendance[studentId], function(index,attendance){
 					if(attendance){
-						console.log(attendance);
 						var date = index.toString();
 						if(date.length==1)
 							date = "0"+date;
@@ -247,7 +288,6 @@
 						if(mm.length==1)
 							mm =  "0"+ mm;
 						date = yyyy.toString() + "-" + mm + "-" + date;	
-						console.log(date);
 						var url = '?student_id=' + studentId+'&attendance='+attendance+'&date='+date;			 	 		
 						$.get('/principal/create/attendance'+url , function(data) {
 
@@ -257,6 +297,8 @@
 				});
 			}
 		});
+		$("#successMsg").fadeIn(1000);
+		$("#successMsg").fadeOut(3000);
 	}
 
 	function addTableClasses(){
@@ -285,9 +327,6 @@
 			selectHtml += '</select>'+' <i class="fa fa-caret-down hidden"></i>';
 		return selectHtml;	
 	}
-	// function addIconTag(selectId){
-	// 	$(selectId).after('<i class="fa fa-caret-down hidden"></i>');
-	// }
 
 	function addLabelTag(str,studentId,date){
 		var attId="";
@@ -295,6 +334,99 @@
 			attId = "s"+studentId+"d"+date;
 		return '<label id='+attId+ '>'+ str + '</label>';
 	}
+
+	Morris.Line.prototype.setSeries = function(ykeys, labels,colors,data){
+	    this.options.ykeys = ykeys;
+	    this.options.labels = labels;
+	    
+	    this.options.colors = colors;
+	    this.setData(data);
+	};
+
+	var data = []
+	var colors = ["red","green","blue","black","yellow","brown"];
+	var bChart;
+	var isGraphCreated = false;
+	function drawLine(){
+		var config = {
+				      data: data,
+				      xkey: 'date',
+				      ykeys: [],
+				      fillOpacity: 0.6,
+				      hideHover: 'auto',
+				      behaveLikeLine: true,
+				      resize: true,
+				      pointFillColors:['#ffffff'],
+				      pointStrokeColors: ['black'],
+				      labels: [],
+				      colors:[]
+	  	};
+		config.element = 'class-chart';
+		for(var i=0;i<graphGrade.length;i++){
+			config.ykeys.push(graphGrade[i]);
+			config.labels.push(graphGrade[i]);
+			config.colors.push(colors[(parseInt(graphGrade[i]))%6]);
+		}
+
+		if(bChart){
+		    bChart.setSeries(config.ykeys,config.labels,config.colors,data);
+		}
+		else{
+			bChart = Morris.Line(config);
+		}
+	}
+
+	var graphGrade = [];
+	var totalDays = 30;
+
+	function addGradeToGraph(){
+		grad = $("#graphGrade").val();
+		if($.inArray(grad , graphGrade) == -1)
+		{
+			graphGrade.push(grad); 
+			$.get("/principal/attendance-analysis?gra_id="+grad+"&days="+totalDays, function(resp){					
+				
+				if(data.length){
+					$.each(resp,function(index,att){
+						data[index][grad] = att[grad];
+					});					
+				}
+				else
+					data = resp;		 
+				drawLine();
+			});
+		}
+	}
+
+	function todaysAttendance(){
+		$("#todayBtn").addClass("active");
+		$("#weekBtn").removeClass("active");
+		$("#monthBtn").removeClass("active");
+		totalDays = 1;
+		data = [];
+		graphGrade = [];
+
+		addGradeToGraph();
+	}
+	function weeksAttendance(){
+		$("#todayBtn").removeClass("active");
+		$("#weekBtn").addClass("active");
+		$("#monthBtn").removeClass("active");
+		totalDays = 7;
+		data = [];
+		graphGrade = [];
+		addGradeToGraph();
+		// $("#gradeMarkSelect").val($("#gradeMarkSelect option:first").val());
+	}
+	function monthsAttendance(){
+		$("#todayBtn").removeClass("active");
+		$("#weekBtn").removeClass("active");
+		$("#monthBtn").addClass("active");
+		totalDays = 30;
+		data = [];
+		graphGrade = [];
+		addGradeToGraph();
+	}	 
 </script>
  
 @endsection
